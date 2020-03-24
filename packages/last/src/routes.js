@@ -1,15 +1,17 @@
 const express = require('express');
 
+const DataController = require('./Controllers/DataController');
 
-function teste(req, res){
-    res.json({rota: "Sucesoso"});
+
+async function teste(req, res){
+    res.status(201).json({teste: "teste"});
 }
 
 
 
 const routes = express.Router();
 
-routes.post('/data', teste);
+routes.post('/data', DataController.create);
 
 
 
