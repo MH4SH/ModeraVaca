@@ -13,6 +13,7 @@ const routes = express.Router();
 
 routes.post('/data', DataController.create);
 routes.get('/data', DataController.index);
+routes.put('/data/:_id', DataController.updateStatus);
 
 
 
