@@ -12,6 +12,7 @@ async function teste(req, res){
 const routes = express.Router();
 
 routes.post('/data', DataController.create);
+routes.get('/data', DataController.index);
 
 
 
