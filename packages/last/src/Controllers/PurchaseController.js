@@ -16,14 +16,14 @@ module.exports = {
         res.header('X-Per-Page', per_page)
 
         if(!transactions[0]){
-            res.status(204);
+            return res.status(204).json([]);
         }
 
         res.status(200).json(transactions);
     },
     create: async (req, res) => {
-        
         const {salesman, breed, sexo, date, birth, amount, head_price, freight} = req.body;
+        
         try {
             const transaction = await new Transactions({
                 salesman,
