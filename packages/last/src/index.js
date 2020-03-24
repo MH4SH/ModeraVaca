@@ -36,7 +36,6 @@ process.on('SIGINT', () => {
 });
 
 
-const DataModels = require('./Models/data');
 
 
 const routes = require('./routes')
