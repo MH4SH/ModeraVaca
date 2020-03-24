@@ -13,7 +13,8 @@ const routes = express.Router();
 
 routes.post('/data', DataController.create);
 routes.get('/data', DataController.index);
-routes.put('/data/:_id', DataController.updateStatus);
+routes.patch('/data/:_id', DataController.update);
+routes.patch('/data/:_id/status', DataController.updateStatus);
 
 
 

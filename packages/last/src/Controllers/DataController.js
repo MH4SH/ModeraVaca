@@ -9,6 +9,23 @@ module.exports = {
 
         res.status(201).json(response);
     },
+    update: async (req, res) => {
+        const {_id} = req.params,
+            {value} = req.body;
+        try {
+            if(!value){ return res.value(400).json({error: "Parametr 'value' is required"})};
+
+            const doc = await Datas.updateOne({_id}, {value});
+            
+            res.status(201).json({_id, value});
+        } catch (err){
+            if(err.path==="_id"){
+                res.status(404).json({error: err.message}); 
+            } else {
+                res.status(400).json({error: "Parametr 'value' don't is Sring"});
+            }
+        }
+    },
     updateStatus: async (req, res) => {
         const {_id} = req.params,
             {status} = req.body;
