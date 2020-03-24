@@ -18,6 +18,7 @@ routes.patch('/data/:_id', DataController.update);
 routes.patch('/data/:_id/status', DataController.updateStatus);
 
 routes.post('/purchase', PurchaseController.create);
+routes.get('/purchase', PurchaseController.index);
 
 
 

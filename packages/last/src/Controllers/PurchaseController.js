@@ -5,11 +5,21 @@ const Transactions = mongoose.model('Transaction');
 
 module.exports = {
     index: async (req, res) => {
-        const datas = await Transactions.find().sort({date: 1});
-        var response = {salesman: [], breed: [], buyer: []};
-        datas.map(({_id, value, number, kind}) => { response[kind].push({_id, value, number})});
+        const {page = 1} = req.query,
+            per_page = 10;
 
-        res.status(201).json(response);
+        const count = await Transactions.count();
+        const transactions = await Transactions.find().sort({date: -1}).skip((page-1)*per_page).limit(per_page);
+
+
+        res.header('X-Total-Count', count);
+        res.header('X-Per-Page', per_page)
+
+        if(!transactions[0]){
+            res.status(204);
+        }
+
+        res.status(200).json(transactions);
     },
     create: async (req, res) => {
         
