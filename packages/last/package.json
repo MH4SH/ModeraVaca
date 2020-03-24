@@ -1,0 +1,23 @@
+{
+  "name": "moderavaca_api",
+  "version": "1.0.1",
+  "description": "Projeto para moderar rebanhos e transações do sitio",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mh4sh/ModeraVaca_API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mh4sh/ModeraVaca_API/issues"
+  },
+  "homepage": "https://github.com/mh4sh/ModeraVaca_API#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
