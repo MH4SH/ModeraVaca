@@ -12,12 +12,15 @@ module.exports = {
             return res.status(400).json({error: 'Sexo invalid.'});
         };
 
-        const filter = sexo ? {sexo} : {};
+        const filter = sexo ? {sexo, kind: 'purchase'} : {kind: 'purchase'};
 
 
         const count = await Transactions.countDocuments(filter);
         const transactions = await Transactions.find(filter).sort({date: -1}).skip((page-1)*per_page).limit(per_page);
 
+        const response = [];
+        
+        transactions.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
 
         res.header('X-Total-Count', count);
         res.header('X-Per-Page', per_page)
@@ -26,7 +29,7 @@ module.exports = {
             return res.status(204).json([]);
         }
 
-        res.status(200).json(transactions);
+        res.status(200).json(response);
     },
     create: async (req, res) => {
         const {salesman, breed, sexo, date, birth, amount, head_price, freight} = req.body;
