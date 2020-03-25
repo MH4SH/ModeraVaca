@@ -47,5 +47,17 @@ module.exports = {
         } catch (err){
             res.status(400).json({error: err.message});        
         }
+    },
+    delete: async (req, res) => {
+        const {_id} = req.params;
+
+        try {
+            await Transactions.deleteOne({_id});
+            
+            res.status(204).send();
+        } catch (err){
+            res.status(404).json({error: err.message}); 
+        }
+
     }
 }
