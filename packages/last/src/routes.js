@@ -24,6 +24,7 @@ routes.delete('/purchase/:_id', PurchaseController.delete);
 routes.put('/purchase/:_id', PurchaseController.update);
 
 routes.post('/sale', SaleController.create);
+routes.get('/sale', SaleController.index);
 
 
 
