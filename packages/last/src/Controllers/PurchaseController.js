@@ -5,11 +5,18 @@ const Transactions = mongoose.model('Transaction');
 
 module.exports = {
     index: async (req, res) => {
-        const {page = 1} = req.query,
+        const {page = 1, sexo} = req.query,
             per_page = 10;
 
-        const count = await Transactions.count();
-        const transactions = await Transactions.find().sort({date: -1}).skip((page-1)*per_page).limit(per_page);
+        if(sexo && !(sexo==='f' || sexo==='m')){
+            return res.status(400).json({error: 'Sexo invalid.'});
+        };
+
+        const filter = sexo ? {sexo} : {};
+
+
+        const count = await Transactions.countDocuments(filter);
+        const transactions = await Transactions.find(filter).sort({date: -1}).skip((page-1)*per_page).limit(per_page);
 
 
         res.header('X-Total-Count', count);
