@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const PurchaseModels = require('../Models/purchase');
-const Transactions = mongoose.model('Transaction');
+const PurchaseDB = mongoose.model('Purchase');
 
 
 module.exports = {
@@ -15,17 +15,17 @@ module.exports = {
         const filter = sexo ? {sexo, kind: 'purchase'} : {kind: 'purchase'};
 
 
-        const count = await Transactions.countDocuments(filter);
-        const transactions = await Transactions.find(filter).sort({date: -1}).skip((page-1)*per_page).limit(per_page);
+        const count = await PurchaseDB.countDocuments(filter);
+        const PurchaseDB = await PurchaseDB.find(filter).sort({date: -1}).skip((page-1)*per_page).limit(per_page);
 
         const response = [];
         
-        transactions.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
+        PurchaseDB.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
 
         res.header('X-Total-Count', count);
         res.header('X-Per-Page', per_page)
 
-        if(!transactions[0]){
+        if(!PurchaseDB[0]){
             return res.status(204).json([]);
         }
 
@@ -35,7 +35,7 @@ module.exports = {
         const {salesman, breed, sexo, date, birth, amount, head_price, freight} = req.body;
         
         try {
-            const transaction = await new Transactions({
+            const transaction = await new PurchaseDB({
                 salesman,
                 breed,
                 sexo,
@@ -55,7 +55,7 @@ module.exports = {
         const {_id} = req.params;
 
         try {
-            await Transactions.deleteOne({_id});
+            await PurchaseDB.deleteOne({_id});
             
             res.status(204).send();
         } catch (err){
@@ -68,7 +68,7 @@ module.exports = {
             data = req.body;
 
         try {
-            await Transactions.updateOne({_id, kind: "purchase"}, data);
+            await PurchaseDB.updateOne({_id, kind: "purchase"}, data);
 
             res.status(205).json(data);
         } catch (err){
