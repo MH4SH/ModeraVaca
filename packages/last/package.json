@@ -1,6 +1,6 @@
 {
   "name": "moderavaca_api",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Projeto para moderar rebanhos e transações do sitio",
   "main": "src/index.js",
   "scripts": {

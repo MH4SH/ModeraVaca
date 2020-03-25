@@ -42,5 +42,16 @@ module.exports = {
         } catch (err){
             res.status(400).json({error: err.message});        
         }
+    },
+    delete: async (req, res) => {
+        const {_id} = req.params;
+
+        try {
+            await SaleDB.deleteOne({_id});
+
+            res.status(204).json();
+        } catch(err){
+            res.status(400).json({error: err.message})
+        }
     }
 }
