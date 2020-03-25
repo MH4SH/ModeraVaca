@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const PurchaseModels = require('../Models/purchase');
+require('../Models/purchase');
 const PurchaseDB = mongoose.model('Purchase');
 
 
@@ -16,16 +16,16 @@ module.exports = {
 
 
         const count = await PurchaseDB.countDocuments(filter);
-        const PurchaseDB = await PurchaseDB.find(filter).sort({date: -1}).skip((page-1)*per_page).limit(per_page);
+        const transaction = await PurchaseDB.find(filter).sort({date: -1}).skip((page-1)*per_page).limit(per_page);
 
         const response = [];
         
-        PurchaseDB.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
+        transaction.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
 
         res.header('X-Total-Count', count);
         res.header('X-Per-Page', per_page)
 
-        if(!PurchaseDB[0]){
+        if(!transaction[0]){
             return res.status(204).json([]);
         }
 

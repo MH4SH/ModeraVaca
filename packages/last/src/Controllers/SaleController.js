@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const SaleModels = require('../Models/sale');
+require('../Models/sale');
 const SaleDB = mongoose.model('Sales');
 
 
