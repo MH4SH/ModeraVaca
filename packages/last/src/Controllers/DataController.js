@@ -16,7 +16,7 @@ module.exports = {
         try {
             if(!value){ return res.value(400).json({error: "Parametr 'value' is required"})};
 
-            const doc = await Datas.updateOne({_id}, {value});
+            await Datas.updateOne({_id}, {value});
             
             res.status(201).json({_id, value});
         } catch (err){
