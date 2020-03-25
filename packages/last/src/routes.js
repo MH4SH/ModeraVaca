@@ -4,6 +4,7 @@ const DataController = require('./Controllers/DataController');
 const PurchaseController = require('./Controllers/PurchaseController');
 const SaleController = require('./Controllers/SaleController');
 
+const TransactionController = require('./Controllers/TransactionController');
 
 async function teste(req, res){
     res.status(201).json({teste: "teste"});
@@ -12,6 +13,9 @@ async function teste(req, res){
 
 
 const routes = express.Router();
+
+
+routes.get('/transaction', TransactionController.index);
 
 routes.post('/data', DataController.create);
 routes.get('/data', DataController.index);
