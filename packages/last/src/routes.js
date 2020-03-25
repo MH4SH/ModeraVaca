@@ -20,6 +20,7 @@ routes.patch('/data/:_id/status', DataController.updateStatus);
 routes.post('/purchase', PurchaseController.create);
 routes.get('/purchase', PurchaseController.index);
 routes.delete('/purchase/:_id', PurchaseController.delete);
+routes.put('/purchase/:_id', PurchaseController.update);
 
 
 

@@ -62,5 +62,21 @@ module.exports = {
             res.status(404).json({error: err.message}); 
         }
 
+    },
+    update: async (req, res) => {
+        const {_id} = req.params,
+            data = req.body;
+
+        try {
+            await Transactions.updateOne({_id, kind: "purchase"}, data);
+
+            res.status(205).json(data);
+        } catch (err){
+            if(err.path==="_id"){
+                res.status(404).json({error: err.message}); 
+            } else {
+                res.status(400).json({error: err.message});
+            }
+        }
     }
 }
