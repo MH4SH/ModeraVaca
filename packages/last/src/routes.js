@@ -2,6 +2,7 @@ const express = require('express');
 
 const DataController = require('./Controllers/DataController');
 const PurchaseController = require('./Controllers/PurchaseController');
+const SaleController = require('./Controllers/SaleController');
 
 
 async function teste(req, res){
@@ -22,6 +23,7 @@ routes.get('/purchase', PurchaseController.index);
 routes.delete('/purchase/:_id', PurchaseController.delete);
 routes.put('/purchase/:_id', PurchaseController.update);
 
+routes.post('/sale', SaleController.create);
 
 
 
