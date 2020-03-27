@@ -1,4 +1,4 @@
-const gerate = require('../../src/gerate');
+const gerate = require('../../src/utils/gerate');
 
 describe('Config test for test', () => {
     it('Sum 2 number.', () => {
