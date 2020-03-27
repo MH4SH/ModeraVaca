@@ -4,19 +4,19 @@
   "description": "Projeto para moderar rebanhos e transações do sitio",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "nodemon src/server.js",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mh4sh/ModeraVaca_API.git"
+    "url": "git+https://github.com/marconwillian/ModeraVaca_backend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mh4sh/ModeraVaca_API/issues"
+    "url": "https://github.com/marconwillian/ModeraVaca_backend/issues"
   },
-  "homepage": "https://github.com/mh4sh/ModeraVaca_API#readme",
+  "homepage": "https://github.com/marconwillian/ModeraVaca_backend#readme",
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.9.3"
