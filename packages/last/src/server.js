@@ -1,3 +1,5 @@
+require('custom-env').env('key');
+
 const Database = require('./Database')
 Database.connection();
 

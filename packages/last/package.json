@@ -1,11 +1,11 @@
 {
   "name": "moderavaca_api",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "Projeto para moderar rebanhos e transações do sitio",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "test": "jest"
+    "start": "cross-env IS_TEST=test nodemon src/server.js",
+    "test": "cross-env IS_TEST=test jest"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,8 @@
   "homepage": "https://github.com/marconwillian/ModeraVaca_backend#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.9.3"
+    "mongoose": "^5.9.3",
+    "custom-env": "^2.0.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",

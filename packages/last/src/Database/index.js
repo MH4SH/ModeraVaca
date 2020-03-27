@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
+const config = process.env.IS_TEST === 'test' ? process.env.DATABASE_CONNECTION_TEST : process.env.DATABASE_CONNECTION_STRING;
 
-module.exports = {
+module.exports = {    
     
     connection: async function (){
-        mongoose.connect('mongodb+srv://marconadmin:AwqDiEEjM1X5RcYw@mh4shbr-dwomq.gcp.mongodb.net/moderavaca?retryWrites=true&w=majority', {
+        mongoose.connect(config, {
             useUnifiedTopology: true,
             useFindAndModify: true,
             useNewUrlParser: true,
