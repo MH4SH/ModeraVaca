@@ -36,7 +36,7 @@ describe('ROUTE: Transactions', () => {
     });
     it('GET:: should be able return list with test object about the sale', async () => {
         const itemListSale = [{
-            _id: "5e7e78c15795032597320876",
+            _id: "5e7f636d7c43af62b81550d9",
             kind: "sale",
             cattle: [
               1900,

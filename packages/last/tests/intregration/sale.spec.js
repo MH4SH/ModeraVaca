@@ -10,13 +10,6 @@ describe('ROUTE: Sale', () => {
     afterAll(async () => {
         database.close();
     });
-    it('GET:: should be able all itens with with a item of type buyer', async () => {
-        const response = await request(app)
-            .get('/sale');
-        
-        expect(response.body.length).not.toBe(0);
-        response.body.map(item => expect(item).toHaveProperty('buyer'));
-    });
     it('POST:: should be able create a new sale', async () => {
         const response = await request(app)
             .post('/sale')
@@ -24,7 +17,7 @@ describe('ROUTE: Sale', () => {
                 "buyer":  "5e6beb7dba56ab37d900ff6c",
                 "purchase": "5e6bdcf013e34f37d9d68c85",
                 "date": "2020-02-09T02:00:00.000+00:00",
-                "amount": 10,
+                "amount": 141,
                 "cattle": [
                         1900,
                         1900,
@@ -47,5 +40,23 @@ describe('ROUTE: Sale', () => {
             .send({"buyer":  "5e6beb7dba56ab37d900ff6c"});
 
             expect(response.body).toHaveProperty('error');
+    });
+    it('GET:: should be able all itens with with a item of type buyer', async () => {
+        const response = await request(app)
+            .get('/sale');
+        
+        expect(response.body.length).not.toBe(0);
+        response.body.map(item => expect(item).toHaveProperty('buyer'));
+    });
+    it('DELETE:: should be able delete a buyer after get your ID.', async () => {
+        const res = await request(app)
+            .get('/sale');
+
+        const _id = res.body[1]._id;
+        
+        const response = await request(app)
+            .delete(`/sale/${_id}/`);
+
+            expect(response.status).toBe(204);
     });
 });
