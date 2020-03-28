@@ -10,13 +10,13 @@ describe('ROUTE: Transactions', () => {
     afterAll(async () => {
         database.close();
     });
-    it('should be able to list yours transactions', async () => {
+    it('GET:: should be able to list yours transactions', async () => {
         const response = await request(app)
             .get('/transaction');
 
         expect(response.body[0]).toHaveProperty('_id');
     });
-    it('should be able return list with test object about the purchase', async () => {
+    it('GET:: should be able return list with test object about the purchase', async () => {
         const itemListPurchase = [{
             _id: "5e7e78fe5795032597320877",
             kind: "purchase",
@@ -34,7 +34,7 @@ describe('ROUTE: Transactions', () => {
         
         expect(response.body).toEqual(expect.arrayContaining(itemListPurchase));
     });
-    it('should be able return list with test object about the sale', async () => {
+    it('GET:: should be able return list with test object about the sale', async () => {
         const itemListSale = [{
             _id: "5e7e78c15795032597320876",
             kind: "sale",
