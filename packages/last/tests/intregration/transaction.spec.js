@@ -4,17 +4,61 @@ const database = require('../../src/database/');
 require('custom-env').env('test.key');
 
 describe('ROUTE: Transactions', () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await database.connectionTest();
     });
-
     afterAll(async () => {
-        await database.close();
-    })
+        database.close();
+    });
     it('should be able to list yours transactions', async () => {
         const response = await request(app)
             .get('/transaction');
 
-        expect(response.body[0]).toHaveProperty('_aid');
-    })
+        expect(response.body[0]).toHaveProperty('_id');
+    });
+    it('should be able return list with test object about the purchase', async () => {
+        const itemListPurchase = [{
+            _id: "5e7e78fe5795032597320877",
+            kind: "purchasea",
+            salesman: "5e6bd02413e34f37d9d68c81",
+            breed: "5e6bdcf013e34f37d9d68c85",
+            sexo: "f",
+            date: "2018-07-01T00:00:00.000Z",
+            birth: "2018-07-01T00:00:00.000Z",
+            amount: 6,
+            head_price: 700,
+            freight: 100
+        }];
+        const response = await request(app)
+            .get('/transaction');
+        
+        expect(response.body).toEqual(expect.arrayContaining(itemListPurchase));
+    });
+    it('should be able return list with test object about the sale', async () => {
+        const itemListSale = [{
+            _id: "5e7e78c15795032597320876",
+            kind: "salea",
+            cattle: [
+              1900,
+              1900,
+              1900,
+              1900,
+              1900,
+              1900,
+              1900,
+              1900,
+              1900,
+              1900
+            ],
+            buyer: "5e6beb7dba56ab37d900ff6c",
+            purchase: "5e6bdcf013e34f37d9d68c85",
+            date: "2020-02-09T02:00:00.000Z",
+            amount: 10
+          }];
+
+        const response = await request(app)
+            .get('/transaction');
+        
+        expect(response.body).toEqual(expect.arrayContaining(itemListSale));
+    });
 })
