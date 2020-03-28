@@ -61,4 +61,4 @@ describe('ROUTE: Transactions', () => {
         
         expect(response.body).toEqual(expect.arrayContaining(itemListSale));
     });
-})
+});
