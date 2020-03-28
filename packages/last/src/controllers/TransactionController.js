@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('../Models/transactions');
+require('../models/transactions');
 const TransactionSB = mongoose.model('Transaction');
 
 module.exports = {

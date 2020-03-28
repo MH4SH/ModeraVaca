@@ -1,7 +1,7 @@
 const express = require('express');
 const PurchaseRoute = express.Router();
 
-const PurchaseController = require('./../Controllers/PurchaseController');
+const PurchaseController = require('../controllers/PurchaseController');
 
 PurchaseRoute.post('/purchase', PurchaseController.create);
 PurchaseRoute.get('/purchase', PurchaseController.index);

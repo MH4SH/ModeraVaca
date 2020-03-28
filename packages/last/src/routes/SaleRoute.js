@@ -1,7 +1,7 @@
 const express = require('express');
 const SaleRoute = express.Router();
 
-const SaleController = require('./../Controllers/SaleController');
+const SaleController = require('../controllers/SaleController');
 
 SaleRoute.post('/sale', SaleController.create);
 SaleRoute.get('/sale', SaleController.index);

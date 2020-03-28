@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('../Models/purchase');
+require('../models/purchase');
 const PurchaseDB = mongoose.model('Purchase');
 
 

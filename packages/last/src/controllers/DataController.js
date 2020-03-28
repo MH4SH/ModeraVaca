@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DataModels = require('../Models/data');
+const DataModels = require('../models/data');
 const Datas = mongoose.model('Datas');
 
 module.exports = {
@@ -14,16 +14,15 @@ module.exports = {
         const {_id} = req.params,
             {value} = req.body;
         try {
-            if(!value){ return res.value(400).json({error: "Parametr 'value' is required"})};
-
-            await Datas.updateOne({_id}, {value});
+            const doc = await Datas.updateOne({_id}, {value});
+            if(doc.n===0){ throw {status: 404, message: `Data "${_id}" don't found!`}}
             
             res.status(201).json({_id, value});
         } catch (err){
-            if(err.path==="_id"){
-                res.status(404).json({error: err.message}); 
+            if(err.status===404){
+                res.status(404).json({statusCode: 404, error: "Not Found", message: err.message}); 
             } else {
-                res.status(400).json({error: "Parametr 'value' don't is Sring"});
+                res.status(400).json({statusCode: 400, error: "Bad Request", message: err.message, validation: { source: "params", keys: ["_id"]} }); 
             }
         }
     },
@@ -31,16 +30,15 @@ module.exports = {
         const {_id} = req.params,
             {status} = req.body;
         try {
-            if(status===undefined || status===null){ return res.status(400).json({error: "Parametr 'status' is required"})};
-
             const doc = await Datas.updateOne({_id}, {status});
+            if(doc.n===0){ throw {status: 404, message: `Data "${_id}" don't found!`}}
             
-            res.status(201).json({_id, status});
+            res.status(200).json({_id, status});
         } catch (err){
-            if(err.path==="_id"){
-                res.status(404).json({error: err.message}); 
+            if(err.status===404){
+                res.status(404).json({statusCode: 404, error: "Not Found", message: err.message}); 
             } else {
-                res.status(400).json({error: "Parametr 'status' don't is Boolean"});
+                res.status(400).json({statusCode: 400, error: "Bad Request", message: err.message, validation: { source: "params", keys: ["_id"]} }); 
             }
         }
     },
