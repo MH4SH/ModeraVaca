@@ -19,7 +19,7 @@ describe('ROUTE: Transactions', () => {
     it('should be able return list with test object about the purchase', async () => {
         const itemListPurchase = [{
             _id: "5e7e78fe5795032597320877",
-            kind: "purchasea",
+            kind: "purchase",
             salesman: "5e6bd02413e34f37d9d68c81",
             breed: "5e6bdcf013e34f37d9d68c85",
             sexo: "f",
@@ -37,7 +37,7 @@ describe('ROUTE: Transactions', () => {
     it('should be able return list with test object about the sale', async () => {
         const itemListSale = [{
             _id: "5e7e78c15795032597320876",
-            kind: "salea",
+            kind: "sale",
             cattle: [
               1900,
               1900,
