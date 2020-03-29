@@ -10,4 +10,10 @@ module.exports = {
             pass: Joi.string().required(),
         })
     }),
+    authenticate: celebrate({
+        [Segments.BODY]: Joi.object({
+            user: Joi.string().required(),
+            pass: Joi.string().required()
+        })
+    }),
 }

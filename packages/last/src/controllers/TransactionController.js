@@ -17,6 +17,6 @@ module.exports = {
         res.header('X-Total-Count', count);
         res.header('X-Per-Page', perPage);
 
-        res.status(200).json(transactions);
+        res.status(200).json({transactions});
     }
 }

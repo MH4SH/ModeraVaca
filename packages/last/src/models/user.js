@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: true,
       select: false
+    },
+    type: {
+      type: Number,
+      default: 5
     }
 });
 
