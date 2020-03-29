@@ -3,6 +3,6 @@ const TransactionRoute = express.Router();
 
 const TransactionController = require('../controllers/TransactionController');
 
-TransactionRoute.get('/transaction', TransactionController.index);
+TransactionRoute.get('/', TransactionController.index);
 
 module.exports = TransactionRoute;
