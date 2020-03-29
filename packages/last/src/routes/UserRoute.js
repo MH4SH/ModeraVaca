@@ -4,7 +4,7 @@ const UserValidator = require('../validator/UserValidator');
 
 const UserRoute = express.Router();
 
-UserRoute.post('/authenticate', UserValidator.authenticate, UserController.authenticate);
+UserRoute.post('/authenticate', UserValidator.auth, UserController.auth);
 
 UserRoute.post('/resgister', UserValidator.register, UserController.register);
 

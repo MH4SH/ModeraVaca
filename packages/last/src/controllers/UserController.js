@@ -25,7 +25,7 @@ module.exports = {
             return res.status(400).json({error: err.message})
         }
     },
-    authenticate: async (req, res) => {
+    auth: async (req, res) => {
         const {body} = req,
             userBody = body.user,
             {pass} = body;
