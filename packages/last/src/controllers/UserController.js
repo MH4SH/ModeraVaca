@@ -8,11 +8,12 @@ const User = mongoose.model('Users');
 module.exports = {
     register: async (req, res) => {
         const body = req.body,
-            userBody = body.user.toLowerCase();
+            userBody = body.user.toLowerCase(),
+            emailBody = body.email.toLowerCase();
 
         try {
-            if(await User.findOne({user: userBody}))
-                return res.status(400).json({statusCode: 400, error: "Bad Request", message: "\"user\" already in use", validation: { source: "body", keys: [ "user"]}})
+            if(await User.findOne({$or: [{user: userBody}, {email: emailBody}]}))
+                return res.status(400).json({statusCode: 400, error: "Bad Request", message: "\"user\" or \"email\" already in use", validation: { source: "body", keys: [ "user", "email"]}})
 
             const user = await new User(req.body).save();
             user.pass = undefined;
@@ -37,7 +38,7 @@ module.exports = {
             return res.status(400).json({statusCode: 400, error: "Bad Request", message: "user not found", validation: { source: "body", keys: [ "user"]}})
 
         if(!await bcrypt.compare(pass, user.pass))
-            return res.status(403).json({statusCode: 405, error: "Forbidden", message: "access denied", validation: { source: "body", keys: [ "pass"]}})
+            return res.status(403).json({statusCode: 403, error: "Forbidden", message: "access denied", validation: { source: "body", keys: [ "pass"]}})
 
             user.pass = undefined;
             user.__v = undefined;

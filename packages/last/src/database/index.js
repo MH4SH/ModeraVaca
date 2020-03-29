@@ -62,5 +62,6 @@ module.exports = {
     },
     close: async () => {
         mongoose.disconnect();
-    }
+    },
+    mongoose: mongoose
 }
