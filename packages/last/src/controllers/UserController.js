@@ -16,6 +16,7 @@ module.exports = {
 
             const user = await new User(req.body).save();
             user.pass = undefined;
+            user.__v = undefined;
 
             return res.status(201).json({
                 user,
@@ -33,12 +34,13 @@ module.exports = {
         const user = await User.findOne({user: userBody}).select('+pass');
 
         if(!user)
-        return res.status(400).json({err: 'not user'})
+            return res.status(400).json({statusCode: 400, error: "Bad Request", message: "user not found", validation: { source: "body", keys: [ "user"]}})
 
         if(!await bcrypt.compare(pass, user.pass))
-            return res.status(400).json({err: 'invalid'})
+            return res.status(403).json({statusCode: 405, error: "Forbidden", message: "access denied", validation: { source: "body", keys: [ "pass"]}})
 
             user.pass = undefined;
+            user.__v = undefined;
 
         return res.status(200).json({
             user,
