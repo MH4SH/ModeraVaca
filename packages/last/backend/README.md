@@ -1,6 +1,4 @@
-# ModeraVaca_API
+# Backend
 Projeto para moderar rebanhos e transações do sitio.
 
-
-***
-![Test Jest](https://github.com/marconwillian/ModeraVaca_backend/workflows/Test%20Jest/badge.svg?branch=master)
+[![Node.js CI](https://github.com/marconwillian/ModeraVaca_backend/workflows/Backend%20-%20Jest/badge.svg)](https://github.com/marconwillian/ModeraVaca_backend/actions?query=workflow%3A%22Backend+-+Jest%22)
