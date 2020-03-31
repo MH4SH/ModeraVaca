@@ -46,9 +46,11 @@ module.exports = {
         }
     },
     create: async (req, res) => {
-        const {kind, number, value} = req.body;
+        const {kind, number, value} = req.body,
+            _user = req._user;
         try {
             const data = await new Datas({
+                _user,
                 kind,
                 number,
                 value,
