@@ -45,7 +45,8 @@ module.exports = {
 
         return res.status(200).json({
             user,
-            token: generateToken({id: user._id, type: user.type})
+            token: generateToken({id: user._id, type: user.type}),
+            auth: generateToken({id: user._id, type: user.type}, 131212313213)
         })
     }
 }

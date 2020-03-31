@@ -17,6 +17,6 @@ module.exports = {
             
         const transactions = await TransactionSB.find({_user}, {__v: false, _user: false}).sort({date: -1}).skip((page-1)*perPage).limit(perPage);
 
-        res.status(200).json({_user, transactions});
+        res.status(200).json(transactions);
     }
 }

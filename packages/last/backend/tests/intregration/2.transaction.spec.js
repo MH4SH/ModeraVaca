@@ -1,22 +1,23 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const database = require('../../src/database/');
+const database = require('../../src/database');
 require('custom-env').env('test.key');
 
-describe('ROUTE: Transactions', () => {
+describe('TRANSACTION: List', () => {
     beforeAll(async () => {
         await database.connectionTest();
     });
     afterAll(async () => {
         database.close();
     });
-    it('GET:: should be able to list yours transactions', async () => {
+    it('should be able to list yours transactions', async () => {
         const response = await request(app)
-            .get('/transaction');
+            .get('/transaction')
+            .set({ "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODBmNDM2M2E1NWFmNzZlYTMyZDIxNyIsInR5cGUiOjUsImlhdCI6MTU4NTYyMDk5MCwiZXhwIjoxMzI3OTc5MzQyMDN9.6a21Tm8Ue5X_WKgpQOn2cqOTl9lJlE52Nk4gt2nZrew' });
 
         expect(response.body[0]).toHaveProperty('_id');
     });
-    it('GET:: should be able return list with test object about the purchase', async () => {
+    it('should be able return list with test object about the purchase', async () => {
         const itemListPurchase = [{
             _id: "5e7e78fe5795032597320877",
             kind: "purchase",
@@ -28,10 +29,11 @@ describe('ROUTE: Transactions', () => {
             amount: 6,
             head_price: 700,
             freight: 100
-        }];
+          }];
         const response = await request(app)
-            .get('/transaction');
-        
+            .get('/transaction')
+            .set({ Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODBmNDM2M2E1NWFmNzZlYTMyZDIxNyIsInR5cGUiOjUsImlhdCI6MTU4NTYyMDk5MCwiZXhwIjoxMzI3OTc5MzQyMDN9.6a21Tm8Ue5X_WKgpQOn2cqOTl9lJlE52Nk4gt2nZrew" });
+
         expect(response.body).toEqual(expect.arrayContaining(itemListPurchase));
     });
     it('GET:: should be able return list with test object about the sale', async () => {
@@ -57,8 +59,9 @@ describe('ROUTE: Transactions', () => {
           }];
 
         const response = await request(app)
-            .get('/transaction');
-        
+            .get('/transaction')
+            .set({ Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODBmNDM2M2E1NWFmNzZlYTMyZDIxNyIsInR5cGUiOjUsImlhdCI6MTU4NTYyMDk5MCwiZXhwIjoxMzI3OTc5MzQyMDN9.6a21Tm8Ue5X_WKgpQOn2cqOTl9lJlE52Nk4gt2nZrew" });
+
         expect(response.body).toEqual(expect.arrayContaining(itemListSale));
     });
 });
