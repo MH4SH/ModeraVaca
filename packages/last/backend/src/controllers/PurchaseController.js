@@ -19,13 +19,9 @@ module.exports = {
         if(count===0)
             return res.status(204).json([]);
 
-        const transaction = await PurchaseDB.find(filter).sort({date: -1}).skip((page-1)*perPage).limit(perPage);
-
-        const response = [];
+        const transaction = await PurchaseDB.find(filter).sort({date: -1}).skip((page-1)*perPage).limit(perPage).select({__v: false, kind: false, _user: false});
         
-        transaction.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
-
-        res.status(200).json(response);
+        res.status(200).json(transaction);
     },
     create: async (req, res) => {
         const {salesman, breed, sexo, date, birth, amount, head_price, freight} = req.body,
