@@ -21,8 +21,8 @@ module.exports = (req, res, next) => {
         if(err)
             return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "Token invalid"})
 
-        req.userId = decoded.id;
-        req.userType = decoded.type;
+        req._user = decoded.id;
+        req._userType = decoded.type;
         return next();
     })
 }
