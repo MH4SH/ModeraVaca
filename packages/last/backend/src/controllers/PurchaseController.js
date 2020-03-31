@@ -6,28 +6,24 @@ const PurchaseDB = mongoose.model('Purchase');
 module.exports = {
     index: async (req, res) => {
         const {page = 1, sexo} = req.query,
+            _user = req._user,
             perPage = 10;
 
-        if(sexo && !(sexo==='f' || sexo==='m')){
-            return res.status(400).json({error: 'Sexo invalid.'});
-        };
-
-        const filter = sexo ? {sexo, kind: 'purchase'} : {kind: 'purchase'};
+        const filter = sexo ? {sexo, kind: 'purchase', _user} : {kind: 'purchase', _user};
 
 
         const count = await PurchaseDB.countDocuments(filter);
+        res.header('X-Total-Count', count);
+        res.header('X-Per-Page', perPage)
+
+        if(count===0)
+            return res.status(204).json([]);
+
         const transaction = await PurchaseDB.find(filter).sort({date: -1}).skip((page-1)*perPage).limit(perPage);
 
         const response = [];
         
         transaction.map(({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}) => response.push({_id, salesman, breed, sexo, date, birth, amount, head_price, freight}))
-
-        res.header('X-Total-Count', count);
-        res.header('X-Per-Page', perPage)
-
-        if(!transaction[0]){
-            return res.status(204).json([]);
-        }
 
         res.status(200).json(response);
     },
