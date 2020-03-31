@@ -33,7 +33,7 @@ module.exports = {
     },
     create: async (req, res) => {
         const {salesman, breed, sexo, date, birth, amount, head_price, freight} = req.body,
-            {_user} = req;
+            _user = req._user;
         
         try {
             const transaction = await new PurchaseDB({
@@ -67,12 +67,16 @@ module.exports = {
     },
     update: async (req, res) => {
         const {_id} = req.params,
+            _user = req._user,
             data = req.body;
 
         try {
-            await PurchaseDB.updateOne({_id, kind: "purchase"}, data);
+            const update = await PurchaseDB.updateOne({_user, _id, kind: "purchase"}, data);
 
-            res.status(205).json(data);
+            if(update.n===0)
+                return res.status(404).json({statusCode: 404, error: "Not Found", message: "This 'purchase' was not found"})
+
+            res.status(200).json(data);
         } catch (err){
             if(err.path==="_id"){
                 res.status(404).json({error: err.message}); 
