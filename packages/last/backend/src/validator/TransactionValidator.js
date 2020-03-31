@@ -5,7 +5,7 @@ module.exports = {
         [Segments.QUERY]: Joi.object().keys({
             page: Joi.number().min(1),
             dateMin: Joi.date(),
-            dataMax: Joi.date()
+            dateMax: Joi.date()
         })
     })
 }

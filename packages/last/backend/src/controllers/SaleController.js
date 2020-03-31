@@ -18,7 +18,7 @@ module.exports = {
         if(count===0)
             return res.status(204).json([]);
             
-        const transaction = await SaleDB.find(filter).skip((page - 1)*perPage).limit(perPage).select({__v: false, kind: false, _user: false});        
+        const transaction = await SaleDB.find(filter, {__v: false, kind: false, _user: false}).skip((page - 1)*perPage).limit(perPage);
 
         res.status(200).json(transaction);
     },
