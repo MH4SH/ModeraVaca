@@ -30,9 +30,10 @@ module.exports = {
     },
     updateStatus: async (req, res) => {
         const {_id} = req.params,
+            _user = req._user,
             {status} = req.body;
         try {
-            const doc = await Datas.updateOne({_id}, {status});
+            const doc = await Datas.updateOne({_id, _user}, {status});
             if(doc.n===0){ throw {status: 404, message: `Data "${_id}" don't found!`}}
             
             res.status(200).json({_id, status});
