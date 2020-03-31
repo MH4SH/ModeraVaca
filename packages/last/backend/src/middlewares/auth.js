@@ -8,8 +8,6 @@ module.exports = (req, res, next) => {
         return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "No token provided"})
 
     const parts = authHeader.split(' ');
-    console.log(parts);
-    console.log(parts.length !== 2);
 
     if(parts.length !== 2)
         return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "Token error"})
