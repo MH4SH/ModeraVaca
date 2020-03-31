@@ -54,14 +54,18 @@ module.exports = {
         }
     },
     delete: async (req, res) => {
-        const {_id} = req.params;
+        const {_id} = req.params,
+            _user = req._user;
 
         try {
-            await PurchaseDB.deleteOne({_id});
+            const delet = await PurchaseDB.deleteOne({_id, _user});
+
+            if(delet.n===0)
+                return res.status(404).json({statusCode: 404, error: "Not Found", message: "This 'purchase' was not found"})
             
-            res.status(204).send();
+            return res.status(204).send();
         } catch (err){
-            res.status(404).json({error: err.message}); 
+            return res.status(404).json({statusCode: 404, error: "Not Found", message: err.message})
         }
 
     },
@@ -79,9 +83,9 @@ module.exports = {
             res.status(200).json(data);
         } catch (err){
             if(err.path==="_id"){
-                res.status(404).json({error: err.message}); 
+                return res.status(404).json({statusCode: 404, error: "Not Found", message: err.message})
             } else {
-                res.status(400).json({error: err.message});
+                return res.status(400).json({statusCode: 400, error: "Bad Reaquest", message: err.message})
             }
         }
     }
