@@ -13,9 +13,10 @@ module.exports = {
     },
     update: async (req, res) => {
         const {_id} = req.params,
+            _user = req._user,
             {value} = req.body;
         try {
-            const doc = await Datas.updateOne({_id}, {value});
+            const doc = await Datas.updateOne({_id, _user}, {value});
             if(doc.n===0){ throw {status: 404, message: `Data "${_id}" don't found!`}}
             
             res.status(201).json({_id, value});
