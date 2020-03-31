@@ -4,7 +4,8 @@ const Datas = mongoose.model('Datas');
 
 module.exports = {
     index: async (req, res) => {
-        const datas = await Datas.find().sort({number: 1});
+        const _user = req._user;
+        const datas = await Datas.find({_user}).sort({number: 1});
         var response = {salesman: [], breed: [], buyer: []};
         datas.map(({_id, value, number, kind}) => { response[kind].push({_id, value, number})});
 
