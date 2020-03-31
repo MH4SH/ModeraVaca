@@ -2,6 +2,11 @@
 const {celebrate, Joi, Segments} = require('celebrate');
 
 module.exports = {
+    index: celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            page: Joi.string().required()
+        })
+    }),
     register: celebrate({
         [Segments.BODY]: Joi.object().keys({
             name: Joi.string().required(),
