@@ -23,10 +23,12 @@ module.exports = {
         res.status(200).json(transaction);
     },
     create: async (req, res) => {
-        const {buyer, purchase, date, amount, cattle} = req.body;
+        const {buyer, purchase, date, amount, cattle} = req.body,
+            _user = req._user;
         
         try {
             const transaction = await new SaleDB({
+                _user,
                 buyer,
                 purchase,
                 date,
@@ -36,7 +38,7 @@ module.exports = {
     
             res.status(201).json({_id: transaction._id});
         } catch (err){
-            res.status(400).json({error: err.message});        
+            return res.status(400).json({statusCode: 400, error: "Bad Request", message: err.message})
         }
     },
     delete: async (req, res) => {
