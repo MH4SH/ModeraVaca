@@ -42,14 +42,18 @@ module.exports = {
         }
     },
     delete: async (req, res) => {
-        const {_id} = req.params;
+        const {_id} = req.params,
+            _user = req._user;
 
         try {
-            await SaleDB.deleteOne({_id});
+            const delet = await SaleDB.deleteOne({_id, _user});
+
+            if(delet.n===0)
+                return res.status(404).json({statusCode: 404, error: "Not Found", message: "This 'sale' was not found"})
 
             res.status(204).json();
         } catch(err){
-            res.status(400).json({error: err.message})
+            return res.status(404).json({statusCode: 404, error: "Not Found", message: err.message})
         }
     }
 }
