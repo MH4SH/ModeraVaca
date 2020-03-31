@@ -19,7 +19,7 @@ module.exports = {
         if(dateMax)
             Object.assign(date, {$lte: dateMax});
         
-        if(date!=={})
+        if(date==={})
             Object.assign(filter, {date});
 
         const count = await TransactionSB.countDocuments(filter);
