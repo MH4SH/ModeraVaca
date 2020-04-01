@@ -5,9 +5,9 @@ name: Backend - Jest
 
 on:
   push:
-    branches: [ master ]
+    branches: [ backend ]
   pull_request:
-    branches: [ master ]
+    branches: [ backend ]
 
 jobs:
   mongo:
