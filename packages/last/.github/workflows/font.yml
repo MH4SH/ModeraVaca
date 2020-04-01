@@ -5,9 +5,9 @@ name: Frontend - Jest
 
 on:
   push:
-    branches: [ Desktop ]
+    branches: [ frontend ]
   pull_request:
-    branches: [ Desktop ]
+    branches: [ frontend ]
 
 jobs:
   mongo:
