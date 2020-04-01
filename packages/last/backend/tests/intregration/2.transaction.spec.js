@@ -38,7 +38,7 @@ describe('TRANSACTION: List', () => {
     });
     it('GET:: should be able return list with test object about the sale', async () => {
         const itemListSale = [{
-            _id: "5e7f636d7c43af62b81550d9",
+            _id: "5e810b455c9d5c0a44bb18b8",
             kind: "sale",
             cattle: [
               1900,
@@ -55,7 +55,7 @@ describe('TRANSACTION: List', () => {
             buyer: "5e6beb7dba56ab37d900ff6c",
             purchase: "5e6bdcf013e34f37d9d68c85",
             date: "2020-02-09T02:00:00.000Z",
-            amount: 10
+            amount: 141
           }];
 
         const response = await request(app)
