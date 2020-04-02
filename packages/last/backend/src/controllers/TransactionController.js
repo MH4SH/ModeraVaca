@@ -8,8 +8,6 @@ module.exports = {
             {_user} = req,
             perPage = 5;
 
-            const target = { a: 1, b: 2 };
-
         const filter = {_user};
         const date = {};
 

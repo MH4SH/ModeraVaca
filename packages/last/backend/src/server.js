@@ -1,10 +1,11 @@
-require('custom-env').env('test.key');
+require('custom-env').env('key');
 
 const database = require('./database')
 database.connection();
 
 const app = require('./app');
+const port = process.env.PORT || 3333;
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log(`API start on port :${process.env.PORT || 3000}`)
+app.listen(port, () => {
+    console.log(`API start on port :${port}`)
 });
