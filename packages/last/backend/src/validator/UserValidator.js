@@ -9,15 +9,17 @@ module.exports = {
     }),
     register: celebrate({
         [Segments.BODY]: Joi.object().keys({
-            name: Joi.string().required(),
             email: Joi.string().email().required(),
-            user: Joi.string().required(),
-            pass: Joi.string().required(),
+            phone: Joi.number().required(),
+            name: Joi.string().required(),
+            city: Joi.string().required(),
+            uf: Joi.string().required(),
+            pass: Joi.string().required()
         })
     }),
     auth: celebrate({
         [Segments.BODY]: Joi.object().keys({
-            user: Joi.string().required(),
+            access: Joi.string().required(),
             pass: Joi.string().required()
         })
     }),

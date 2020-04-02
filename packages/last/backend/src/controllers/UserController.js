@@ -27,12 +27,12 @@ module.exports = {
     },
     register: async (req, res) => {
         const body = req.body,
-            userBody = body.user.toLowerCase(),
+            phoneBody = body.phone.slice(-2),
             emailBody = body.email.toLowerCase();
 
         try {
-            if(await User.findOne({$or: [{user: userBody}, {email: emailBody}]}))
-                return res.status(400).json({statusCode: 400, error: "Bad Request", message: "\"user\" or \"email\" already in use", validation: { source: "body", keys: [ "user", "email"]}})
+            if(await User.findOne({$or: [{phone: phoneBody}, {email: emailBody}]}))
+                return res.status(400).json({statusCode: 400, error: "Bad Request", message: "\"phone\" or \"email\" already in use", validation: { source: "body", keys: [ "phone", "email"]}})
 
             const user = await new User(req.body).save();
             user.pass = undefined;
@@ -48,13 +48,12 @@ module.exports = {
     },
     auth: async (req, res) => {
         const {body} = req,
-            userBody = body.user,
-            {pass} = body;
+            {pass, access} = body;
 
-        const user = await User.findOne({user: userBody}).select('+pass');
+        const user = await User.findOne({$or: [{phone: access}, {email: access}]}).select('+pass');
 
         if(!user)
-            return res.status(400).json({statusCode: 400, error: "Bad Request", message: "user not found", validation: { source: "body", keys: [ "user"]}})
+            return res.status(400).json({statusCode: 400, error: "Bad Request", message: "user not found", validation: { source: "body", keys: [ "access"]}})
 
         if(!await bcrypt.compare(pass, user.pass))
             return res.status(403).json({statusCode: 403, error: "Forbidden", message: "access denied", validation: { source: "body", keys: [ "pass"]}})
@@ -64,8 +63,7 @@ module.exports = {
 
         return res.status(200).json({
             user,
-            token: generateToken({id: user._id, type: user.type}),
-            auth: generateToken({id: user._id, type: user.type}, 131212313213)
+            token: generateToken({id: user._id, type: user.type})
         })
     }
 }

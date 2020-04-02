@@ -1,11 +1,11 @@
 {
   "name": "moderavaca_api",
-  "version": "1.1.31",
+  "version": "1.1.32",
   "description": "Projeto para moderar rebanhos e transações do sitio",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "cross-env IS_TEST=test jest --detectOpenHandles"
   },
   "repository": {
