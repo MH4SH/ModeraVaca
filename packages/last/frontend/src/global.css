@@ -1,6 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+}
+
+
+body {
+    font: 400 14px Roboto, sans-setif;
+    -webkit-font-smoothing: antialiased;
+    color: #212421;
+}
+
+input, button, textarea {
+    font: 400 18px Roboto, sans-setif;
+}
+h1 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+}
+
+form input {
+    width: 100%;
+    height: 40px;
+    color: #212421;
+    background: #EFF6EF;
+    border: 0px solid #dcdce6;
+    padding: 0 10px;
+}
+
+
+
+.button {
+    width: 50%;
+    height: 40px;
+    background: #6999EA;
+    border: 0;
+    color: #FFF;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    transition: filter 0.3s;
+    cursor: pointer;
+
+}
+
+.button:hover {
+    filter: brightness(0.9);
 }
