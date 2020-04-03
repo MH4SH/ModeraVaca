@@ -27,7 +27,7 @@ module.exports = {
     },
     register: async (req, res) => {
         const body = req.body,
-            phoneBody = body.phone.slice(-2),
+            phoneBody = body.phone,
             emailBody = body.email.toLowerCase();
 
         try {
