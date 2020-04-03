@@ -10,25 +10,43 @@ import logoImg from '../../assets/logo.svg'
 import './styles.css';
 
 export default function Login() {
-    const [id, setId] = useState("");
+    const [access, setAccess] = useState("");
+    const [pass, setPass] = useState("");
     const [formPhone, setFormPhone] = useState(true);
 
     const history = useHistory();
-    //history.push('/perfil')
+
+
+    const handleChange = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await api.post('user/authenticate', {access, pass});
+
+            localStorage.setItem('userToken', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+
+            history.push('/home');
+
+        } catch (err){
+            alert(`Falha: ${err.response.data.message} (${err.response.status})`);
+        }
+    }
+
 
     const inputAccess = () => {
         if(formPhone){
             return (
                 <div className="from-input">
                     <label for="access">seu celular ou <span onClick={()=>{setFormPhone(false)}}>seu email aqui</span></label>
-                    <input type="number" id="access"/>
+                    <input type="number" id="access" value={access} onChange={e=> setAccess(e.target.value)}/>
                 </div>
                 )
         } else {
             return (
                 <div className="from-input">
                     <label for="access">seu email ou <span onClick={()=>{setFormPhone(true)}}>seu celular aqui</span></label>
-                    <input type="email" id="access"/>
+                    <input type="email" id="access" value={access} onChange={e=> setAccess(e.target.value)}/>
                 </div>
                 )
         }
@@ -38,12 +56,12 @@ export default function Login() {
         <div className="login-container">
             <section className="form">
                 <img src={logoImg} alt="Logo ModeraVaca" />
-                <form>
+                <form onSubmit={handleChange}>
                     <h1>fazer login</h1>
                     { inputAccess()}
                     <div className="from-input">
                         <label for="pass">sua senha</label>
-                        <input type="password" id="pass"/>
+                        <input type="password" id="pass" value={pass} onChange={e=> setPass(e.target.value)}/>
                     </div>
                     <button className="button" type="submit">entrar</button>
                 </form>

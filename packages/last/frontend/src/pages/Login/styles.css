@@ -39,7 +39,8 @@
 
 .login-container section.form form div.from-input label > span {
     cursor: pointer;
-    color: #BFC5BF;
+    color: #6999EA;
+
 }
 
 .login-container section.form form div.from-input input {
