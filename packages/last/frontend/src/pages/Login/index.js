@@ -34,6 +34,7 @@ export default function Login() {
         } catch (err){
             if(err.response.status===400){
                 alert(`Celular ou Email não encontrado!`);
+                setAccess("");
             } else if(err.response.status===403){
                 alert(`Senha incorreta!`);
             }

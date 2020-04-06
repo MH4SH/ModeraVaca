@@ -60,8 +60,8 @@ export default function Login() {
                     <h1>se cadastre</h1>
                     <div className="row">
                         <div>
-                            <label for="phone">seu celular para login</label>
-                            <input type="number" id="phone" value={phone} onChange={e=>setPhone(e.target.value)} required="true" />
+                            <label for="phone">seu celular para login com ddd</label>
+                            <input type="number" id="phone" value={phone} onChange={e=>setPhone(e.target.value)} required="true" minlength="10" />
                         </div>
                         <div>
                             <label for="email">email</label>
