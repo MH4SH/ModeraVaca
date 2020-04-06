@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi';
 
 import api from '../../services/api';
 
@@ -19,6 +18,10 @@ export default function Login() {
 
     const handleChange = async (e) => {
         e.preventDefault();
+        if(!access)
+            return alert(`Acesso não preenchido!`);
+        if(!pass)
+            return alert(`Senha não preenchido!`);
 
         try {
             const response = await api.post('user/authenticate', {access, pass});
@@ -29,7 +32,12 @@ export default function Login() {
             history.push('/home');
 
         } catch (err){
-            alert(`Falha: ${err.response.data.message} (${err.response.status})`);
+            if(err.response.status===400){
+                alert(`Celular ou Email não encontrado!`);
+                setAccess("");
+            } else if(err.response.status===403){
+                alert(`Senha incorreta!`);
+            }
         }
     }
 
@@ -39,14 +47,14 @@ export default function Login() {
             return (
                 <div className="from-input">
                     <label for="access">seu celular ou <span onClick={()=>{setFormPhone(false)}}>seu email aqui</span></label>
-                    <input type="number" id="access" value={access} onChange={e=> setAccess(e.target.value)}/>
+                    <input type="number" id="access" value={access} onChange={e=> setAccess(e.target.value)} required=""/>
                 </div>
                 )
         } else {
             return (
                 <div className="from-input">
                     <label for="access">seu email ou <span onClick={()=>{setFormPhone(true)}}>seu celular aqui</span></label>
-                    <input type="email" id="access" value={access} onChange={e=> setAccess(e.target.value)}/>
+                    <input type="email" id="access" value={access} onChange={e=> setAccess(e.target.value)} required=""/>
                 </div>
                 )
         }
@@ -58,7 +66,7 @@ export default function Login() {
                 <img src={logoImg} alt="Logo ModeraVaca" />
                 <form onSubmit={handleChange}>
                     <h1>fazer login</h1>
-                    { inputAccess()}
+                    { inputAccess() }
                     <div className="from-input">
                         <label for="pass">sua senha</label>
                         <input type="password" id="pass" value={pass} onChange={e=> setPass(e.target.value)}/>

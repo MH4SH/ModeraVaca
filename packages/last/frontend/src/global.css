@@ -23,7 +23,7 @@ h1 {
     font-weight: 700;
 }
 
-form input {
+form input, select {
     width: 100%;
     height: 40px;
     color: #212421;
