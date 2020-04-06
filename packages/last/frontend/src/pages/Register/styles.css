@@ -63,7 +63,7 @@
 	flex: 3;
 }
 
-.register-container section.form form > div.row input {
+.register-container section.form form > div.row input, select {
     margin-top: 5px;
     margin-bottom: 20px;
 }
