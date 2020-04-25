@@ -3,6 +3,9 @@ import {Link, useHistory} from 'react-router-dom';
 
 import api from '../../services/api';
 
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
 import './styles.css';
 
 export default function Home(){
@@ -19,9 +22,13 @@ export default function Home(){
     }, [userToken])
 
     return (
-        <div>
-            HOME - {userToken}<br/>
-            {user}
-        </div>
+        <>
+            <Header />
+            <div>
+                HOME - {userToken}<br/>
+                {user}
+            </div>
+            <Footer />
+        </>
     )
 }
