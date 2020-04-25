@@ -5,9 +5,13 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 
+import ScrollToTop from './components/ScrollToTop';
+
 export default function Routes() {
     return (
         <Router>
+            <ScrollToTop />
+
             <Switch>
                 <Route path="/" exact component={Login}/>
                 <Route path="/entrar" exact component={Login}/>
