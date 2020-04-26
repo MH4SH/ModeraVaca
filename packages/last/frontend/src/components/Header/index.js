@@ -13,7 +13,7 @@ export default function Header(){
                 <NavLink to="/" className="grid-3">
                     <img src={logoImg} alt="Modera Vaca" />
                 </NavLink>
-                <div className="grid-13 row header_menu">
+                <div className="grid-9 row header_menu">
                     <div>
                         <img src={perfilImg} alt="Perfil"/>
                     </div>
