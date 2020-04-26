@@ -3,5 +3,102 @@ section:nth-of-type(1) {
 }
 
 section:nth-of-type(1) > div {
-    background: tomato;
+}
+
+.headerListCards {
+    background: var(--primary-s-light);
+    display: block;
+    margin-bottom: 20px;
+}
+
+.headerListCards h1{
+    padding: 7px 10px;
+
+    text-transform: lowercase;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.listCards > ul {
+    display: inline-block;
+    padding: 10px 0;
+
+    background: #FFFFFF;
+    /* shadow */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+.listCards > ul > li:before {
+    content: "";
+    background: var(--primary);
+    width: 2px;
+    height: 45px;
+    position: absolute;
+    display: block;
+}
+
+.listCards > ul > li {
+    display: inline-block;
+    padding: 10px 0;
+    width: calc(100% - 22px);
+    margin-left: 10px;
+    transition: 100ms ease;
+    cursor: pointer;
+}
+
+.listCards > ul > li:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.listCards > ul > li div:nth-of-type(even) {
+    text-align: right;
+}
+
+.listCards > ul > li div:nth-of-type(1) {
+    font-size: 14px;
+}
+
+.listCards > ul > li div:nth-of-type(2) {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.listCards > ul > li div:nth-of-type(3) {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.listCards > ul > li div:nth-of-type(4) {
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+.headerButtons {
+    background: var(--primary-s-light);
+    display: block;
+    
+    margin-bottom: 20px;
+}
+
+.headerButtons h1{
+    padding: 7px 10px;
+
+    text-transform: lowercase;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.cardData {
+    display: inline-block;
+    height: 300px;
+    background: #FFFFFF;
+    /* shadow */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 }

@@ -39,6 +39,7 @@ figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
     font-size: 100%;
+    color: var(--bg);
 }
 /* HTML5 display-role */
 article, aside, details, figcaption, figure, 
@@ -47,6 +48,7 @@ footer, header, hgroup, menu, nav, section, img {
 }
 body {
     line-height: 1;
+    background: #FDFDFD;
 }
 ol, ul {
     list-style: none;

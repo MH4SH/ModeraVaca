@@ -28,7 +28,6 @@ export default function Routes() {
     }
     return (
         <Router>
-            <ScrollToTop />
 
             <Switch>
                 <Route path="/entrar" component={Login}/>
