@@ -5,8 +5,7 @@ module.exports = {
         [Segments.QUERY]: Joi.object().keys({
             page: Joi.number().min(1),
             dateMin: Joi.date(),
-            dateMax: Joi.date(),
-            sexo: Joi.string().valid(...['f', 'm'])
+            dateMax: Joi.date()
         })
     }),
     createManual: celebrate({
