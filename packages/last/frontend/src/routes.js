@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Cards from './pages/Cards';
 
 import ScrollToTop from './components/ScrollToTop';
 
@@ -17,7 +18,7 @@ export default function Routes() {
             return (
                 <>
                     <Route path="/" exact={true} component={Home} />
-                    <Route path="/fichas" component={Home} />
+                    <Route path="/fichas" component={Cards} />
                     <Route path="/pendente" exact component={Home} />
                     <Route path="/transacoes" exact component={Home} />
                 </>
