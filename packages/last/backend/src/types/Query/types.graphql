@@ -1,0 +1,7 @@
+type Query {
+  users(
+    id: ID,
+    ordem: String
+  ): UserCursor
+  user(id: ID!): User
+}

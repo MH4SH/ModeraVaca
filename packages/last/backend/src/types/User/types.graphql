@@ -1,0 +1,16 @@
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    age: String
+}
+
+type UserCursor {
+    edges: [UserEdge]
+    pageInfo: PageInfo!
+}
+
+type UserEdge {
+    node: User
+    cursor: String
+}
