@@ -8,13 +8,15 @@ const getTypeDefs = require('./types');
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 
-console.log(Mutation);
+//Enums 
+const UsersType = require('./TypesEnums/UsersType');
 
 const startServer = () => {
     try {
         var app = express();
 
         const resolvers = {
+            UsersType: UsersType,
             Query,
             Mutation
         };
@@ -34,6 +36,7 @@ const startServer = () => {
         console.log(`Server is running on: http://localhost:${port}/graphql`)
 
     } catch (e) {
+        console.log(e.message);
       throw new Error(e.message);
     }
 };

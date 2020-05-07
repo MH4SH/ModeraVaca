@@ -1,7 +1,7 @@
 const usersList = [
-    {id: 1, name: "Marcon", email: "marcon@mh4sh.dev", age: "21"},
-    {id: 2, name: "Murillo", email: "murillo@mh4sh.dev"},
-    {id: 3, name: "dÉ", email: "DE@mh4sh.dev", age: "47"}
+    {id: 1, name: "Marcon", email: "marcon@mh4sh.dev", age: "21", type: 1},
+    {id: 2, name: "Murillo", email: "murillo@mh4sh.dev", type: 2},
+    {id: 3, name: "dÉ", email: "DE@mh4sh.dev", age: "47", type: 2}
 ];
 
 const pageInfo = {

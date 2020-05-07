@@ -1,12 +1,18 @@
 // Update with your config settings.
 
 module.exports = {
-  client: 'sqlite3',
+  client: 'mysql',
   connection: {
-    filename: './dev.sqlite3'
+    database: 'moderavaca',
+    user:     'root',
+    password: ''
+  },
+  pool: {
+    min: 2,
+    max: 10
   },
   migrations: {
     directory: './src/database/migrations'
-  },
-  useNullAsDefault: true,
+  }
+
 };

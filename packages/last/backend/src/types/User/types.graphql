@@ -1,8 +1,18 @@
 type User {
     id: ID!
+    type: UsersType!
     name: String!
     email: String!
-    age: String
+    phone: String!
+    password: String
+    city: String
+    uf: String
+}
+
+enum UsersType {
+  ADMIN
+  MASTER
+  NULL
 }
 
 type UserCursor {
