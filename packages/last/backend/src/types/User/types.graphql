@@ -1,3 +1,4 @@
+# An user
 type User {
     id: ID!
     type: UsersType!
@@ -8,11 +9,24 @@ type User {
     city: String
     uf: String
 }
+input UserInput {
+    type: UsersType
+    name: String
+    email: String
+    phone: String
+    password: String
+    city: String
+    uf: String
+}
 
+# Type of nivel of type
 enum UsersType {
+    #Is a admin of the platform ModeraVaca
   ADMIN
-  MASTER
-  NULL
+    #Is a moderator of the platform ModeraVaca
+  MODERATOR
+    #Is a client and own of the a farm
+  CLIENT
 }
 
 type UserCursor {
