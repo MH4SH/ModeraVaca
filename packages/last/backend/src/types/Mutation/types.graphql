@@ -4,7 +4,7 @@ type Mutation {
     updateUser(id: ID!, input: UserInput): User
 
 
-    createCard(input: CardInput): Card
-    deleteCard(id: ID!): Boolean
-    updateCard(id: ID!, input: CardInput): Card
+    createData(input: DataInput): Data
+    deleteData(id: ID!): Boolean
+    updateData(id: ID!, input: DataInput): Data
 }

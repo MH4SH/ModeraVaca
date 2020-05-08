@@ -1,0 +1,21 @@
+type Data {
+    id: ID!
+    kind: String!
+    value: String!
+    status: Boolean!
+    idFarm: Int
+}
+input DataInput {
+    kind: String!
+    value: String!
+}
+
+type DataCursor {
+    edges: [DataEdge!]!
+    pageInfo: PageInfo!
+}
+
+type DataEdge {
+    node: Data!
+    cursor: String
+}

@@ -1,11 +1,7 @@
 type Query {
-  users(
-    ordem: String
-  ): UserCursor
+  users: UserCursor
   user(id: ID!): User
 
-  cards(
-    ordem: String
-  ): CardCursor
-  card(id: ID!): Card
+  datas: DataCursor
+  data(id: ID!): Data
 }

@@ -20,12 +20,6 @@ input UserInput {
     uf: String
 }
 
-type Farm {
-  id: ID!
-  idUser: Int
-  name: String
-}
-
 # Type of nivel of type
 enum UsersType {
     #Is a admin of the platform ModeraVaca

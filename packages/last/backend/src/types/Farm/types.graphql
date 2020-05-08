@@ -1,0 +1,5 @@
+type Farm {
+  id: ID!
+  idUser: Int
+  name: String
+}

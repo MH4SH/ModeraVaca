@@ -1,7 +1,7 @@
 const User = require('./User/Query');
-const Card = require('./Card/Query');
+const Data = require('./Data/Query');
 
 module.exports = {
     ...User,
-    ...Card
+    ...Data
 }

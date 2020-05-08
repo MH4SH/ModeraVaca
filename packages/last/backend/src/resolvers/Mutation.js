@@ -1,7 +1,7 @@
 const User = require('./User/Mutation.js');
-const Card = require('./Card/Mutation.js');
+const Data = require('./Data/Mutation.js');
 
 module.exports = {
     ...User,
-    ...Card
+    ...Data
 }
