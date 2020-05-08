@@ -1,7 +1,7 @@
-const usersList = [
-    {id: 1, amount: 12, type: 'manual'},
-    {id: 2, amount: 22, type: 'sale'},
-    {id: 3, amount: 30, type: 'sale'}
+const cadsList = [
+    {id: 1, amount: 12, type: 'manual', date: 1588973303, created: 1588973303},
+    {id: 2, amount: 22, type: 'sale', date: 1588973303, created: 1588973303},
+    {id: 3, amount: 30, type: 'sale', date: 1588973303, created: 1588973303}
 ];
 
 const pageInfo = {
@@ -15,7 +15,7 @@ const cards = async (_, args) => {
     const current = "CURSOR NÃO ARRUMADO"
     return {
       pageInfo,
-      edges: usersList.map(item => ({ node: item, cursor: current })),
+      edges: cadsList.map(item => ({ node: item, cursor: current })),
     };
   } catch (e) {
     throw new Error(e.message);
@@ -24,7 +24,7 @@ const cards = async (_, args) => {
 
 const card = async (_, args) => {
   try {
-    const data = usersList.find(user => user.id == args.id);
+    const data = cadsList.find(user => user.id == args.id);
     return data;
   } catch (e) {
     throw new Error(e.message);

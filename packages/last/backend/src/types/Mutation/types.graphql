@@ -3,6 +3,10 @@ type Mutation {
     deleteUser(id: ID!): Boolean
     updateUser(id: ID!, input: UserInput): User
 
+    createFarm(input: FarmInput): Farm
+    deleteFarm(id: ID!): Boolean
+    updateFarm(id: ID!, input: FarmInput): Farm
+
 
     createData(input: DataInput): Data
     deleteData(id: ID!): Boolean

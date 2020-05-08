@@ -1,5 +1,9 @@
 type Farm {
   id: ID!
-  idUser: Int
   name: String
+}
+
+input FarmInput {
+  idUser: Int!
+  name: String!
 }
