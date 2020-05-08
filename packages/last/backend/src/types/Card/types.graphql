@@ -4,6 +4,7 @@ type Card {
     amount: Int!
     date: Int!
     created: Int!
+    items: [CardItem]
 }
 input CardInput {
     type: String!

@@ -1,0 +1,35 @@
+# An user
+type CardItem {
+    id: ID!
+    gender: GenderType!
+    age: AgeType!
+    total: Int!
+}
+
+input CardItemInput {
+    id: ID!
+    idCard: ID!
+    idBreeds: ID!
+    gender: GenderType!
+    age: AgeType!
+    total: Int!
+}
+
+# Gender of animals
+enum GenderType {
+    #Male
+  m
+    #Female
+  f
+}
+
+# Gender of animals
+enum AgeType {
+  PRIMEIRO
+  SEGUNDO
+  TERCEIRO
+  QUARTO
+  QUINTO
+  SEXTO
+  SETIMO
+}
