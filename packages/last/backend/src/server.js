@@ -8,15 +8,17 @@ const getTypeDefs = require('./types');
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 
-//Enums 
-const UsersType = require('./TypesEnums/UsersType');
+//Enuns and Types of elements 
+const Types = require('./resolvers/Types');
+
+
 
 const startServer = () => {
     try {
         var app = express();
 
         const resolvers = {
-            UsersType: UsersType,
+            ...Types,
             Query,
             Mutation
         };

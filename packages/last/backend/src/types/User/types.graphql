@@ -8,6 +8,7 @@ type User {
     password: String
     city: String
     uf: String
+    farms: [Farm]
 }
 input UserInput {
     type: UsersType
@@ -17,6 +18,12 @@ input UserInput {
     password: String
     city: String
     uf: String
+}
+
+type Farm {
+  id: ID!
+  idUser: Int
+  name: String
 }
 
 # Type of nivel of type
