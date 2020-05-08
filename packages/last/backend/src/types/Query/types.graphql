@@ -4,4 +4,7 @@ type Query {
 
   datas: DataCursor
   data(id: ID!): Data
+
+  cards: CardCursor
+  card(id: ID!): Card
 }

@@ -1,0 +1,37 @@
+const usersList = [
+    {id: 1, amount: 12, type: 'manual'},
+    {id: 2, amount: 22, type: 'sale'},
+    {id: 3, amount: 30, type: 'sale'}
+];
+
+const pageInfo = {
+  endCursor: "CURSOR NÃO ARRUMADO",
+  hasNextPage: true
+}
+
+
+const cards = async (_, args) => {
+  try {
+    const current = "CURSOR NÃO ARRUMADO"
+    return {
+      pageInfo,
+      edges: usersList.map(item => ({ node: item, cursor: current })),
+    };
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const card = async (_, args) => {
+  try {
+    const data = usersList.find(user => user.id == args.id);
+    return data;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+module.exports = {
+    cards,
+    card,
+};

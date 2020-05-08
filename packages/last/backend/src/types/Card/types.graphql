@@ -1,0 +1,32 @@
+type Card {
+    id: ID!
+    type: CardType!
+    amount: Int!
+    date: Int!
+    created: Int!
+}
+input CardInput {
+    type: String!
+    amount: String!
+    date: Int!
+}
+
+# Types of cards
+enum CardType {
+  manual
+  sale
+  purchase
+  born
+  dead
+}
+
+
+type CardCursor {
+    edges: [CardEdge!]!
+    pageInfo: PageInfo!
+}
+
+type CardEdge {
+    node: Card!
+    cursor: String
+}
