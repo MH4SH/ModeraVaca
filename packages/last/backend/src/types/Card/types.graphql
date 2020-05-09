@@ -8,8 +8,9 @@ type Card {
 }
 input CardInput {
     type: String!
-    amount: String!
+    amount: Int!
     date: Int!
+    items: [CardItemInput!]!
 }
 
 # Types of cards

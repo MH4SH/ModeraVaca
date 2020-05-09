@@ -16,4 +16,8 @@ type Mutation {
     createCard(input: CardInput): Card
     deleteCard(id: ID!): Boolean
     updateCard(id: ID!, input: CardInput): Card
+
+    createPurchase(input: PurchaseInput): Purchase
+    deletePurchase(id: ID!): Boolean
+    updatePurchase(id: ID!, input: PurchaseInput): Purchase
 }

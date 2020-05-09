@@ -7,4 +7,7 @@ type Query {
 
   cards: CardCursor
   card(id: ID!): Card
+
+  purchases: PurchaseCursor
+  purchase(id: ID!): Purchase
 }

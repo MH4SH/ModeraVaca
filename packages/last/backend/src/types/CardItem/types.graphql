@@ -1,4 +1,3 @@
-# An user
 type CardItem {
     id: ID!
     idBreeds: ID!
@@ -8,8 +7,6 @@ type CardItem {
 }
 
 input CardItemInput {
-    id: ID!
-    idCard: ID!
     idBreeds: ID!
     gender: GenderType!
     age: AgeType!
