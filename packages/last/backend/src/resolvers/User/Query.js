@@ -1,3 +1,5 @@
+const connection = require('../../database/connection');
+
 const usersList = [
     {id: 1, name: "Marcon", email: "marcon@mh4sh.dev", age: "21", type: 1},
     {id: 2, name: "Murillo", email: "murillo@mh4sh.dev", type: 2},
@@ -24,7 +26,10 @@ const users = async (_, args) => {
 
 const user = async (_, args) => {
   try {
-    const data = usersList.find(user => user.id == args.id);
+    const data = await connection('users')
+    .where('id', args.id)
+    .first();
+    
     return data;
   } catch (e) {
     throw new Error(e.message);
