@@ -20,4 +20,8 @@ type Mutation {
     createPurchase(input: PurchaseInput): Purchase
     deletePurchase(id: ID!): Boolean
     updatePurchase(id: ID!, input: PurchaseInput): Purchase
+
+    createSale(input: SaleInput): Sale
+    deleteSale(id: ID!): Boolean
+    updateSale(id: ID!, input: SaleInput): Sale
 }

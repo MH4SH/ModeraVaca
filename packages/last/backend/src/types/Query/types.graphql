@@ -10,4 +10,7 @@ type Query {
 
   purchases: PurchaseCursor
   purchase(id: ID!): Purchase
+
+  sales: SaleCursor
+  sale(id: ID!): Sale
 }
