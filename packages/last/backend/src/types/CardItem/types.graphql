@@ -1,6 +1,7 @@
 # An user
 type CardItem {
     id: ID!
+    idBreeds: ID!
     gender: GenderType!
     age: AgeType!
     total: Int!
