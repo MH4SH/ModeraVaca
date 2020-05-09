@@ -1,16 +1,19 @@
 type Query {
-  users: UserCursor
-  user(id: ID!): User
+  users: UserCursor!
+  user(id: ID!): User!
 
-  datas: DataCursor
-  data(id: ID!): Data
+  datas: DataCursor!
+  data(id: ID!): Data!
 
-  cards: CardCursor
-  card(id: ID!): Card
+  cards: CardCursor!
+  card(id: ID!): Card!
 
-  purchases: PurchaseCursor
-  purchase(id: ID!): Purchase
+  purchases: PurchaseCursor!
+  purchase(id: ID!): Purchase!
 
-  sales: SaleCursor
-  sale(id: ID!): Sale
+  sales: SaleCursor!
+  sale(id: ID!): Sale!
+
+  borns: BornCursor!
+  born(id: ID!): Born!
 }

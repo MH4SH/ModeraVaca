@@ -24,4 +24,12 @@ type Mutation {
     createSale(input: SaleInput): Sale
     deleteSale(id: ID!): Boolean
     updateSale(id: ID!, input: SaleInput): Sale
+
+    createBorn(input: BornInput): Born
+    deleteBorn(id: ID!): Boolean
+    updateBorn(id: ID!, input: BornInput): Born
+
+    createDead(input: DeadInput): Dead
+    deleteDead(id: ID!): Boolean
+    updateDead(id: ID!, input: DeadInput): Dead
 }

@@ -4,6 +4,8 @@ const Data = require('./Data/Mutation');
 const Card = require('./Card/Mutation');
 const Purchase = require('./Purchase/Mutation');
 const Sale = require('./Sale/Mutation');
+const Born = require('./Born/Mutation');
+const Dead = require('./Dead/Mutation');
 
 module.exports = {
     ...User,
@@ -11,5 +13,7 @@ module.exports = {
     ...Data,
     ...Card,
     ...Purchase,
-    ...Sale
+    ...Sale,
+    ...Born,
+    ...Dead
 }

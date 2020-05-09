@@ -3,11 +3,15 @@ const Data = require('./Data/Query');
 const Card = require('./Card/Query');
 const Purchase = require('./Purchase/Query');
 const Sale = require('./Sale/Query');
+const Born = require('./Born/Query');
+const Dead = require('./Dead/Query');
 
 module.exports = {
     ...User,
     ...Data,
     ...Card,
     ...Purchase,
-    ...Sale
+    ...Sale,
+    ...Born,
+    ...Dead
 }
