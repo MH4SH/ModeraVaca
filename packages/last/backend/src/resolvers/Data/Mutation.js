@@ -1,3 +1,4 @@
+const connection = require('../../database/connection');
 const DatasList = [
     {id: 1, kind: "Marcon", value: "Tipo Nelore", status: true},
     {id: 2, kind: "Murillo", value: "Tipo Pastoso", statue: true},
@@ -6,8 +7,23 @@ const DatasList = [
 
 const createData = async (_, args) => {
   try {
-    const data = DatasList.find(Data => Data.id == 1);
-    return data;
+    const {kind, value} = args.input;
+
+    const data = {
+      kind,
+      value
+    };
+
+    const [id] = await connection('data').insert({
+      ...data,
+      idFarm: args.idFarm
+    });
+
+    return {
+      id,
+      ...data,
+      status: true
+    };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -15,8 +31,11 @@ const createData = async (_, args) => {
 
 const deleteData = async (_, args) => {
   try {
-    const data = DatasList.find(Data => Data.id == 1);
-    return false;
+    await connection('data')
+    .where('id', args.id)
+    .delete();
+
+    return true;
   } catch (e) {
     throw new Error(e.message);
   }
@@ -24,7 +43,16 @@ const deleteData = async (_, args) => {
 
 const updateData = async (_, args) => {
   try {
-    const data = DatasList.find(Data => Data.id == 1);
+    const content = {...args.input};
+    
+    await connection('data')
+    .where('id', args.id)
+    .update({ ...content });
+
+    const data = await connection('data')
+    .where('id', args.id)
+    .first();
+
     return data;
   } catch (e) {
     throw new Error(e.message);

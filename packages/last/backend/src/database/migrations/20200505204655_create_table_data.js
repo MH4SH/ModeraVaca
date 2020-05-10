@@ -4,7 +4,7 @@ exports.up = function(knex) {
     table.increments('id').primary();
     table.string('kind', 20).notNullable();
     table.string('value', 80).notNullable();
-    table.enu('status', [true, false]);
+    table.boolean('status').defaultTo(true).notNullable();
     
     table.integer('idFarm').unsigned().notNullable();
     table.foreign('idFarm').references('id').inTable('farm');

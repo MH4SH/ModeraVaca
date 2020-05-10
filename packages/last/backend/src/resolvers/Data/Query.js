@@ -1,8 +1,4 @@
-const DatasList = [
-  {id: 1, kind: "Marcon", value: "Tipo Nelore", status: false},
-  {id: 2, kind: "Murillo", value: "Tipo Pastoso", status: true},
-  {id: 3, kind: "dÉ", value: "Tipo Farmento", status: false}
-];
+const connection = require('../../database/connection');
 
 const pageInfo = {
   endCursor: "CURSOR NÃO ARRUMADO",
@@ -12,10 +8,11 @@ const pageInfo = {
 
 const datas = async (_, args) => {
   try {
-    const current = "CURSOR NÃO ARRUMADO"
+    const current = "CURSOR NÃO ARRUMADO";
+    const datasList = await connection('data');
     return {
       pageInfo,
-      edges: DatasList.map(item => ({ node: item, cursor: current })),
+      edges: datasList.map(item => ({ node: item, cursor: current })),
     };
   } catch (e) {
     throw new Error(e.message);
@@ -24,7 +21,10 @@ const datas = async (_, args) => {
 
 const data = async (_, args) => {
   try {
-    const data = DatasList.find(user => user.id == args.id);
+    const data = await connection('data')
+    .where('id', args.id)
+    .first();
+    
     return data;
   } catch (e) {
     throw new Error(e.message);

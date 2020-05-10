@@ -9,6 +9,11 @@ input DataInput {
     kind: String!
     value: String!
 }
+input DataInputUpdate {
+    kind: String
+    value: String
+    status: Boolean
+}
 
 type DataCursor {
     edges: [DataEdge!]!

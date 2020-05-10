@@ -8,9 +8,9 @@ type Mutation {
     updateFarm(id: ID!, input: FarmInputUpdate): Farm
 
 
-    createData(input: DataInput): Data
+    createData(idFarm: ID!, input: DataInput): Data
     deleteData(id: ID!): Boolean
-    updateData(id: ID!, input: DataInput): Data
+    updateData(id: ID!, input: DataInputUpdate): Data
 
 
     createCard(input: CardInput): Card
