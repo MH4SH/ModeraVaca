@@ -12,6 +12,8 @@ const Card = {
   items: async (obj, args) => {
 
     return await connection('card_item')
+    .orderBy('gender', 'desc')
+    .orderBy('age', 'asc')
     .where('idCard', obj.id);
   }
 }
