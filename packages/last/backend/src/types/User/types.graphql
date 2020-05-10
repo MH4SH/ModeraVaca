@@ -9,6 +9,7 @@ type User {
     uf: String
     farms: [Farm]
 }
+
 input UserInput {
     name: String!
     email: String!
@@ -16,6 +17,16 @@ input UserInput {
     password: String!
     city: String!
     uf: String!
+}
+
+input UserInputUpdate {
+    type: UsersType
+    name: String
+    email: String
+    phone: Float
+    password: String
+    city: String
+    uf: String
 }
 
 # Type of nivel of type

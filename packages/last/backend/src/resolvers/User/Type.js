@@ -6,9 +6,9 @@ const farmList = [
 
 
 const UsersType = {
-  ADMIN: 1,
-  MODERATOR: 2,
-  CLIENT: 3
+  ADMIN: '1',
+  MODERATOR: '2',
+  CLIENT: '3'
 };
 
 const User = {
