@@ -1,13 +1,22 @@
-const farmList = [
-    {id: 1, name: "Fazenda 2 Coqueiros", idUser: 1},
-    {id: 2, name: "Sitio Nevada", idUser: 2},
-    {id: 3, name: "Sitio Ouro Verde", idUser: 2}
-];
+const connection = require('../../database/connection');
 
 const createFarm = async (_, args) => {
   try {
-    const data = farmList.find(Farm => Farm.id == 1);
-    return data;
+    const {name, idUser} = args.input;
+
+    const data = {
+      name, 
+      idUser
+    };
+
+    const [id] = await connection('farm').insert({
+      ...data
+    });
+
+    return {
+      id,
+      ...data
+    };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -15,8 +24,11 @@ const createFarm = async (_, args) => {
 
 const deleteFarm = async (_, args) => {
   try {
-    const data = farmList.find(Farm => Farm.id == 1);
-    return false;
+    await connection('farm')
+    .where('id', args.id)
+    .delete();
+
+    return true;
   } catch (e) {
     throw new Error(e.message);
   }
@@ -24,8 +36,16 @@ const deleteFarm = async (_, args) => {
 
 const updateFarm = async (_, args) => {
   try {
-    const data = farmList.find(Farm => Farm.id == 1);
-    return data;
+    const {name} = args.input;
+    
+    await connection('farm')
+    .where('id', args.id)
+    .update({ name });
+    
+    return {
+      id: args.id,
+      name
+    };
   } catch (e) {
     throw new Error(e.message);
   }

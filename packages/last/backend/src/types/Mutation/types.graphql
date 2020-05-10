@@ -5,7 +5,7 @@ type Mutation {
 
     createFarm(input: FarmInput): Farm
     deleteFarm(id: ID!): Boolean
-    updateFarm(id: ID!, input: FarmInput): Farm
+    updateFarm(id: ID!, input: FarmInputUpdate): Farm
 
 
     createData(input: DataInput): Data

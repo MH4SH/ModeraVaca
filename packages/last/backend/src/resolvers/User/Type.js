@@ -1,9 +1,4 @@
-const farmList = [
-  {id: 1, name: "Fazenda 2 Coqueiros", idUser: 1},
-  {id: 2, name: "Sitio Nevada", idUser: 3},
-  {id: 3, name: "Sitio Ouro Verde", idUser: 3}
-];
-
+const connection = require('../../database/connection');
 
 const UsersType = {
   ADMIN: '1',
@@ -12,13 +7,14 @@ const UsersType = {
 };
 
 const User = {
-  farms: (obj, args) => {
-      return farmList.filter(element => element.idUser === obj.id)
+  farms: async (obj, args) => {
+      return await connection('farm')
+      .select('id',  'name')
+      .where('idUser', obj.id);
   }
 }
 
 module.exports = {
     UsersType,
     User
-
 };
