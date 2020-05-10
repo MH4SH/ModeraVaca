@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('purchases', table => {
+    return knex.schema.createTable('purchase', table => {
         table.increments('id').primary();
         table.integer('idCard').unsigned().notNullable();
         table.integer('idBreeds').unsigned().notNullable();
@@ -14,12 +14,12 @@ exports.up = function(knex) {
 
         table.integer('idFarm').unsigned().notNullable();
         table.foreign('idFarm').references('id').inTable('farm');
-        table.foreign('idCard').references('id').inTable('cards');
+        table.foreign('idCard').references('id').inTable('card');
         table.foreign('idBreeds').references('id').inTable('data');
         table.foreign('idSeller').references('id').inTable('data');
     })
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTable('purchases');
+    return knex.schema.dropTable('purchase');
 };

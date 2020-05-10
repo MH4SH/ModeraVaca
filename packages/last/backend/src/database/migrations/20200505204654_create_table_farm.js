@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.integer('idUser').unsigned().notNullable();
         table.string('name').notNullable();
 
-        table.foreign('idUser').references('id').inTable('users');
+        table.foreign('idUser').references('id').inTable('user');
     })
 };
 

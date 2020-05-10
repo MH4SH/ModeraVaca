@@ -1,10 +1,10 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('cards', table => {
+  return knex.schema.createTable('card', table => {
     table.increments('id').primary();
     table.enu('type', ['born', 'dead', 'sale', 'purchase', 'manual']).notNullable();
     table.integer('amount').notNullable();
-    table.datetime('date').notNullable();
-    table.datetime('created').notNullable();
+    table.timestamp('date').notNullable();
+    table.timestamp('created').notNullable();
 
 
     table.integer('idFarm').unsigned().notNullable();
@@ -13,5 +13,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('cards');
+  return knex.schema.dropTable('card');
 };

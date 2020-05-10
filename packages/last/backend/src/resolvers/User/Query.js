@@ -9,7 +9,7 @@ const pageInfo = {
 const users = async (_, args) => {
   try {
     const current = "CURSOR NÃO ARRUMADO";
-    const usersList = await connection('users');
+    const usersList = await connection('user');
     return {
       pageInfo,
       edges: usersList.map(item => ({ node: item, cursor: current })),
@@ -21,7 +21,7 @@ const users = async (_, args) => {
 
 const user = async (_, args) => {
   try {
-    const data = await connection('users')
+    const data = await connection('user')
     .where('id', args.id)
     .first();
     

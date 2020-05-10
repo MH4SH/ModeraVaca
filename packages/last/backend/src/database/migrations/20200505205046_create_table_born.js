@@ -7,7 +7,7 @@ exports.up = function(knex) {
         table.enu('gender', ['m', 'f']).notNullable();
         table.enu('age', [1, 2, 3, 4, 5, 6, 7]).notNullable();
         table.string('note', 400).notNullable();
-        table.datetime('dateBorn').notNullable();
+        table.timestamp('dateBorn').notNullable();
         table.enu('status', [true, false]).notNullable().comment("True: Created a new card, False: Dont Created a new card");
 
 

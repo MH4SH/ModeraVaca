@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('users', table => {
+  return knex.schema.createTable('user', table => {
     table.increments('id').primary();
     table.enu('type', [1, 2, 3, 4, 5]).notNullable();
     table.string('name', 80).notNullable();
@@ -8,10 +8,10 @@ exports.up = function(knex) {
     table.bigInteger('phone', 20).notNullable();
     table.string('city').notNullable();
     table.string('uf').notNullable();
-    table.datetime('created').notNullable();
+    table.timestamp('created').notNullable();
   })
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('users');  
+  return knex.schema.dropTable('user');  
 };

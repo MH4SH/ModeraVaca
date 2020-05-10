@@ -1,13 +1,36 @@
-const CardsList = [
-    {id: 1, name: "Marcon", email: "marcon@mh4sh.dev", age: "21"},
-    {id: 2, name: "Murillo", email: "murillo@mh4sh.dev"},
-    {id: 3, name: "dÉ", email: "DE@mh4sh.dev", age: "47"}
-];
+const connection = require('../../database/connection');
 
 const createCard = async (_, args) => {
   try {
-    const data = CardsList.find(Card => Card.id == 1);
-    return data;
+    const {type, amount, date, items} = args.input;
+
+    const data = {
+      type, 
+      amount, 
+      date: new Date(date * 100),
+      created: new Date()
+    };
+
+
+    const [id] = await connection('card').insert({
+      ...data,
+      idFarm: args.idFarm
+    });
+
+
+    items.map(async item => {
+      await connection('card_item').insert({
+        ...item,
+        idCard: id,
+        idFarm: args.idFarm
+      });
+    })
+
+    return {
+      id,
+      ...data,
+      status: true
+    };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -15,17 +38,50 @@ const createCard = async (_, args) => {
 
 const deleteCard = async (_, args) => {
   try {
-    const data = CardsList.find(Card => Card.id == 1);
-    return false;
+    await connection('card_item')
+    .where('idCard', args.id)
+    .delete();
+
+    await connection('card')
+    .where('id', args.id)
+    .delete();
+
+    return true;
   } catch (e) {
     throw new Error(e.message);
   }
 };
 
-const updateCard = async (_, args) => {
+const remakeCard = async (_, args) => {
   try {
-    const data = CardsList.find(Card => Card.id == 1);
-    return data;
+    await connection('card_item')
+    .where('idCard', args.id)
+    .delete();
+
+    await connection('card')
+    .where('id', args.id)
+    .delete();
+
+
+    const {amount, date} = args.input;
+
+    const data = {
+      type: "manual", 
+      amount, 
+      date,
+      created: new Date()
+    };
+
+    const [id] = await connection('card').insert({
+      ...data,
+      idFarm: args.idFarm
+    });
+
+    return {
+      id,
+      ...data,
+      status: true
+    };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -34,5 +90,5 @@ const updateCard = async (_, args) => {
 module.exports = {
     createCard,
     deleteCard,
-    updateCard
+    remakeCard
 };

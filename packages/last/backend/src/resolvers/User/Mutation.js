@@ -15,7 +15,7 @@ const createUser = async (_, args) => {
       uf,
     };
 
-    const [id] = await connection('users').insert({
+    const [id] = await connection('user').insert({
       ...data,
       password: mh4sh,
       created: new Date()
@@ -32,7 +32,7 @@ const createUser = async (_, args) => {
 
 const deleteUser = async (_, args) => {
   try {
-    await connection('users')
+    await connection('user')
     .where('id', args.id)
     .delete();
 
@@ -49,8 +49,8 @@ const updateUser = async (_, args) => {
     if(content.password)
       content.password = await bcrypt.hash(content.password, 10);
     
-    await connection('users').where('id', args.id).update({ ...content });
-    const data = await connection('users').where('id', args.id).first();
+    await connection('user').where('id', args.id).update({ ...content });
+    const data = await connection('user').where('id', args.id).first();
 
     return data;
   } catch (e) {
