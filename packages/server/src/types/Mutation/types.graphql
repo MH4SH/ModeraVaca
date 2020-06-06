@@ -1,0 +1,36 @@
+type Mutation {
+    createUser(input: UserInput): User
+    deleteUser(id: ID!): Boolean
+    updateUser(id: ID!, input: UserInputUpdate): User
+
+    createFarm(input: FarmInput): Farm
+    deleteFarm(id: ID!): Boolean
+    updateFarm(id: ID!, input: FarmInputUpdate): Farm
+
+
+    createData(idFarm: ID!, input: DataInput): Data
+    deleteData(id: ID!): Boolean
+    updateData(id: ID!, input: DataInputUpdate): Data
+
+
+    createCard(idFarm: ID!, input: CardInput): Card
+    deleteCard(id: ID!): Boolean
+    # Delete and after remake this card
+    remakeCard(id: ID!, input: CardInputUpdate): Card
+
+    createPurchase(input: PurchaseInput): Purchase
+    deletePurchase(id: ID!): Boolean
+    updatePurchase(id: ID!, input: PurchaseInput): Purchase
+
+    createSale(input: SaleInput): Sale
+    deleteSale(id: ID!): Boolean
+    updateSale(id: ID!, input: SaleInput): Sale
+
+    createBorn(input: BornInput): Born
+    deleteBorn(id: ID!): Boolean
+    updateBorn(id: ID!, input: BornInput): Born
+
+    createDead(input: DeadInput): Dead
+    deleteDead(id: ID!): Boolean
+    updateDead(id: ID!, input: DeadInput): Dead
+}
