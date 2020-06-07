@@ -29,5 +29,6 @@ jobs:
     - name: npm install, build and test
       run: |
         npm install
-        npm test
+        knex migrate:latest --env test
+        yarn test
 

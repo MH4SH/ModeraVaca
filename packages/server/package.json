@@ -5,8 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "jest"
+    "dev": "cross-env C_TYPE=dev nodemon src/server.js",
+    "test": "cross-env C_TYPE=test jest",
+
+    "heroku-prebuild": "npx knex migrate:latest --env production"
   },
   "repository": {
     "type": "git",
@@ -25,10 +27,12 @@
     "graphql": "^15.0.0",
     "graphql-tools": "^5.0.0",
     "knex": "^0.21.1",
-    "mysql": "^2.18.1"
+    "pg": "^8.2.1"
   },
   "devDependencies": {
     "@divyenduz/ts-graphql-plugin": "^0.1.0",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "jest": "^26.0.1",
+    "sqlite3": "^4.2.0"
   }
 }
