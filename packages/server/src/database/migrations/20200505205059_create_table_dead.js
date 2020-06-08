@@ -4,8 +4,10 @@ exports.up = function(knex) {
         table.increments('id').primary();
         table.integer('idBreeds').unsigned().notNullable();
         table.enu('gender', ['m', 'f']).notNullable();
+        table.integer('amount').notNullable();
         table.string('note', 400).notNullable();
         table.timestamp('dateDead').notNullable();
+        table.timestamp('created').notNullable();
         
 
         table.integer('idFarm').unsigned().notNullable();
