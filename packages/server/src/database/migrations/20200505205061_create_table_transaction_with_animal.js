@@ -9,7 +9,7 @@ exports.up = function(knex) {
 
         table.integer('idFarm').unsigned().notNullable();
         table.foreign('idFarm').references('id').inTable('farm');
-        table.foreign('idAnimal').references('id').inTable('data');
+        table.foreign('idAnimal').references('id').inTable('animal');
     });
 };
 
