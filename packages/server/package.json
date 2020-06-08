@@ -5,10 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "cross-env C_TYPE=dev nodemon src/server.js",
-    "test": "cross-env C_TYPE=test jest",
+    "dev": "cross-env NODE_ENV=dev nodemon src/server.js",
+    "test": "cross-env NODE_ENV=test jest",
 
-    "heroku-prebuild": "npx knex migrate:latest --env production"
+    "heroku-postbuild": "npx knex migrate:latest --env production"
   },
   "repository": {
     "type": "git",
@@ -34,5 +34,9 @@
     "cross-env": "^7.0.2",
     "jest": "^26.0.1",
     "sqlite3": "^4.2.0"
+  },
+  "engines": {
+    "node": "13.x",
+    "yarn": "1.x"
   }
 }
