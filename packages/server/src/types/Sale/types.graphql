@@ -3,7 +3,6 @@ type Sale {
     idCard: ID!
     idBreeds: ID!
     gender: GenderType!
-    age: AgeType!
     amount: Int!
     priceAmount: Int!
     note: String
@@ -13,7 +12,6 @@ type Sale {
 input SaleInput {
     idBreeds: ID!
     gender: GenderType!
-    age: AgeType!
     amount: Int!
     priceAmount: Int!
     note: String

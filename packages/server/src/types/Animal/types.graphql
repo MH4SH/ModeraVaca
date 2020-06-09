@@ -1,0 +1,8 @@
+
+# Gender of animals
+enum GenderType {
+    #Male
+  m
+    #Female
+  f
+}

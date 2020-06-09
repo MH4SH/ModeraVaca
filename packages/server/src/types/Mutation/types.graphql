@@ -12,12 +12,6 @@ type Mutation {
     deleteData(id: ID!): Boolean
     updateData(id: ID!, input: DataInputUpdate): Data
 
-
-    createCard(idFarm: ID!, input: CardInput): Card
-    deleteCard(id: ID!): Boolean
-    # Delete and after remake this card
-    remakeCard(id: ID!, input: CardInputUpdate): Card
-
     createPurchase(input: PurchaseInput): Purchase
     deletePurchase(id: ID!): Boolean
     updatePurchase(id: ID!, input: PurchaseInput): Purchase

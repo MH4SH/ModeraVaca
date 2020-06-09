@@ -3,7 +3,6 @@ type Purchase {
     idCard: ID!
     idBreeds: ID!
     gender: GenderType!
-    age: AgeType!
     amount: Int!
     priceAmount: Int!
     priceDelivery: Int
@@ -13,8 +12,7 @@ type Purchase {
 
 input PurchaseInput {
     idBreeds: ID!
-    gender: GenderType!
-    age: AgeType!
+    gender: GenderType! 
     amount: Int!
     priceAmount: Int!
     priceDelivery: Int
