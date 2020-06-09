@@ -24,3 +24,13 @@ type DataEdge {
     node: Data!
     cursor: String
 }
+
+# Gender of animals
+enum KindDataType {
+    #Breed animals
+  breed
+    #Seller person or business
+  seller
+    #Buyer person or business
+  buyer
+}
