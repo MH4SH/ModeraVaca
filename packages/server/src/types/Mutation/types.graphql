@@ -11,6 +11,10 @@ type Mutation {
     createData(idFarm: ID!, input: DataInput): Data
     deleteData(id: ID!): Boolean
     updateData(id: ID!, input: DataInputUpdate): Data
+    
+    createBorn(idFarm: ID!, input: BornInput): Born
+    deleteBorn(id: ID!): Boolean
+    updateBorn(id: ID!, input: BornInput): Born
 
     createPurchase(input: PurchaseInput): Purchase
     deletePurchase(id: ID!): Boolean
@@ -19,10 +23,6 @@ type Mutation {
     createSale(input: SaleInput): Sale
     deleteSale(id: ID!): Boolean
     updateSale(id: ID!, input: SaleInput): Sale
-
-    createBorn(input: BornInput): Born
-    deleteBorn(id: ID!): Boolean
-    updateBorn(id: ID!, input: BornInput): Born
 
     createDead(input: DeadInput): Dead
     deleteDead(id: ID!): Boolean

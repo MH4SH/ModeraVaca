@@ -1,16 +1,16 @@
 type Data {
     id: ID!
-    kind: String!
+    kind: KindDataType!
     value: String!
     status: Boolean!
     idFarm: Int
 }
 input DataInput {
-    kind: String!
+    kind: KindDataType!
     value: String!
 }
 input DataInputUpdate {
-    kind: String
+    kind: KindDataType
     value: String
     status: Boolean
 }

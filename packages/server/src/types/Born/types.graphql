@@ -1,16 +1,16 @@
 type Born {
     id: ID!
-    idCard: ID
     idBreeds: ID!
     gender: GenderType!
+    amount: Int!
     dateBorn: Int!
     note: String
-    status: Boolean!
 }
 
 input BornInput {
     idBreeds: ID!
     gender: GenderType!
+    amount: Int!
     dateBorn: Int!
     note: String
 }

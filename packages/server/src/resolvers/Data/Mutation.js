@@ -1,9 +1,4 @@
 const connection = require('../../database/connection');
-const DatasList = [
-    {id: 1, kind: "Marcon", value: "Tipo Nelore", status: true},
-    {id: 2, kind: "Murillo", value: "Tipo Pastoso", statue: true},
-    {id: 3, kind: "dÉ", value: "Tipo Farmento", status: true}
-];
 
 const createData = async (_, args) => {
   try {
@@ -22,7 +17,8 @@ const createData = async (_, args) => {
     return {
       id,
       ...data,
-      status: true
+      status: true,
+      idFarm: args.idFarm
     };
   } catch (e) {
     throw new Error(e.message);
