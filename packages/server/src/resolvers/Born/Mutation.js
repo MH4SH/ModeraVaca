@@ -56,8 +56,36 @@ const createBorn = async (_, args) => {
 
 const deleteBorn = async (_, args) => {
   try {
-    const data = bornList.find(Born => Born.id == 1);
-    return false;
+    let listAnimals = await connection('transaction_with_animal')
+    .where('idTransaction', args.id)
+    .where('type', 'born');
+
+    if(listAnimals.length===0)
+      return false;
+
+    const trx = await connection.transaction();
+
+    await trx('born')
+    .where('id', args.id)
+    .delete();
+
+    for(let {idAnimal} of listAnimals){
+
+      await trx('animal')
+      .where('id', idAnimal)
+      .delete();
+
+      await trx('transaction_with_animal')
+      .where('idAnimal', idAnimal)
+      .where('idTransaction', args.id)
+      .where('type', 'born')
+      .delete();
+
+    }
+
+    await trx.commit();
+
+    return true;
   } catch (e) {
     throw new Error(e.message);
   }
