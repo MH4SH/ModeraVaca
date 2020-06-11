@@ -15,6 +15,10 @@ input BornInput {
     note: String
 }
 
+input BornUpdate {
+    note: String
+}
+
 type BornCursor {
     edges: [BornEdge!]!
     pageInfo: PageInfo!

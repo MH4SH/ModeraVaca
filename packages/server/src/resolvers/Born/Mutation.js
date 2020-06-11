@@ -14,7 +14,7 @@ const bornList = [
 ];
 
 const createBorn = async (_, args) => {
-  try {    
+  try {
     const trx = await connection.transaction();
     const data = args.input;
 
@@ -60,6 +60,16 @@ const deleteBorn = async (_, args) => {
     .where('idTransaction', args.id)
     .where('type', 'born');
 
+    let {amountCreated} = await connection('transaction_with_animal')
+    .where({'idTransaction': args.id, type: 'dead'})
+    .orWhere({'idTransaction': args.id, type: 'born'})
+    .count({amountCreated: 'id'})
+    .first();
+    
+    if(!args.force)
+      if(amountCreated!=0)
+        throw new Error(JSON.stringify({status: "Need Force", number: amountCreated}));
+
     if(listAnimals.length===0)
       return false;
 
@@ -93,8 +103,19 @@ const deleteBorn = async (_, args) => {
 
 const updateBorn = async (_, args) => {
   try {
-    const data = bornList.find(Born => Born.id == 1);
-    return data;
+    const content = {...args.input};
+
+
+    await connection('born')
+    .where('id', args.id)
+    .update({ ...content });
+
+    let item = await connection('born')
+    .where('id', args.id)
+    .first();
+
+    console.log(item);
+    return item;
   } catch (e) {
     throw new Error(e.message);
   }

@@ -13,8 +13,8 @@ type Mutation {
     updateData(id: ID!, input: DataInputUpdate): Data
     
     createBorn(idFarm: ID!, input: BornInput): Born
-    deleteBorn(id: ID!): Boolean
-    updateBorn(id: ID!, input: BornInput): Born
+    deleteBorn(id: ID!, force: Boolean): Boolean
+    updateBorn(id: ID!, input: BornUpdate): Born
 
     createPurchase(input: PurchaseInput): Purchase
     deletePurchase(id: ID!): Boolean
