@@ -1,18 +1,5 @@
 const connection = require('../../database/connection');
 
-const bornList = [
-  {id: 1, gender: 'f', age: 1, idBreeds: 1, amount: 12},
-  {id: 2, gender: 'f', age: 2, idBreeds: 1, amount: 22},
-  {id: 3, gender: 'f', age: 3, idBreeds: 1, amount: 11},
-  {id: 4, gender: 'f', age: 4, idBreeds: 1, amount: 14},
-  {id: 5, gender: 'f', age: 2, idBreeds: 2, amount: 2},
-  {id: 6, gender: 'f', age: 1, idBreeds: 2, amount: 22},
-  {id: 7, gender: 'f', age: 3, idBreeds: 2, amount: 23},
-  {id: 8, gender: 'f', age: 4, idBreeds: 2, amount: 44},
-  {id: 9, gender: 'f', age: 6, idBreeds: 2, amount: 11},
-  {id: 10, gender: 'm', age: 7, idBreeds: 1, amount: 1}
-];
-
 const createBorn = async (_, args) => {
   try {
     const trx = await connection.transaction();
@@ -62,7 +49,7 @@ const deleteBorn = async (_, args) => {
 
     let {amountCreated} = await connection('transaction_with_animal')
     .where({'idTransaction': args.id, type: 'dead'})
-    .orWhere({'idTransaction': args.id, type: 'born'})
+    .orWhere({'idTransaction': args.id, type: 'sale'})
     .count({amountCreated: 'id'})
     .first();
     
