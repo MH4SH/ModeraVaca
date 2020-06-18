@@ -11,6 +11,8 @@ const bornList = [
   {id: 10, gender: 'm', age: 7, idCard: 1, amount: 1}
 ];
 
+const connection = require('../../database/connection');
+
 const pageInfo = {
   endCursor: "CURSOR NÃO ARRUMADO",
   hasNextPage: true
@@ -19,10 +21,14 @@ const pageInfo = {
 
 const borns = async (_, args) => {
   try {
-    const current = "CURSOR NÃO ARRUMADO"
+    const current = "CURSOR NÃO ARRUMADO";
+    const listBorns = await connection('born');
+
+
+    
     return {
       pageInfo,
-      edges: bornList.map(item => ({ node: item, cursor: current })),
+      edges: listBorns.map(item => ({ node: item, cursor: current })),
     };
   } catch (e) {
     throw new Error(e.message);
@@ -31,7 +37,9 @@ const borns = async (_, args) => {
 
 const born = async (_, args) => {
   try {
-    const data = bornList.find(user => user.id == args.id);
+    const data = await connection('born')
+      .where('id', args.id)
+      .first();
     return data;
   } catch (e) {
     throw new Error(e.message);

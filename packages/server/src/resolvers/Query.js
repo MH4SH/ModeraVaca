@@ -10,6 +10,6 @@ module.exports = {
     ...Data,
     ...Purchase,
     ...Sale,
-    ...Born,
-    ...Dead
+    ...Born //,
+    //...Dead
 }
