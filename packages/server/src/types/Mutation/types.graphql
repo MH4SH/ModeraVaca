@@ -20,7 +20,7 @@ type Mutation {
     deletePurchase(id: ID!): Boolean
     updatePurchase(id: ID!, input: PurchaseUpdate): Purchase
 
-    createSale(input: SaleInput): Sale
+    createSale(idFarm: ID!, input: SaleInput): Sale
     deleteSale(id: ID!): Boolean
     updateSale(id: ID!, input: SaleInput): Sale
 
