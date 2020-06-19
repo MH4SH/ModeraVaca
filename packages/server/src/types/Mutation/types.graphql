@@ -22,7 +22,7 @@ type Mutation {
 
     createSale(idFarm: ID!, input: SaleInput): Sale
     deleteSale(id: ID!): Boolean
-    updateSale(id: ID!, input: SaleInput): Sale
+    updateSale(id: ID!, input: SaleUpdate): Sale
 
     createDead(idFarm: ID!, input: DeadInput): Dead
     deleteDead(id: ID!): Boolean

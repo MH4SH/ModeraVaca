@@ -18,6 +18,12 @@ input SaleInput {
     idBuyer: ID!
 }
 
+input SaleUpdate {
+    priceAmount: Int
+    note: String
+    idBuyer: ID
+}
+
 type SaleCursor {
     edges: [SaleEdge!]!
     pageInfo: PageInfo!
