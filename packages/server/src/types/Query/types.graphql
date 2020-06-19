@@ -11,6 +11,9 @@ type Query {
   sales: SaleCursor!
   sale(id: ID!): Sale!
 
-  borns: BornCursor!
-  born(id: ID!): Born!
+  borns: DeadCursor!
+  born(id: ID!): Dead!
+
+  deads: DeadCursor!
+  dead(id: ID!): Dead!
 }

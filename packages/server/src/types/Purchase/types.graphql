@@ -2,7 +2,7 @@ type Purchase {
     id: ID!
     idBreeds: ID!
     gender: GenderType!
-    dateBorn: Int!
+    dateBorn: Float!
     amount: Int!
     priceAmount: Int!
     priceDelivery: Int
@@ -13,7 +13,7 @@ type Purchase {
 input PurchaseInput {
     idBreeds: ID!
     gender: GenderType!
-    dateBorn: Int!
+    dateBorn: Float!
     amount: Int!
     priceAmount: Int!
     priceDelivery: Int
