@@ -36,7 +36,7 @@ const createSale = async (_, args) => {
 
     const trx = await connection.transaction();
 
-    const [saleId] = await trx('dead').insert({
+    const [saleId] = await trx('sale').insert({
       ...data,
       idFarm: args.idFarm,
       created: new Date()
@@ -44,7 +44,7 @@ const createSale = async (_, args) => {
 
 
     for(let v = 0; v < amount; v++){
-      let idAnimal = listAnimals[v];
+      let idAnimal = listAnimals[v].id;
       await trx('animal')
         .where('id', idAnimal)
         .update({
@@ -80,8 +80,18 @@ const deleteSale = async (_, args) => {
 
 const updateSale = async (_, args) => {
   try {
-    const data = saleList.find(Sale => Sale.id == 1);
-    return data;
+    const content = {...args.input};
+
+
+    await connection('sale')
+    .where('id', args.id)
+    .update({ ...content });
+
+    let item = await connection('sale')
+    .where('id', args.id)
+    .first();
+
+    return item;
   } catch (e) {
     throw new Error(e.message);
   }
