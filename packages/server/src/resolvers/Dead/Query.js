@@ -1,3 +1,5 @@
+const connection = require('../../database/connection');
+
 const bornList = [
   {id: 1, gender: 'f', age: 1, idCard: 1, amount: 12},
   {id: 2, gender: 'f', age: 2, idCard: 1, amount: 22},
@@ -17,21 +19,24 @@ const pageInfo = {
 }
 
 
-const borns = async (_, args) => {
+const deads = async (_, args) => {
   try {
-    const current = "CURSOR NÃO ARRUMADO"
+    const current = "CURSOR NÃO ARRUMADO";
+    const listDeads = await connection('dead');
     return {
       pageInfo,
-      edges: bornList.map(item => ({ node: item, cursor: current })),
+      edges: listDeads.map(item => ({ node: item, cursor: current })),
     };
   } catch (e) {
     throw new Error(e.message);
   }
 };
 
-const born = async (_, args) => {
+const dead = async (_, args) => {
   try {
-    const data = bornList.find(user => user.id == args.id);
+    const data = await connection('dead')
+      .where('id', args.id)
+      .first();
     return data;
   } catch (e) {
     throw new Error(e.message);
@@ -39,6 +44,6 @@ const born = async (_, args) => {
 };
 
 module.exports = {
-  borns,
-  born
+  deads,
+  dead
 };

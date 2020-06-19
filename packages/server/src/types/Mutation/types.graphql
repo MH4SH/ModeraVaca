@@ -16,15 +16,15 @@ type Mutation {
     deleteBorn(id: ID!, force: Boolean): Boolean
     updateBorn(id: ID!, input: BornUpdate): Born
 
-    createPurchase(input: PurchaseInput): Purchase
+    createPurchase(idFarm: ID!, input: PurchaseInput): Purchase
     deletePurchase(id: ID!): Boolean
-    updatePurchase(id: ID!, input: PurchaseInput): Purchase
+    updatePurchase(id: ID!, input: PurchaseUpdate): Purchase
 
     createSale(input: SaleInput): Sale
     deleteSale(id: ID!): Boolean
     updateSale(id: ID!, input: SaleInput): Sale
 
-    createDead(input: DeadInput): Dead
+    createDead(idFarm: ID!, input: DeadInput): Dead
     deleteDead(id: ID!): Boolean
-    updateDead(id: ID!, input: DeadInput): Dead
+    updateDead(id: ID!, input: DeadUpdate): Dead
 }
