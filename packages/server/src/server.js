@@ -1,6 +1,7 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { makeExecutableSchema } = require("graphql-tools");
+require('dotenv').config();
 
 const port = process.env.PORT || 4004;
 
@@ -11,11 +12,11 @@ const Mutation = require('./resolvers/Mutation');
 //Enuns and Types of elements 
 const Types = require('./resolvers/Types');
 
-
-
 const startServer = () => {
     try {
         var app = express();
+        
+        require('./auth')(app);
 
         const resolvers = {
             ...Types,
