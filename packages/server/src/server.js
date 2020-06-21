@@ -9,6 +9,10 @@ const getTypeDefs = require('./types');
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 
+//Auth for altenticate
+const auth = require('./auth');
+const middlewaresAuth = require('./auth/middlewares/');
+
 //Enuns and Types of elements 
 const Types = require('./resolvers/Types');
 
@@ -16,7 +20,7 @@ const startServer = () => {
     try {
         var app = express();
         
-        require('./auth')(app);
+        auth(app);
 
         const resolvers = {
             ...Types,
@@ -29,6 +33,14 @@ const startServer = () => {
     
         app.use(
             "/graphql",
+            middlewaresAuth,
+            graphqlHTTP({
+            schema: schema
+            })
+        );
+
+        app.use(
+            "/graphiql",
             graphqlHTTP({
             schema: schema,
             graphiql: true,
