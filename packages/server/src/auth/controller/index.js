@@ -26,6 +26,12 @@ const UserController = {
                 return res.status(400).json({statusCode: 400, error: 'Bad Request', message: err.message})
             }
     },
+    getNewPassword: async (req, res) => {
+        return res.status(200).json({statusCode: 400, error: 'Bad Request'})
+    },
+    setNewPassword: async (req, res) => {
+        return res.status(200).json({statusCode: 400, error: 'Bad Request'})
+    },
     auth: async (req, res) => {
         const {password, access} = req.body;
         try {

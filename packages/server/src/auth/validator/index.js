@@ -17,4 +17,17 @@ module.exports = {
             password: Joi.string().required()
         })
     }),
+    getNewPassword: celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            access: Joi.string().required(),
+            type: Joi.string().valid('phone', 'email').required()
+        })
+    }),
+    setNewPassword: celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            token: Joi.string().required(),
+            code: Joi.number().required(),
+            pass: Joi.string().required()
+        })
+    }),
 }
