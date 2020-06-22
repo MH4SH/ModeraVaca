@@ -1,6 +1,6 @@
 {
   "name": "moderavaca_api",
-  "version": "3.11.0",
+  "version": "3.12.0",
   "description": "Projeto para moderar rebanhos e transações do sitio",
   "main": "src/index.js",
   "scripts": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/marconwillian/ModeraVaca_backend#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.2.0",
     "bcryptjs": "^2.4.3",
     "celebrate": "^12.1.1",
     "dotenv": "^8.2.0",
@@ -29,7 +30,8 @@
     "graphql-tools": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
-    "pg": "^8.2.1"
+    "pg": "^8.2.1",
+    "smslegal": "^0.2.1"
   },
   "devDependencies": {
     "@divyenduz/ts-graphql-plugin": "^0.1.0",

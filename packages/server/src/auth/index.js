@@ -1,5 +1,5 @@
-const express = require("express");
-const {errors} = require('celebrate')
+const express = require('express');
+const {errors} = require('celebrate');
 
 const UserController = require('./controller');
 const UserValidator = require('./validator');

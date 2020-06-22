@@ -1,6 +1,14 @@
 const bcrypt = require('bcryptjs');
 const connection = require('../../database/connection');
 const generateToken = require('../utils/generateToken');
+const generateNumberCode = require('../../utils/generateNumberCode');
+
+//Send email api
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+//Send sms api
+const sendSMS = require('../../utils/sendSMS');
 
 const UserController = {
     register: async (req, res) => {
@@ -27,7 +35,44 @@ const UserController = {
             }
     },
     getNewPassword: async (req, res) => {
-        return res.status(200).json({statusCode: 400, error: 'Bad Request'})
+        const {type, access} = req.body;
+
+        try {
+            const userData = await connection('user')
+                .where({[type]: access})
+                .first();
+
+            if(!userData)
+                return res.status(400).json({statusCode: 400, error: "Bad Request", message: `user not found with this ${type}`, validation: { source: "body", keys: ['access']}})
+
+            let token = await bcrypt.genSalt(10);
+            let code = generateNumberCode(6);
+            
+            switch (type) {
+                case 'phone':
+                    sendSMS.send({numberSMS: `55${access}`, message: `${code}: Seu token para redefinir a senha no ModeraVaca.`});
+                break;
+                case 'email':
+                    console.log('sgMail');
+                    console.log(process.env.SENDGRID_API_KEY);
+                    const msg = {
+                      to: 'marconw201012@gmail.com',
+                      from: 'no_replay@moderavaca.mh4sh.dev',
+                      subject: 'Sending with SendGrid is Fun',
+                      text: 'and easy to do anywhere, even with Node.js',
+                      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                    };
+
+                    sgMail.send(msg);
+
+                break;
+            }
+
+            return res.status(200).json({statusCode: 200, token})
+        } catch (err) {
+            return res.status(200).json({statusCode: 400, error: 'Bad Request'})
+        }
+
     },
     setNewPassword: async (req, res) => {
         return res.status(200).json({statusCode: 400, error: 'Bad Request'})
