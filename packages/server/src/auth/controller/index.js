@@ -47,6 +47,13 @@ const UserController = {
             let token = await bcrypt.genSalt(10);
             let code = generateNumberCode(6);
             
+            await connection('resetPassword')
+            .insert({
+                idUser: userData.id,
+                token,
+                code: await bcrypt.hash(`code`, 10)
+            });
+
             switch (type) {
                 case 'phone':
                     sendSMS.send({numberSMS: `55${access}`, message: `${code}: Seu token para redefinir a senha no ModeraVaca.`});
@@ -64,7 +71,7 @@ const UserController = {
 
             return res.status(200).json({statusCode: 200, token})
         } catch (err) {
-            return res.status(200).json({statusCode: 400, error: 'Bad Request'})
+            return res.status(200).json({statusCode: 400, error: 'Bad Request', message: err.message})
         }
 
     },
