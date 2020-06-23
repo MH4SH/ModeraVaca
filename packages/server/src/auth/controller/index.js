@@ -46,12 +46,17 @@ const UserController = {
 
             let token = await bcrypt.genSalt(10);
             let code = generateNumberCode(6);
+
+            await connection('resetPassword')
+                .where('idUser', userData.id)
+                .delete();
+
             
             await connection('resetPassword')
             .insert({
                 idUser: userData.id,
                 token,
-                code: await bcrypt.hash(`code`, 10)
+                code: await bcrypt.hash(`${code}`, 10)
             });
 
             switch (type) {
@@ -59,6 +64,7 @@ const UserController = {
                     sendSMS.send({numberSMS: `55${access}`, message: `${code}: Seu token para redefinir a senha no ModeraVaca.`});
                 break;
                 case 'email':
+                    console.log('Email', code);
                     sendEmail
                         .noreplay({
                             to: access,
@@ -71,12 +77,46 @@ const UserController = {
 
             return res.status(200).json({statusCode: 200, token})
         } catch (err) {
-            return res.status(200).json({statusCode: 400, error: 'Bad Request', message: err.message})
+            return res.status(400).json({statusCode: 400, error: 'Bad Request', message: err.message})
         }
 
     },
     setNewPassword: async (req, res) => {
-        return res.status(200).json({statusCode: 400, error: 'Bad Request'})
+        const {token, code, password} = req.body;
+        
+        try {
+            let resetPassword = await connection('resetPassword')
+                .where({token})
+                .first();
+            
+            if(!await bcrypt.compare(`${code}`, resetPassword.code))
+                return res.status(403).json({statusCode: 403, error: "Forbidden", message: "Wrong code", validation: { source: "body", keys: [ "code"]}})
+            
+            let hash = await bcrypt.hash(password, 10);
+            let trx = await connection.transaction();
+            await trx('user')
+            .where('id', resetPassword.idUser)
+            .update({
+                password: hash
+            });
+
+            const userData = await trx('user')
+                .where('id', resetPassword.idUser)
+                .first();
+
+            
+            await trx('resetPassword')
+                .where('idUser', resetPassword.idUser)
+                .delete();
+            
+            await trx.commit();
+
+            userData.password = undefined;
+
+            res.status(200).json({user: {...userData}, token: generateToken({id: userData.id, phone: userData.phone, email: userData.email, type: userData.type})});
+        } catch(err) {
+            return res.status(400).json({statusCode: 400, error: 'Bad Request', message: err.message})
+        }
     },
     auth: async (req, res) => {
         const {password, access} = req.body;

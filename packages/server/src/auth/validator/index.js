@@ -27,7 +27,7 @@ module.exports = {
         [Segments.BODY]: Joi.object().keys({
             token: Joi.string().required(),
             code: Joi.number().required(),
-            pass: Joi.string().required()
+            password: Joi.string().required()
         })
     }),
 }
