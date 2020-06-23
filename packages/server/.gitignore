@@ -2,3 +2,4 @@
 *.sqlite3
 package-lock.json
 yarn.lock
+*.env

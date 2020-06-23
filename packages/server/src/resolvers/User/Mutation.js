@@ -45,9 +45,6 @@ const deleteUser = async (_, args) => {
 const updateUser = async (_, args) => {
   try {
     const content = {...args.input};
-
-    if(content.password)
-      content.password = await bcrypt.hash(content.password, 10);
     
     await connection('user').where('id', args.id).update({ ...content });
     const data = await connection('user').where('id', args.id).first();
