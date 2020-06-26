@@ -1,8 +1,8 @@
 type Purchase {
     id: ID!
-    idCard: ID!
     idBreeds: ID!
     gender: GenderType!
+    dateBorn: Float!
     amount: Int!
     priceAmount: Int!
     priceDelivery: Int
@@ -12,12 +12,20 @@ type Purchase {
 
 input PurchaseInput {
     idBreeds: ID!
-    gender: GenderType! 
+    gender: GenderType!
+    dateBorn: Float!
     amount: Int!
     priceAmount: Int!
     priceDelivery: Int
     note: String
     idSeller: ID!
+}
+
+input PurchaseUpdate {
+    priceAmount: Int
+    priceDelivery: Int
+    note: String
+    idSeller: ID
 }
 
 type PurchaseCursor {

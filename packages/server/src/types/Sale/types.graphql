@@ -1,6 +1,5 @@
 type Sale {
     id: ID!
-    idCard: ID!
     idBreeds: ID!
     gender: GenderType!
     amount: Int!
@@ -11,11 +10,18 @@ type Sale {
 
 input SaleInput {
     idBreeds: ID!
+    AgeGroup: AgeGroup!
     gender: GenderType!
     amount: Int!
     priceAmount: Int!
     note: String
     idBuyer: ID!
+}
+
+input SaleUpdate {
+    priceAmount: Int
+    note: String
+    idBuyer: ID
 }
 
 type SaleCursor {

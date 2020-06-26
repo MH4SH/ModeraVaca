@@ -1,17 +1,21 @@
 type Dead {
     id: ID!
-    idCard: ID
     idBreeds: ID!
     gender: GenderType!
-    dateDead: Int!
+    dateDead: Float!
     note: String
-    status: Boolean!
 }
 
 input DeadInput {
     idBreeds: ID!
+    AgeGroup: AgeGroup!
     gender: GenderType!
-    dateDead: Int!
+    dateDead: Float!
+    note: String
+}
+
+input DeadUpdate {
+    dateDead: Float
     note: String
 }
 
