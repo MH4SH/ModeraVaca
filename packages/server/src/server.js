@@ -48,7 +48,7 @@ const startServer = () => {
         );
 
         app.listen(port);
-        console.log(`Server is running on: http://localhost:${port}/graphql`)
+        console.log(`Server is running on: \nhttp://localhost:${port}/graphql \nhttp://localhost:${port}/graphiql`)
 
     } catch (e) {
         console.log(e.message);
