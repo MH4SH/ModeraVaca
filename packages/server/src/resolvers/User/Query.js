@@ -1,4 +1,5 @@
 const connection = require('../../database/connection');
+const verifyUserIsAdmin = require('../../utils/verifyUserIsAdmin');
 
 const pageInfo = {
   endCursor: "CURSOR NÃO ARRUMADO",
@@ -6,8 +7,13 @@ const pageInfo = {
 }
 
 
-const users = async (_, args) => {
+const users = async (_, args, context) => {
   try {
+    let TypeUserAuthenticate =  context._userAuthenticate.type;
+
+    if(!verifyUserIsAdmin(TypeUserAuthenticate))
+      throw new Error(`You don't have permission for this request`);
+
     const current = "CURSOR NÃO ARRUMADO";
     const usersList = await connection('user');
     return {
@@ -19,13 +25,21 @@ const users = async (_, args) => {
   }
 };
 
-const user = async (_, args) => {
+const user = async (_, args, context) => {
   try {
-    const data = await connection('user')
-    .where('id', args.id)
-    .first();
+    let TypeUserAuthenticate =  context._userAuthenticate.type;
+    let idUserAuthenticate =  context._userAuthenticate.id;
     
-    return data;
+    let requestIdUser = args.id;
+    
+    if(!verifyUserIsAdmin(TypeUserAuthenticate) &&  idUserAuthenticate!=requestIdUser)
+      throw new Error(`You don't have permission for this request`);
+
+    const usserContent = await connection('user')
+      .where('id', requestIdUser)
+      .first();
+    
+    return usserContent;
   } catch (e) {
     throw new Error(e.message);
   }

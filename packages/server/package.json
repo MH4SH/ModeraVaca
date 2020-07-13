@@ -1,6 +1,6 @@
 {
   "name": "moderavaca_api",
-  "version": "3.13.0",
+  "version": "3.14.0",
   "description": "Projeto para moderar rebanhos e transações do sitio",
   "main": "src/index.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "sqlite3": "^4.2.0"
   },
   "engines": {
-    "node": "13.x",
+    "node": "12.x",
     "yarn": "1.x"
   }
 }
