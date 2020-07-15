@@ -9,11 +9,11 @@ const getTypeDefs = require('./types');
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 
-//Auth for altenticate
+//Auth for authenticate
 const auth = require('./auth');
 const middlewaresAuth = require('./auth/middlewares/');
 
-//Enuns and Types of elements 
+//Enums and Types of elements 
 const Types = require('./resolvers/Types');
 
 const startServer = () => {

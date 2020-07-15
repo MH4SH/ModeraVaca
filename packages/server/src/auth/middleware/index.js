@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
     const [scheme, token] = parts;
 
     if(!/Bearer$/i.test(scheme))
-        return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "Token malformatted"})
+        return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "Token unformatted"})
 
     jwt.verify(token, process.env.HASH_1_SECRET, (err, decoded) => {
         if(err)

@@ -1,21 +1,22 @@
 const connection = require('../../database/connection');
 
-const createFarm = async (_, args) => {
+const createFarm = async (_, args, context) => {
   try {
-    const {name, idUser} = args.input;
+    const idUserAuthenticate =  context._userAuthenticate.id,
+      {name} = args.input;
 
-    const data = {
+    const farmData = {
       name, 
-      idUser
+      idUser: idUserAuthenticate
     };
 
     const [id] = await connection('farm').insert({
-      ...data
+      ...farmData
     });
 
     return {
       id,
-      ...data
+      ...farmData
     };
   } catch (e) {
     throw new Error(e.message);
@@ -24,8 +25,12 @@ const createFarm = async (_, args) => {
 
 const deleteFarm = async (_, args) => {
   try {
+    const idUserAuthenticate =  context._userAuthenticate.id,
+      requestIdFarm = args.id;
+
     await connection('farm')
-    .where('id', args.id)
+    .where('id', requestIdFarm)
+    .where('idUser', idUserAuthenticate)
     .delete();
 
     return true;
@@ -36,14 +41,17 @@ const deleteFarm = async (_, args) => {
 
 const updateFarm = async (_, args) => {
   try {
-    const {name} = args.input;
+    const idUserAuthenticate =  context._userAuthenticate.id,
+      requestIdFarm = args.id,
+      {name} = args.input;
     
     await connection('farm')
-    .where('id', args.id)
+    .where('id', requestIdFarm)
+    .where('idUser', idUserAuthenticate)
     .update({ name });
     
     return {
-      id: args.id,
+      id: requestIdFarm,
       name
     };
   } catch (e) {
