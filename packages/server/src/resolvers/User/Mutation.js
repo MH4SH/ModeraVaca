@@ -1,12 +1,16 @@
 const bcrypt = require('bcryptjs');
 const connection = require('../../database/connection');
 
-const createUser = async (_, args) => {
+const { authorizationUserIsAdmin, authorizationUserIsAdminOrIsOwn } = require('../../auth/utils/verifyUserAuthenticate');
+
+const createUser = async (_, args, context) => {
   try {
+    authorizationUserIsAdmin(context);
+
     const {name, email, phone, password, city, uf} = args.input;
 
     const mh4sh = await bcrypt.hash(password, 10);
-    const data = {
+    const userData = {
       type: '3',
       name,
       email,
@@ -16,24 +20,28 @@ const createUser = async (_, args) => {
     };
 
     const [id] = await connection('user').insert({
-      ...data,
+      ...userData,
       password: mh4sh,
       created: new Date()
     });
 
     return {
       id,
-      ...data
+      ...userData
     };
   } catch (e) {
     throw new Error(e.message);
   }
 };
 
-const deleteUser = async (_, args) => {
+const deleteUser = async (_, args, context) => {
   try {
+    let requestIdUser = args.id;
+
+    authorizationUserIsAdmin(context);
+
     await connection('user')
-    .where('id', args.id)
+    .where('id', requestIdUser)
     .delete();
 
     return true;
@@ -42,8 +50,12 @@ const deleteUser = async (_, args) => {
   }
 };
 
-const updateUser = async (_, args) => {
+const updateUser = async (_, args, context) => {
   try {
+    let requestIdUser = args.id;
+
+    authorizationUserIsAdminOrIsOwn(context, requestIdUser);
+
     const content = {...args.input};
     
     await connection('user').where('id', args.id).update({ ...content });
