@@ -24,8 +24,8 @@ const createDead = async (_, args) => {
 	.where('idBreeds', idBreeds)
 	.where('gender', gender)
 	.where('hasNow', true)
-	.where('dateBorn', '<=', age.start.getTime())
-	.where('dateBorn', '>', age.end.getTime());
+	.where('dateBirth', '<=', age.start.getTime())
+	.where('dateBirth', '>', age.end.getTime());
 
 	if(listAnimals.length===0)
 	  throw new Error(JSON.stringify({status: "Don't have animal"}));

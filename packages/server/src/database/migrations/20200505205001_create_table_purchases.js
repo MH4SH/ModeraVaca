@@ -3,7 +3,7 @@ exports.up = function(knex) {
 		table.increments('id').primary();
 		table.integer('idBreeds').unsigned().notNullable();
 		table.enu('gender', ['m', 'f']).notNullable();
-		table.timestamp('dateBorn').notNullable();
+		table.timestamp('dateBirth').notNullable();
 		table.integer('amount').notNullable();
 		table.integer('priceAmount').notNullable();
 		table.integer('priceDelivery').notNullable();

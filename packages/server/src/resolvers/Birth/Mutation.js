@@ -1,12 +1,12 @@
 const connection = require('../../database/connection');
 
-const createBorn = async (_, args) => {
+const createBirth = async (_, args) => {
   try {
 	const trx = await connection.transaction();
 	const data = args.input;
 
 
-	const [bornId] = await trx('born').insert({
+	const [birthId] = await trx('birth').insert({
 	  ...data,
 	  idFarm: args.idFarm,
 	  created: new Date()
@@ -16,24 +16,24 @@ const createBorn = async (_, args) => {
 	  let [idAnimal] = await trx('animal').insert({
 		idBreeds: data.idBreeds,
 		gender: data.gender,
-		dateBorn: data.dateBorn,
+		dateBirth: data.dateBirth,
 		idFarm: args.idFarm,
-		type: 'born',
+		type: 'birth',
 		created: new Date()
 	  });
 
 
 	  await trx('transaction_with_animal').insert({
 		idAnimal,
-		idTransaction: bornId,
-		type: 'born'
+		idTransaction: birthId,
+		type: 'birth'
 	  });
 	}
 
 	await trx.commit();
 
 	return {
-	  id: bornId,
+	  id: birthId,
 	  ...data
 	  };
   } catch (e) {
@@ -41,11 +41,11 @@ const createBorn = async (_, args) => {
   }
 };
 
-const deleteBorn = async (_, args) => {
+const deleteBirth = async (_, args) => {
   try {
 	let listAnimals = await connection('transaction_with_animal')
 	.where('idTransaction', args.id)
-	.where('type', 'born');
+	.where('type', 'birth');
 
 	let {amountCreated} = await connection('transaction_with_animal')
 	.where({'idTransaction': args.id, type: 'dead'})
@@ -62,7 +62,7 @@ const deleteBorn = async (_, args) => {
 
 	const trx = await connection.transaction();
 
-	await trx('born')
+	await trx('birth')
 	.where('id', args.id)
 	.delete();
 
@@ -75,7 +75,7 @@ const deleteBorn = async (_, args) => {
 	  await trx('transaction_with_animal')
 	  .where('idAnimal', idAnimal)
 	  .where('idTransaction', args.id)
-	  .where('type', 'born')
+	  .where('type', 'birth')
 	  .delete();
 
 	}
@@ -88,16 +88,16 @@ const deleteBorn = async (_, args) => {
   }
 };
 
-const updateBorn = async (_, args) => {
+const updateBirth = async (_, args) => {
   try {
 	const content = {...args.input};
 
 
-	await connection('born')
+	await connection('birth')
 	.where('id', args.id)
 	.update({ ...content });
 
-	let item = await connection('born')
+	let item = await connection('birth')
 	.where('id', args.id)
 	.first();
 
@@ -109,7 +109,7 @@ const updateBorn = async (_, args) => {
 };
 
 module.exports = {
-	createBorn,
-	deleteBorn,
-	updateBorn
+	createBirth,
+	deleteBirth,
+	updateBirth
 };

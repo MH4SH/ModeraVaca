@@ -3,7 +3,7 @@ const Farm = require('./Farm/Mutation');
 const Data = require('./Data/Mutation');
 const Purchase = require('./Purchase/Mutation');
 const Sale = require('./Sale/Mutation');
-const Born = require('./Born/Mutation');
+const Birth = require('./Birth/Mutation');
 const Dead = require('./Dead/Mutation');
 
 module.exports = {
@@ -12,6 +12,6 @@ module.exports = {
 	...Data,
 	...Purchase,
 	...Sale,
-	...Born,
+	...Birth,
 	...Dead
 }

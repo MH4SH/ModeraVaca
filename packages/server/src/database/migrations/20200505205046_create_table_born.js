@@ -1,12 +1,12 @@
 
 exports.up = function(knex) {
-	return knex.schema.createTable('born', table => {	
+	return knex.schema.createTable('birth', table => {	
 		table.increments('id').primary();
 		table.integer('idBreeds').unsigned().notNullable();
 		table.enu('gender', ['m', 'f']).notNullable();
 		table.integer('amount').notNullable();
 		table.string('note', 400).notNullable();
-		table.timestamp('dateBorn').notNullable();
+		table.timestamp('dateBirth').notNullable();
 		table.timestamp('created').notNullable();
 		
 
@@ -17,5 +17,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-	return knex.schema.dropTable('born');
+	return knex.schema.dropTable('birth');
 };

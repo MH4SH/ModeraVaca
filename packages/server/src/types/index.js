@@ -8,7 +8,7 @@ const DataTypes = fs.readFileSync(`${dirName}/Data/types.graphql`, 'utf8');
 const AnimalTypes = fs.readFileSync(`${dirName}/Animal/types.graphql`, 'utf8');
 const PurchaseTypes = fs.readFileSync(`${dirName}/Purchase/types.graphql`, 'utf8');
 const SaleTypes = fs.readFileSync(`${dirName}/Sale/types.graphql`, 'utf8');
-const BornTypes = fs.readFileSync(`${dirName}/Born/types.graphql`, 'utf8');
+const BirthTypes = fs.readFileSync(`${dirName}/Birth/types.graphql`, 'utf8');
 const DeadTypes = fs.readFileSync(`${dirName}/Dead/types.graphql`, 'utf8');
 const PageInfoTypes = fs.readFileSync(`${dirName}/PageInfo/types.graphql`, 'utf8');
 const QueryTypes = fs.readFileSync(`${dirName}/Query/types.graphql`, 'utf8');
@@ -21,7 +21,7 @@ module.exports = () => `
 	${AnimalTypes}
 	${PurchaseTypes}
 	${SaleTypes}
-	${BornTypes}
+	${BirthTypes}
 	${DeadTypes}
 	${PageInfoTypes}
 	${QueryTypes}

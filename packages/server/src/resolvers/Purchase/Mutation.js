@@ -16,7 +16,7 @@ const createPurchase = async (_, args) => {
 	  let [idAnimal] = await trx('animal').insert({
 		idBreeds: data.idBreeds,
 		gender: data.gender,
-		dateBorn: data.dateBorn,
+		dateBirth: data.dateBirth,
 		idFarm: args.idFarm,
 		type: 'purchase',
 		created: new Date()

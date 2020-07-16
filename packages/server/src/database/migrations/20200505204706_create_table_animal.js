@@ -3,8 +3,8 @@ exports.up = function(knex) {
 	table.increments('id').primary();
 	table.integer('idBreeds').unsigned().notNullable();
 	table.enu('gender', ['m', 'f']).notNullable();
-	table.enu('type', ['born', 'purchase']).notNullable();
-	table.timestamp('dateBorn').notNullable();
+	table.enu('type', ['birth', 'purchase']).notNullable();
+	table.timestamp('dateBirth').notNullable();
 	table.boolean('hasNow').defaultTo(true).notNullable().comment("True: exist in this farm, False: This animal is sended or her dead");
 	table.timestamp('created').notNullable();
 

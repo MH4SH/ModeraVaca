@@ -6,25 +6,25 @@ const pageInfo = {
 }
 
 
-const borns = async (_, args) => {
+const births = async (_, args) => {
   try {
 	const current = "CURSOR NÃO ARRUMADO";
-	const listBorns = await connection('born');
+	const listBirths = await connection('birth');
 
 
 	
 	return {
 	  pageInfo,
-	  edges: listBorns.map(item => ({ node: item, cursor: current })),
+	  edges: listBirths.map(item => ({ node: item, cursor: current })),
 	};
   } catch (e) {
 	throw new Error(e.message);
   }
 };
 
-const born = async (_, args) => {
+const birth = async (_, args) => {
   try {
-	const data = await connection('born')
+	const data = await connection('birth')
 	  .where('id', args.id)
 	  .first();
 	return data;
@@ -34,6 +34,6 @@ const born = async (_, args) => {
 };
 
 module.exports = {
-  borns,
-  born
+  births,
+  birth
 };

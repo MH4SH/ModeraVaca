@@ -4,7 +4,7 @@ exports.up = function(knex) {
 		table.increments('id').primary();
 		table.integer('idAnimal').unsigned().notNullable();
 		table.integer('idTransaction').unsigned().notNullable();
-		table.enu('type', ['born', 'dead', 'sale', 'purchase', 'manual']).notNullable();
+		table.enu('type', ['birth', 'dead', 'sale', 'purchase', 'manual']).notNullable();
 		
 		table.index(['idAnimal','idTransaction'], 'index_transaction_w_animal');
 	});

@@ -1,6 +1,6 @@
 const connection = require('../../database/connection');
 
-const bornList = [
+const birthList = [
   {id: 1, gender: 'f', age: 1, idCard: 1, amount: 12},
   {id: 2, gender: 'f', age: 2, idCard: 1, amount: 22},
   {id: 3, gender: 'f', age: 3, idCard: 1, amount: 11},

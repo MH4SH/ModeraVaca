@@ -2,7 +2,7 @@ const User = require('./User/Query');
 const Data = require('./Data/Query');
 const Purchase = require('./Purchase/Query');
 const Sale = require('./Sale/Query');
-const Born = require('./Born/Query');
+const Birth = require('./Birth/Query');
 const Dead = require('./Dead/Query');
 
 module.exports = {
@@ -10,6 +10,6 @@ module.exports = {
 	...Data,
 	...Purchase,
 	...Sale,
-	...Born,
+	...Birth,
 	...Dead
 }
