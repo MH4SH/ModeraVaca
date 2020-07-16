@@ -36,8 +36,7 @@ const data = async (_, args, context) => {
 			idData = args.id;
 		
 		const data = await connection('data')
-			.where('id', idData)
-			.where('idFarm', idFarm)
+			.where({id: idData, idFarm})
 			.first();
 
 		return data;

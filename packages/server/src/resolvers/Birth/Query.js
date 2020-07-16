@@ -8,14 +8,18 @@ const pageInfo = {
 
 const births = async (_, args) => {
   try {
+	authorizationUserHasFarm(context);
+
+	const idFarm = context._userAuthenticate.idFarm;
+
 	const current = "CURSOR NÃO ARRUMADO";
-	const listBirths = await connection('birth');
 
-
+	const birthsList = await connection('birth')
+		.where({idFarm});
 	
 	return {
 	  pageInfo,
-	  edges: listBirths.map(item => ({ node: item, cursor: current })),
+	  edges: birthsList.map(item => ({ node: item, cursor: current })),
 	};
   } catch (e) {
 	throw new Error(e.message);
@@ -24,10 +28,16 @@ const births = async (_, args) => {
 
 const birth = async (_, args) => {
   try {
-	const data = await connection('birth')
-	  .where('id', args.id)
+	authorizationUserHasFarm(context);
+
+	const idFarm = context._userAuthenticate.idFarm,
+		idBirth = args.id;
+
+	const birthContent = await connection('birth')
+	  .where({id: idBirth, idFarm})
 	  .first();
-	return data;
+
+	return birthContent;
   } catch (e) {
 	throw new Error(e.message);
   }
