@@ -36,7 +36,7 @@ const createUser = async (_, args, context) => {
 
 const deleteUser = async (_, args, context) => {
   try {
-    let requestIdUser = args.id;
+    const requestIdUser = args.id;
 
     authorizationUserIsAdmin(context);
 
@@ -52,7 +52,7 @@ const deleteUser = async (_, args, context) => {
 
 const updateUser = async (_, args, context) => {
   try {
-    let requestIdUser = args.id;
+    const requestIdUser = args.id;
 
     authorizationUserIsAdminOrIsOwn(context, requestIdUser);
 

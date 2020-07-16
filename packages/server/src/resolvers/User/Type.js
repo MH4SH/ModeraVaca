@@ -13,11 +13,11 @@ const User = {
         
         let farms = await connection('farm')
         .select('id',  'name')
-        .where({idUser});
+        .where('idUser', idUser);
         
         return farms.map(farm => ({
             ...farm,
-            token: generateToken({id: context._userAuthenticate.id, phone: context._userAuthenticate.phone, email: context._userAuthenticate.email, type: context._userAuthenticate.type, farmId: `${farm.id}`})
+            token: generateToken({id: context._userAuthenticate.id, phone: context._userAuthenticate.phone, email: context._userAuthenticate.email, type: context._userAuthenticate.type, idFarm: farm.id})
         }))
     }
 }
