@@ -1,5 +1,7 @@
 const connection = require('../../database/connection');
 
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
+
 const pageInfo = {
 	endCursor: "CURSOR NÃO ARRUMADO",
 	hasNextPage: true
@@ -8,6 +10,8 @@ const pageInfo = {
 
 const datas = async (_, args, context) => {
 	try {
+		authorizationUserHasFarm(context);
+		
 		const idFarm = context._userAuthenticate.idFarm;
 
 		const current = "CURSOR NÃO ARRUMADO";
@@ -24,8 +28,10 @@ const datas = async (_, args, context) => {
 	}
 };
 
-const data = async (_, args) => {
+const data = async (_, args, context) => {
 	try {
+		authorizationUserHasFarm(context);
+
 		const idFarm = context._userAuthenticate.idFarm
 			idData = args.id;
 		

@@ -1,49 +1,49 @@
 {
-  "name": "moderavaca_api",
-  "version": "3.14.8",
-  "description": "Projeto para moderar rebanhos e transações do sitio",
-  "main": "src/index.js",
-  "scripts": {
-	"start": "node src/server.js",
-	"dev": "cross-env NODE_ENV=dev nodemon src/server.js",
-	"test": "cross-env NODE_ENV=test jest",
-	"heroku-postbuild": "npx knex migrate:latest --env production"
-  },
-  "repository": {
-	"type": "git",
-	"url": "git+https://github.com/marconwillian/ModeraVaca_backend.git"
-  },
-  "publishConfig": {
-	"registry":"https://npm.pkg.github.com/"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-	"url": "https://github.com/marconwillian/ModeraVaca_backend/issues"
-  },
-  "homepage": "https://github.com/marconwillian/ModeraVaca_backend#readme",
-  "dependencies": {
-	"@sendgrid/mail": "^7.2.0",
-	"bcryptjs": "^2.4.3",
-	"celebrate": "^12.1.1",
-	"dotenv": "^8.2.0",
-	"express": "^4.17.1",
-	"express-graphql": "^0.9.0",
-	"graphql": "^15.0.0",
-	"graphql-tools": "^5.0.0",
-	"jsonwebtoken": "^8.5.1",
-	"knex": "^0.21.1",
-	"pg": "^8.2.1",
-	"smslegal": "^0.2.1"
-  },
-  "devDependencies": {
-	"@divyenduz/ts-graphql-plugin": "^0.1.0",
-	"cross-env": "^7.0.2",
-	"jest": "^26.0.1",
-	"sqlite3": "^4.2.0"
-  },
-  "engines": {
-	"node": "12.x",
-	"yarn": "1.x"
-  }
+	"name": "moderavaca_api",
+	"version": "3.14.9",
+	"description": "Projeto para moderar rebanhos e transações do sitio",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "node src/server.js",
+		"dev": "cross-env NODE_ENV=dev nodemon src/server.js",
+		"test": "cross-env NODE_ENV=test jest",
+		"heroku-postbuild": "npx knex migrate:latest --env production"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/marconwillian/ModeraVaca_backend.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/marconwillian/ModeraVaca_backend/issues"
+	},
+	"homepage": "https://github.com/marconwillian/ModeraVaca_backend#readme",
+	"dependencies": {
+		"@sendgrid/mail": "^7.2.0",
+		"bcryptjs": "^2.4.3",
+		"celebrate": "^12.1.1",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-graphql": "^0.9.0",
+		"graphql": "^15.0.0",
+		"graphql-tools": "^5.0.0",
+		"jsonwebtoken": "^8.5.1",
+		"knex": "^0.21.1",
+		"pg": "^8.2.1",
+		"smslegal": "^0.2.1"
+	},
+	"devDependencies": {
+		"@divyenduz/ts-graphql-plugin": "^0.1.0",
+		"cross-env": "^7.0.2",
+		"jest": "^26.0.1",
+		"sqlite3": "^4.2.0"
+	},
+	"engines": {
+		"node": "12.x",
+		"yarn": "1.x"
+	}
 }
