@@ -1,49 +1,49 @@
 # An user
 type User {
-    id: ID!
-    type: UsersType!
-    name: String!
-    email: String!
-    phone: String!
-    city: String
-    uf: String
-    farms: [Farm]
+	id: ID!
+	type: UsersType!
+	name: String!
+	email: String!
+	phone: String!
+	city: String
+	uf: String
+	farms: [Farm]
 }
 
 input UserInput {
-    name: String!
-    email: String!
-    phone: Float!
-    password: String!
-    city: String!
-    uf: String!
+	name: String!
+	email: String!
+	phone: Float!
+	password: String!
+	city: String!
+	uf: String!
 }
 
 input UserInputUpdate {
-    type: UsersType
-    name: String
-    email: String
-    phone: Float
-    city: String
-    uf: String
+	type: UsersType
+	name: String
+	email: String
+	phone: Float
+	city: String
+	uf: String
 }
 
 # Type of nivel of type
 enum UsersType {
-    #Is a admin of the platform ModeraVaca
+	#Is a admin of the platform ModeraVaca
   ADMIN
-    #Is a moderator of the platform ModeraVaca
+	#Is a moderator of the platform ModeraVaca
   MODERATOR
-    #Is a client and own of the a farm
+	#Is a client and own of the a farm
   CLIENT
 }
 
 type UserCursor {
-    edges: [UserEdge]
-    pageInfo: PageInfo!
+	edges: [UserEdge]
+	pageInfo: PageInfo!
 }
 
 type UserEdge {
-    node: User
-    cursor: String
+	node: User
+	cursor: String
 }

@@ -1,30 +1,30 @@
 type Born {
-    id: ID!
-    idBreeds: ID!
-    gender: GenderType!
-    amount: Int!
-    dateBorn: Float!
-    note: String
+	id: ID!
+	idBreeds: ID!
+	gender: GenderType!
+	amount: Int!
+	dateBorn: Float!
+	note: String
 }
 
 input BornInput {
-    idBreeds: ID!
-    gender: GenderType!
-    amount: Int!
-    dateBorn: Float!
-    note: String
+	idBreeds: ID!
+	gender: GenderType!
+	amount: Int!
+	dateBorn: Float!
+	note: String
 }
 
 input BornUpdate {
-    note: String
+	note: String
 }
 
 type BornCursor {
-    edges: [BornEdge!]!
-    pageInfo: PageInfo!
+	edges: [BornEdge!]!
+	pageInfo: PageInfo!
 }
 
 type BornEdge {
-    node: Born!
-    cursor: String
+	node: Born!
+	cursor: String
 }

@@ -8,28 +8,28 @@ const pageInfo = {
 
 const borns = async (_, args) => {
   try {
-    const current = "CURSOR NÃO ARRUMADO";
-    const listBorns = await connection('born');
+	const current = "CURSOR NÃO ARRUMADO";
+	const listBorns = await connection('born');
 
 
-    
-    return {
-      pageInfo,
-      edges: listBorns.map(item => ({ node: item, cursor: current })),
-    };
+	
+	return {
+	  pageInfo,
+	  edges: listBorns.map(item => ({ node: item, cursor: current })),
+	};
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 const born = async (_, args) => {
   try {
-    const data = await connection('born')
-      .where('id', args.id)
-      .first();
-    return data;
+	const data = await connection('born')
+	  .where('id', args.id)
+	  .first();
+	return data;
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 

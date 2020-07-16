@@ -8,33 +8,33 @@ const pageInfo = {
 
 const purchases = async (_, args) => {
   try {
-    const current = "CURSOR NÃO ARRUMADO"
-    const listPurchases = await connection('purchase');
+	const current = "CURSOR NÃO ARRUMADO"
+	const listPurchases = await connection('purchase');
 
 
 
-    return {
-      pageInfo,
-      edges: listPurchases.map(item => ({ node: item, cursor: current })),
-    };
+	return {
+	  pageInfo,
+	  edges: listPurchases.map(item => ({ node: item, cursor: current })),
+	};
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 const purchase = async (_, args) => {
   try {
-    const data = await connection('purchase')
-      .where('id', args.id)
-      .first();
+	const data = await connection('purchase')
+	  .where('id', args.id)
+	  .first();
 
-    return data;
+	return data;
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 module.exports = {
   purchases,
-    purchase,
+	purchase,
 };

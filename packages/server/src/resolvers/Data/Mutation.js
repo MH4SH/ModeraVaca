@@ -77,7 +77,7 @@ const updateData = async (_, args, context) => {
 };
 
 module.exports = {
-    createData,
-    deleteData,
-    updateData
+	createData,
+	deleteData,
+	updateData
 };

@@ -17,43 +17,43 @@ const middlewaresAuth = require('./auth/middleware');
 const Types = require('./resolvers/Types');
 
 const startServer = () => {
-    try {
-        var app = express();
-        
-        auth(app);
+	try {
+		var app = express();
+		
+		auth(app);
 
-        const resolvers = {
-            ...Types,
-            Query,
-            Mutation
-        };
-        const typeDefs = getTypeDefs();
-    
-        const schema = makeExecutableSchema({ typeDefs, resolvers });
-    
-        app.use(
-            "/graphql",
-            middlewaresAuth,
-            graphqlHTTP({
-            schema: schema
-            })
-        );
+		const resolvers = {
+			...Types,
+			Query,
+			Mutation
+		};
+		const typeDefs = getTypeDefs();
+	
+		const schema = makeExecutableSchema({ typeDefs, resolvers });
+	
+		app.use(
+			"/graphql",
+			middlewaresAuth,
+			graphqlHTTP({
+			schema: schema
+			})
+		);
 
-        app.use(
-            "/graphiql",
-            graphqlHTTP({
-            schema: schema,
-            graphiql: true,
-            })
-        );
+		app.use(
+			"/graphiql",
+			graphqlHTTP({
+			schema: schema,
+			graphiql: true,
+			})
+		);
 
-        app.listen(port);
-        console.log(`Server is running on: \nhttp://localhost:${port}/graphql \nhttp://localhost:${port}/graphiql`)
+		app.listen(port);
+		console.log(`Server is running on: \nhttp://localhost:${port}/graphql \nhttp://localhost:${port}/graphiql`)
 
-    } catch (e) {
-        console.log(e.message);
-      throw new Error(e.message);
-    }
+	} catch (e) {
+		console.log(e.message);
+	  throw new Error(e.message);
+	}
 };
 
 startServer();

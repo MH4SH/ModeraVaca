@@ -7,11 +7,11 @@ const Born = require('./Born/Mutation');
 const Dead = require('./Dead/Mutation');
 
 module.exports = {
-    ...User,
-    ...Farm,
-    ...Data,
-    ...Purchase,
-    ...Sale,
-    ...Born,
-    ...Dead
+	...User,
+	...Farm,
+	...Data,
+	...Purchase,
+	...Sale,
+	...Born,
+	...Dead
 }

@@ -21,25 +21,25 @@ const pageInfo = {
 
 const deads = async (_, args) => {
   try {
-    const current = "CURSOR NÃO ARRUMADO";
-    const listDeads = await connection('dead');
-    return {
-      pageInfo,
-      edges: listDeads.map(item => ({ node: item, cursor: current })),
-    };
+	const current = "CURSOR NÃO ARRUMADO";
+	const listDeads = await connection('dead');
+	return {
+	  pageInfo,
+	  edges: listDeads.map(item => ({ node: item, cursor: current })),
+	};
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 const dead = async (_, args) => {
   try {
-    const data = await connection('dead')
-      .where('id', args.id)
-      .first();
-    return data;
+	const data = await connection('dead')
+	  .where('id', args.id)
+	  .first();
+	return data;
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 

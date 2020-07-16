@@ -15,112 +15,112 @@ const deadList = [
 
 const createDead = async (_, args) => {
   try {
-    const {idBreeds, gender, AgeGroup} = args.input,
-      data = args.input;
+	const {idBreeds, gender, AgeGroup} = args.input,
+	  data = args.input;
 
-    let age = AgeGroup(new Date());
+	let age = AgeGroup(new Date());
 
-    let listAnimals = await connection('animal')
-    .where('idBreeds', idBreeds)
-    .where('gender', gender)
-    .where('hasNow', true)
-    .where('dateBorn', '<=', age.start.getTime())
-    .where('dateBorn', '>', age.end.getTime());
+	let listAnimals = await connection('animal')
+	.where('idBreeds', idBreeds)
+	.where('gender', gender)
+	.where('hasNow', true)
+	.where('dateBorn', '<=', age.start.getTime())
+	.where('dateBorn', '>', age.end.getTime());
 
-    if(listAnimals.length===0)
-      throw new Error(JSON.stringify({status: "Don't have animal"}));
+	if(listAnimals.length===0)
+	  throw new Error(JSON.stringify({status: "Don't have animal"}));
 
-    let idAnimal = listAnimals[0].id;
-    
-    delete data.AgeGroup;
+	let idAnimal = listAnimals[0].id;
+	
+	delete data.AgeGroup;
 
-    const trx = await connection.transaction();
-
-
-    const [deadId] = await trx('dead').insert({
-      ...data,
-      amount: 3,
-      idFarm: args.idFarm,
-      created: new Date()
-    });
-
-    await trx('animal')
-    .where('id', idAnimal)
-    .update({
-      hasNow: false
-    });
+	const trx = await connection.transaction();
 
 
-    await trx('transaction_with_animal').insert({
-      idAnimal: idAnimal,
-      idTransaction: deadId,
-      type: 'dead'
-    });
+	const [deadId] = await trx('dead').insert({
+	  ...data,
+	  amount: 3,
+	  idFarm: args.idFarm,
+	  created: new Date()
+	});
+
+	await trx('animal')
+	.where('id', idAnimal)
+	.update({
+	  hasNow: false
+	});
 
 
-    await trx.commit();
+	await trx('transaction_with_animal').insert({
+	  idAnimal: idAnimal,
+	  idTransaction: deadId,
+	  type: 'dead'
+	});
 
-    return {
-      id: deadId,
-      ...data
-    };
+
+	await trx.commit();
+
+	return {
+	  id: deadId,
+	  ...data
+	};
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 const deleteDead = async (_, args) => {
   try {
-    let animal = await connection('transaction_with_animal')
-    .where('idTransaction', args.id)
-    .where('type', 'dead')
-    .first();
+	let animal = await connection('transaction_with_animal')
+	.where('idTransaction', args.id)
+	.where('type', 'dead')
+	.first();
 
-    if(!animal)
-      return false;
+	if(!animal)
+	  return false;
 
-    const trx = await connection.transaction();
+	const trx = await connection.transaction();
 
-    await trx('animal')
-    .where('id', animal.idAnimal)
-    .update({ hasNow: true });
+	await trx('animal')
+	.where('id', animal.idAnimal)
+	.update({ hasNow: true });
 
-    await trx('dead')
-    .where('id', args.id)
-    .delete();
+	await trx('dead')
+	.where('id', args.id)
+	.delete();
 
-    await trx('transaction_with_animal')
-    .where('id', animal.id)
-    .delete();
+	await trx('transaction_with_animal')
+	.where('id', animal.id)
+	.delete();
 
-    await trx.commit();
+	await trx.commit();
 
-    return true;
+	return true;
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 const updateDead = async (_, args) => {
   try {
-    const content = {...args.input};
+	const content = {...args.input};
 
-    await connection('dead')
-    .where('id', args.id)
-    .update({ ...content });
+	await connection('dead')
+	.where('id', args.id)
+	.update({ ...content });
 
-    let item = await connection('dead')
-    .where('id', args.id)
-    .first();
+	let item = await connection('dead')
+	.where('id', args.id)
+	.first();
 
-    return item;
+	return item;
   } catch (e) {
-    throw new Error(e.message);
+	throw new Error(e.message);
   }
 };
 
 module.exports = {
-    createDead,
-    deleteDead,
-    updateDead
+	createDead,
+	deleteDead,
+	updateDead
 };
