@@ -11,7 +11,7 @@ const Mutation = require('./resolvers/Mutation');
 
 //Auth for authenticate
 const auth = require('./auth');
-const middlewaresAuth = require('./auth/middlewares/');
+const middlewaresAuth = require('./auth/middleware');
 
 //Enums and Types of elements 
 const Types = require('./resolvers/Types');

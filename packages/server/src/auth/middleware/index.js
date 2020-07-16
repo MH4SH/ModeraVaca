@@ -20,7 +20,8 @@ module.exports = (req, res, next) => {
     jwt.verify(token, process.env.HASH_1_SECRET, (err, decoded) => {
         if(err)
             return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "Token invalid"})
-
+            
+        console.log(decoded);
         req._userAuthenticate = decoded;
 
         return next();

@@ -1,6 +1,7 @@
 type Farm {
   id: ID!
   name: String
+  token: String!
 }
 
 input FarmInput {
