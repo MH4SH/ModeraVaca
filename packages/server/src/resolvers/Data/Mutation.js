@@ -39,8 +39,7 @@ const deleteData = async (_, args, context) => {
 			idData = args.id;
 
 		const isFarmDeleted = await connection('data')
-			.where('id', idData)
-			.where('idFarm', idFarm)
+			.where({'id': idData, idFarm})
 			.delete();
 
 		return isFarmDeleted;
@@ -58,16 +57,14 @@ const updateData = async (_, args, context) => {
 			content = {...args.input};
 		
 		const isUpdated = await connection('data')
-			.where('id', idData)
-			.where('idFarm', idFarm)
+			.where({'id': idData, idFarm})
 			.update({ ...content });
 
 		if(!isUpdated)
 			throw new Error(`Farm don't found`);
 			
 		const data = await connection('data')
-			.where('id', idData)
-			.where('idFarm', idFarm)
+			.where({'id': idData, idFarm})
 			.first();
 
 		return data;

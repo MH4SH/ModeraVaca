@@ -8,23 +8,23 @@ type Mutation {
 	updateFarm(id: ID!, input: FarmInputUpdate): Farm
 
 
-	createData(idFarm: ID!, input: DataInput): Data
+	createData(input: DataInput): Data
 	deleteData(id: ID!): Boolean
 	updateData(id: ID!, input: DataInputUpdate): Data
 	
-	createBirth(idFarm: ID!, input: BirthInput): Birth
+	createBirth(input: BirthInput): Birth
 	deleteBirth(id: ID!, force: Boolean): Boolean
 	updateBirth(id: ID!, input: BirthUpdate): Birth
 
-	createPurchase(idFarm: ID!, input: PurchaseInput): Purchase
+	createPurchase(input: PurchaseInput): Purchase
 	deletePurchase(id: ID!): Boolean
 	updatePurchase(id: ID!, input: PurchaseUpdate): Purchase
 
-	createSale(idFarm: ID!, input: SaleInput): Sale
+	createSale(input: SaleInput): Sale
 	deleteSale(id: ID!): Boolean
 	updateSale(id: ID!, input: SaleUpdate): Sale
 
-	createDead(idFarm: ID!, input: DeadInput): Dead
+	createDead(input: DeadInput): Dead
 	deleteDead(id: ID!): Boolean
 	updateDead(id: ID!, input: DeadUpdate): Dead
 }

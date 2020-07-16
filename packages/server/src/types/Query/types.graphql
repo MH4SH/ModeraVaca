@@ -1,19 +1,19 @@
 type Query {
-  users: UserCursor!
-  user(id: ID!): User!
+	users: UserCursor!
+	user(id: ID!): User
 
-  datas: DataCursor!
-  data(id: ID!): Data!
+	datas: DataCursor!
+	data(id: ID!): Data
 
-  purchases: PurchaseCursor!
-  purchase(id: ID!): Purchase!
+	purchases: PurchaseCursor!
+	purchase(id: ID!): Purchase
 
-  sales: SaleCursor!
-  sale(id: ID!): Sale!
+	sales: SaleCursor!
+	sale(id: ID!): Sale
 
-  births: DeadCursor!
-  birth(id: ID!): Dead!
+	births: DeadCursor!
+	birth(id: ID!): Dead
 
-  deads: DeadCursor!
-  dead(id: ID!): Dead!
+	deads: DeadCursor!
+	dead(id: ID!): Dead
 }
