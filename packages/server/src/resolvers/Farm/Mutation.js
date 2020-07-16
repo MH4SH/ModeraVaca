@@ -1,62 +1,69 @@
 const connection = require('../../database/connection');
+const generateToken = require('../../auth/utils/generateToken');
 
 const createFarm = async (_, args, context) => {
-  try {
-    const idUserAuthenticate =  context._userAuthenticate.id,
-      {name} = args.input;
+    try {
+        const idUserAuthenticate = context._userAuthenticate.id,
+            { name } = args.input;
 
-    const farmData = {
-      name, 
-      idUser: idUserAuthenticate
-    };
+        const farmData = {
+            name,
+            idUser: idUserAuthenticate
+        };
 
-    const [id] = await connection('farm').insert({
-      ...farmData
-    });
+        const [id] = await connection('farm').insert({
+            ...farmData
+        });
 
-    return {
-      id,
-      ...farmData
-    };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+        return {
+            id,
+            ...farmData,
+            token: generateToken({ id: context._userAuthenticate.id, phone: context._userAuthenticate.phone, email: context._userAuthenticate.email, type: context._userAuthenticate.type, idFarm: id })
+        };
+    } catch (e) {
+        throw new Error(e.message);
+    }
 };
 
-const deleteFarm = async (_, args) => {
-  try {
-    const idUserAuthenticate =  context._userAuthenticate.id,
-      requestIdFarm = args.id;
+const deleteFarm = async (_, args, context) => {
+    try {
+        const idUserAuthenticate = context._userAuthenticate.id,
+            requestIdFarm = args.id;
 
-    await connection('farm')
-    .where('id', requestIdFarm)
-    .where('idUser', idUserAuthenticate)
-    .delete();
+        const isFarmDeleted = await connection('farm')
+            .where('id', requestIdFarm)
+            .where('idUser', idUserAuthenticate)
+            .delete();
 
-    return true;
-  } catch (e) {
-    throw new Error(e.message);
-  }
+
+        return isFarmDeleted;
+    } catch (e) {
+        throw new Error(e.message);
+    }
 };
 
-const updateFarm = async (_, args) => {
-  try {
-    const idUserAuthenticate =  context._userAuthenticate.id,
-      requestIdFarm = args.id,
-      {name} = args.input;
-    
-    await connection('farm')
-    .where('id', requestIdFarm)
-    .where('idUser', idUserAuthenticate)
-    .update({ name });
-    
-    return {
-      id: requestIdFarm,
-      name
-    };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+const updateFarm = async (_, args, context) => {
+    try {
+        const idUserAuthenticate = context._userAuthenticate.id,
+            requestIdFarm = args.id,
+            { name } = args.input;
+
+        const isUpdated = await connection('farm')
+            .where('id', requestIdFarm)
+            .where('idUser', idUserAuthenticate)
+            .update({ name });
+
+        if(!isUpdated)
+            throw new Error(`Farm don't found`);
+
+        return {
+            id: requestIdFarm,
+            name,
+            token: generateToken({ id: context._userAuthenticate.id, phone: context._userAuthenticate.phone, email: context._userAuthenticate.email, type: context._userAuthenticate.type, idFarm: requestIdFarm })
+        };
+    } catch (e) {
+        throw new Error(e.message);
+    }
 };
 
 module.exports = {

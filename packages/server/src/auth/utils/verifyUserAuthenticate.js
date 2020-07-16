@@ -1,6 +1,6 @@
 exports.authorizationUserIsAdmin = (contextRequest) => {
     if(!verifyUserIsAdmin(contextRequest))
-      throw new Error(`You don't have permission for this request`);
+        throw new Error(`You don't have permission for this request`);
 
     return true;
 };
@@ -13,7 +13,7 @@ const verifyUserIsAdmin = (contextRequest) => {
 
 exports.authorizationUserIsAdminOrIsOwn = (contextRequest, requestIdUser) => {
     if(!verifyUserIsAdminOrIsOwn(contextRequest, requestIdUser))
-      throw new Error(`You don't have permission for this request`);
+        throw new Error(`You don't have permission for this request`);
 
     return true;
 }
@@ -21,4 +21,16 @@ exports.authorizationUserIsAdminOrIsOwn = (contextRequest, requestIdUser) => {
 const verifyUserIsAdminOrIsOwn = (contextRequest, requestIdUser) => {
     let idUserAuthenticate =  contextRequest._userAuthenticate.id;
     return verifyUserIsAdmin(contextRequest) || idUserAuthenticate==requestIdUser;
+}
+
+exports.authorizationUserHasFarm = (contextRequest) => {
+    if(!verifyUserHasFarm(contextRequest))
+        throw new Error(`You need use token for farm. See more in https://github.com/marconwillian/ModeraVaca_backend`);
+
+    return true;
+}
+
+const verifyUserHasFarm = (contextRequest) => {
+    let idFarmAuthenticate =  contextRequest._userAuthenticate.idFarm;
+    return idFarmAuthenticate ? true : false ;
 }

@@ -1,58 +1,80 @@
 const connection = require('../../database/connection');
 
-const createData = async (_, args) => {
-  try {
-    const {kind, value} = args.input;
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
 
-    const data = {
-      kind,
-      value
-    };
+const createData = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-    const [id] = await connection('data').insert({
-      ...data,
-      idFarm: args.idFarm
-    });
+		const idFarm = context._userAuthenticate.idFarm,
+		{kind, value} = args.input;
 
-    return {
-      id,
-      ...data,
-      status: true,
-      idFarm: args.idFarm
-    };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		const data = {
+			kind,
+			value,
+			idFarm
+		};
+
+		const [id] = await connection('data').insert({
+			...data,
+			idFarm
+		});
+
+		return {
+			id,
+			...data,
+			status: true,
+			idFarm
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const deleteData = async (_, args) => {
-  try {
-    await connection('data')
-    .where('id', args.id)
-    .delete();
+const deleteData = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-    return true;
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		const idFarm = context._userAuthenticate.idFarm,
+			idData = args.id;
+
+		const response = await connection('data')
+			.where('id', idData)
+			.where('idFarm', idFarm)
+			.delete();
+
+		console.log(response)
+
+		return true;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const updateData = async (_, args) => {
-  try {
-    const content = {...args.input};
-    
-    await connection('data')
-    .where('id', args.id)
-    .update({ ...content });
+const updateData = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-    const data = await connection('data')
-    .where('id', args.id)
-    .first();
+		const idFarm = context._userAuthenticate.idFarm,
+			idData = args.id,
+			content = {...args.input};
+		
+		const response = await connection('data')
+			.where('id', idData)
+			.where('idFarm', idFarm)
+			.update({ ...content });
 
-    return data;
-  } catch (e) {
-    throw new Error(e.message);
-  }
+			console.log(response);
+
+		const data = await connection('data')
+			.where('id', idData)
+			.where('idFarm', idFarm)
+			.first();
+
+		return data;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
 module.exports = {

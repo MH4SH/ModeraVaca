@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
         if(err)
             return res.status(401).json({statusCode: 401, error: "Unauthorized", message: "Token invalid"})
             
-        console.log(decoded);
+        
         req._userAuthenticate = decoded;
 
         return next();
