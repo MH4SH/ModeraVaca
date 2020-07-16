@@ -1,35 +1,35 @@
 type Sale {
-    id: ID!
-    idBreeds: ID!
-    gender: GenderType!
-    amount: Int!
-    priceAmount: Int!
-    note: String
-    idBuyer: ID!
+	id: ID!
+	idBreeds: ID!
+	gender: GenderType!
+	amount: Int!
+	priceAmount: Int!
+	note: String
+	idBuyer: ID!
 }
 
 input SaleInput {
-    idBreeds: ID!
-    AgeGroup: AgeGroup!
-    gender: GenderType!
-    amount: Int!
-    priceAmount: Int!
-    note: String
-    idBuyer: ID!
+	idBreeds: ID!
+	AgeGroup: AgeGroup!
+	gender: GenderType!
+	amount: Int!
+	priceAmount: Int!
+	note: String
+	idBuyer: ID!
 }
 
 input SaleUpdate {
-    priceAmount: Int
-    note: String
-    idBuyer: ID
+	priceAmount: Int
+	note: String
+	idBuyer: ID
 }
 
 type SaleCursor {
-    edges: [SaleEdge!]!
-    pageInfo: PageInfo!
+	edges: [SaleEdge!]!
+	pageInfo: PageInfo!
 }
 
 type SaleEdge {
-    node: Sale!
-    cursor: String
+	node: Sale!
+	cursor: String
 }

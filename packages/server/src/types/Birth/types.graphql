@@ -1,0 +1,30 @@
+type Birth {
+	id: ID!
+	idBreeds: ID!
+	gender: GenderType!
+	amount: Int!
+	dateBirth: Float!
+	note: String
+}
+
+input BirthInput {
+	idBreeds: ID!
+	gender: GenderType!
+	amount: Int!
+	dateBirth: Float!
+	note: String
+}
+
+input BirthUpdate {
+	note: String
+}
+
+type BirthCursor {
+	edges: [BirthEdge!]!
+	pageInfo: PageInfo!
+}
+
+type BirthEdge {
+	node: Birth!
+	cursor: String
+}

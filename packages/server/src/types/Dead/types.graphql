@@ -1,30 +1,30 @@
 type Dead {
-    id: ID!
-    idBreeds: ID!
-    gender: GenderType!
-    dateDead: Float!
-    note: String
+	id: ID!
+	idBreeds: ID!
+	gender: GenderType!
+	dateDead: Float!
+	note: String
 }
 
 input DeadInput {
-    idBreeds: ID!
-    AgeGroup: AgeGroup!
-    gender: GenderType!
-    dateDead: Float!
-    note: String
+	idBreeds: ID!
+	AgeGroup: AgeGroup!
+	gender: GenderType!
+	dateDead: Float!
+	note: String
 }
 
 input DeadUpdate {
-    dateDead: Float
-    note: String
+	dateDead: Float
+	note: String
 }
 
 type DeadCursor {
-    edges: [DeadEdge!]!
-    pageInfo: PageInfo!
+	edges: [DeadEdge!]!
+	pageInfo: PageInfo!
 }
 
 type DeadEdge {
-    node: Dead!
-    cursor: String
+	node: Dead!
+	cursor: String
 }

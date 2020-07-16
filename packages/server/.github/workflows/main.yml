@@ -5,28 +5,28 @@ name: Backend - Jest
 
 on:
   push:
-    branches: [ release/** ]
+	branches: [ release/** ]
 
 jobs:
   mongo:
 
-    runs-on: ubuntu-latest
+	runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [13.x]
+	strategy:
+	  matrix:
+		node-version: [13.x]
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+	steps:
+	- uses: actions/checkout@v2
+	- name: Use Node.js ${{ matrix.node-version }}
+	  uses: actions/setup-node@v1
+	  with:
+		node-version: ${{ matrix.node-version }}
 
 
-    - name: Yarn install, build and test
-      run: |
-        yarn install
-        npx knex migrate:latest --env test
-        yarn test
+	- name: Yarn install, build and test
+	  run: |
+		yarn install
+		npx knex migrate:latest --env test
+		yarn test
 
