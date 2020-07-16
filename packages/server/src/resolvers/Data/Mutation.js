@@ -38,14 +38,12 @@ const deleteData = async (_, args, context) => {
 		const idFarm = context._userAuthenticate.idFarm,
 			idData = args.id;
 
-		const response = await connection('data')
+		const isFarmDeleted = await connection('data')
 			.where('id', idData)
 			.where('idFarm', idFarm)
 			.delete();
 
-		console.log(response)
-
-		return true;
+		return isFarmDeleted;
 	} catch (e) {
 		throw new Error(e.message);
 	}
@@ -59,13 +57,14 @@ const updateData = async (_, args, context) => {
 			idData = args.id,
 			content = {...args.input};
 		
-		const response = await connection('data')
+		const isUpdated = await connection('data')
 			.where('id', idData)
 			.where('idFarm', idFarm)
 			.update({ ...content });
 
-			console.log(response);
-
+		if(!isUpdated)
+			throw new Error(`Farm don't found`);
+			
 		const data = await connection('data')
 			.where('id', idData)
 			.where('idFarm', idFarm)
