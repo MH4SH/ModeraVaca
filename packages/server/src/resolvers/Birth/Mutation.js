@@ -19,22 +19,24 @@ const createBirth = async (_, args, context) => {
 		});
 
 		for (let v = 0; v < birthData.amount; v++) {
-			let [idAnimal] = await trx('animal').insert({
-				idBreeds: birthData.idBreeds,
-				gender: birthData.gender,
-				dateBirth: birthData.dateBirth,
-				idFarm,
-				type: 'birth',
-				created: new Date()
-			});
+			let [idAnimal] = await trx('animal')
+				.insert({
+					idBreeds: birthData.idBreeds,
+					gender: birthData.gender,
+					dateBirth: birthData.dateBirth,
+					idFarm,
+					type: 'birth',
+					created: new Date()
+				});
 
 
-			await trx('transaction_with_animal').insert({
-				idAnimal,
-				idTransaction: birthId,
-				idFarm,
-				type: 'birth'
-			});
+			await trx('transaction_with_animal')
+				.insert({
+					idAnimal,
+					idTransaction: birthId,
+					idFarm,
+					type: 'birth'
+				});
 		}
 
 		await trx.commit();
@@ -59,13 +61,13 @@ const deleteBirth = async (_, args) => {
 		let listAnimals = await connection('transaction_with_animal')
 			.where({idTransaction, type: 'birth', idFarm});
 
-		let { amountCreated } = await connection('transaction_with_animal')
+	let { amountCreated } = await connection('transaction_with_animal')
 			.where({ idTransaction, type: 'dead', idFarm })
 			.orWhere({ idTransaction, type: 'sale', idFarm })
 			.count({ amountCreated: 'id' })
 			.first();
 
-		if (!isForceDelete && amountCreated !== 0)
+	if (!isForceDelete && amountCreated !== 0)
 			throw new Error(JSON.stringify({ status: "Need Force", number: amountCreated }));
 
 		if (listAnimals.length === 0)
@@ -114,7 +116,7 @@ const updateBirth = async (_, args) => {
 			throw new Error(`Birth don't found`);
 
 		let item = await connection('birth')
-		.where({id: idTransaction, idFarm})
+			.where({id: idTransaction, idFarm})
 			.first();
 
 		return item;

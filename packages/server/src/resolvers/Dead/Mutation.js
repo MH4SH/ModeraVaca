@@ -1,122 +1,127 @@
 const connection = require('../../database/connection');
 
-const deadList = [
-  {id: 1, gender: 'f', age: 1, idCard: 1, amount: 12},
-  {id: 2, gender: 'f', age: 2, idCard: 1, amount: 22},
-  {id: 3, gender: 'f', age: 3, idCard: 1, amount: 11},
-  {id: 4, gender: 'f', age: 4, idCard: 1, amount: 14},
-  {id: 5, gender: 'f', age: 2, idCard: 2, amount: 2},
-  {id: 6, gender: 'f', age: 1, idCard: 2, amount: 22},
-  {id: 7, gender: 'f', age: 3, idCard: 2, amount: 23},
-  {id: 8, gender: 'f', age: 4, idCard: 2, amount: 44},
-  {id: 9, gender: 'f', age: 6, idCard: 2, amount: 11},
-  {id: 10, gender: 'm', age: 7, idCard: 1, amount: 1}
-];
-
-const createDead = async (_, args) => {
-  try {
-	const {idBreeds, gender, AgeGroup} = args.input,
-	  data = args.input;
-
-	let age = AgeGroup(new Date());
-
-	let listAnimals = await connection('animal')
-	.where('idBreeds', idBreeds)
-	.where('gender', gender)
-	.where('hasNow', true)
-	.where('dateBirth', '<=', age.start.getTime())
-	.where('dateBirth', '>', age.end.getTime());
-
-	if(listAnimals.length===0)
-	  throw new Error(JSON.stringify({status: "Don't have animal"}));
-
-	let idAnimal = listAnimals[0].id;
-	
-	delete data.AgeGroup;
-
-	const trx = await connection.transaction();
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
 
 
-	const [deadId] = await trx('dead').insert({
-	  ...data,
-	  amount: 3,
-	  idFarm: args.idFarm,
-	  created: new Date()
-	});
+const createDead = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-	await trx('animal')
-	.where('id', idAnimal)
-	.update({
-	  hasNow: false
-	});
+		const idFarm = context._userAuthenticate.idFarm,
+			deadData = args.input,
+			{idBreeds, gender, AgeGroup} = args.input;
+
+		let age = AgeGroup(new Date());
+
+		let listAnimals = await connection('animal')
+			.where({idBreeds, gender, idFarm, hasNow: true})
+			.where('dateBirth', '<=', age.start.getTime())
+			.where('dateBirth', '>', age.end.getTime());
+
+		if(listAnimals.length===0)
+			throw new Error(JSON.stringify({status: "Don't have animal"}));
+
+		let idAnimal = listAnimals[0].id;
+		
+		delete deadData.AgeGroup;
+
+		const trx = await connection.transaction();
 
 
-	await trx('transaction_with_animal').insert({
-	  idAnimal: idAnimal,
-	  idTransaction: deadId,
-	  type: 'dead'
-	});
+		const [deadId] = await trx('dead')
+			.insert({
+				...deadData,
+				amount: 3,
+				idFarm,
+				created: new Date()
+			});
+
+		await trx('animal')
+			.where({id: idAnimal})
+			.update({
+				hasNow: false
+			});
 
 
-	await trx.commit();
+		await trx('transaction_with_animal')
+			.insert({
+				idAnimal,
+				idTransaction: deadId,
+				idFarm,
+				type: 'dead'
+			});
 
-	return {
-	  id: deadId,
-	  ...data
-	};
-  } catch (e) {
-	throw new Error(e.message);
-  }
+
+		await trx.commit();
+
+		return {
+			id: deadId,
+			...deadData
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const deleteDead = async (_, args) => {
-  try {
-	let animal = await connection('transaction_with_animal')
-	.where('idTransaction', args.id)
-	.where('type', 'dead')
-	.first();
+const deleteDead = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-	if(!animal)
-	  return false;
+		const idFarm = context._userAuthenticate.idFarm,
+			idTransaction = args.id;
 
-	const trx = await connection.transaction();
+		let animal = await connection('transaction_with_animal')
+			.where({idTransaction, idFarm, type: dead})
+			.first();
 
-	await trx('animal')
-	.where('id', animal.idAnimal)
-	.update({ hasNow: true });
+		if(!animal)
+			return false;
 
-	await trx('dead')
-	.where('id', args.id)
-	.delete();
+		const trx = await connection.transaction();
 
-	await trx('transaction_with_animal')
-	.where('id', animal.id)
-	.delete();
+		await trx('animal')
+			.where({id: animal.idAnimal})
+			.update({ hasNow: true });
 
-	await trx.commit();
+		await trx('dead')
+			.where({id: idTransaction})
+			.delete();
 
-	return true;
-  } catch (e) {
-	throw new Error(e.message);
-  }
+		await trx('transaction_with_animal')
+			.where({id: animal.id})
+			.delete();
+
+		await trx.commit();
+
+		return true;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const updateDead = async (_, args) => {
-  try {
-	const content = {...args.input};
+const updateDead = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-	await connection('dead')
-	.where('id', args.id)
-	.update({ ...content });
+		const idFarm = context._userAuthenticate.idFarm,
+			idTransaction = args.id,
+			deadData = {...args.input};
 
-	let item = await connection('dead')
-	.where('id', args.id)
-	.first();
+		const isUpdated = await connection('dead')
+			.where({id: idTransaction, idFarm})
+			.update({ ...deadData });
 
-	return item;
-  } catch (e) {
-	throw new Error(e.message);
-  }
+		if(!isUpdated)
+			throw new Error(`Birth don't found`);
+
+		let item = await connection('dead')
+			.where({id: idTransaction})
+			.first();
+
+		return item;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
 module.exports = {
