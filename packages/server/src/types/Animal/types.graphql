@@ -1,23 +1,23 @@
 
 # Gender of animals
 enum GenderType {
-    #Male
+	#Male
   m
-    #Female
+	#Female
   f
 }
 
 
 # Age of animals
 enum AgeGroup {
-    #1 to 4 months
+	#1 to 4 months
   PRIMEIRO
-    #5 to 12 months
+	#5 to 12 months
   SEGUNDO
-    #13 to 24 months
+	#13 to 24 months
   TERCEIRO
-    #25 to 36 months
+	#25 to 36 months
   QUARTO
-    #greater than 36 months
+	#greater than 36 months
   QUINTO
 }

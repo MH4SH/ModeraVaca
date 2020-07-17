@@ -29,4 +29,3 @@ jobs:
         yarn install
         npx knex migrate:latest --env test
         yarn test
-

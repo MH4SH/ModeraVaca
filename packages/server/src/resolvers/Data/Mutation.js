@@ -1,62 +1,80 @@
 const connection = require('../../database/connection');
 
-const createData = async (_, args) => {
-  try {
-    const {kind, value} = args.input;
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
 
-    const data = {
-      kind,
-      value
-    };
+const createData = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-    const [id] = await connection('data').insert({
-      ...data,
-      idFarm: args.idFarm
-    });
+		const idFarm = context._userAuthenticate.idFarm,
+		{kind, value} = args.input;
 
-    return {
-      id,
-      ...data,
-      status: true,
-      idFarm: args.idFarm
-    };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		const data = {
+			kind,
+			value,
+			idFarm
+		};
+
+		const [id] = await connection('data').insert({
+			...data,
+			idFarm
+		});
+
+		return {
+			id,
+			...data,
+			status: true,
+			idFarm
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const deleteData = async (_, args) => {
-  try {
-    await connection('data')
-    .where('id', args.id)
-    .delete();
+const deleteData = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-    return true;
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		const idFarm = context._userAuthenticate.idFarm,
+			idData = args.id;
+
+		const isFarmDeleted = await connection('data')
+			.where({'id': idData, idFarm})
+			.delete();
+
+		return isFarmDeleted;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const updateData = async (_, args) => {
-  try {
-    const content = {...args.input};
-    
-    await connection('data')
-    .where('id', args.id)
-    .update({ ...content });
+const updateData = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-    const data = await connection('data')
-    .where('id', args.id)
-    .first();
+		const idFarm = context._userAuthenticate.idFarm,
+			idData = args.id,
+			content = {...args.input};
+		
+		const isUpdated = await connection('data')
+			.where({'id': idData, idFarm})
+			.update({ ...content });
 
-    return data;
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		if(!isUpdated)
+			throw new Error(`Farm don't found`);
+			
+		const data = await connection('data')
+			.where({'id': idData, idFarm})
+			.first();
+
+		return data;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
 module.exports = {
-    createData,
-    deleteData,
-    updateData
+	createData,
+	deleteData,
+	updateData
 };

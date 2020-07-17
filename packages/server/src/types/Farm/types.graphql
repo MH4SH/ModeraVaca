@@ -1,10 +1,10 @@
 type Farm {
   id: ID!
   name: String
+  token: String!
 }
 
 input FarmInput {
-  idUser: Int!
   name: String!
 }
 

@@ -1,58 +1,73 @@
 const connection = require('../../database/connection');
+const generateToken = require('../../auth/utils/generateToken');
 
-const createFarm = async (_, args) => {
-  try {
-    const {name, idUser} = args.input;
+const createFarm = async (_, args, context) => {
+	try {
+		const idUserAuthenticate = context._userAuthenticate.id,
+			{ name } = args.input;
 
-    const data = {
-      name, 
-      idUser
-    };
+		const farmData = {
+			name,
+			idUser: idUserAuthenticate
+		};
 
-    const [id] = await connection('farm').insert({
-      ...data
-    });
+		const [id] = await connection('farm').insert({
+			...farmData
+		});
 
-    return {
-      id,
-      ...data
-    };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		return {
+			id,
+			...farmData,
+			token: generateToken({ id: context._userAuthenticate.id, phone: context._userAuthenticate.phone, email: context._userAuthenticate.email, type: context._userAuthenticate.type, idFarm: id })
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const deleteFarm = async (_, args) => {
-  try {
-    await connection('farm')
-    .where('id', args.id)
-    .delete();
+const deleteFarm = async (_, args, context) => {
+	try {
+		const idUserAuthenticate = context._userAuthenticate.id,
+			requestIdFarm = args.id;
 
-    return true;
-  } catch (e) {
-    throw new Error(e.message);
-  }
+		const isFarmDeleted = await connection('farm')
+			.where('id', requestIdFarm)
+			.where('idUser', idUserAuthenticate)
+			.delete();
+
+
+		return isFarmDeleted;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const updateFarm = async (_, args) => {
-  try {
-    const {name} = args.input;
-    
-    await connection('farm')
-    .where('id', args.id)
-    .update({ name });
-    
-    return {
-      id: args.id,
-      name
-    };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+const updateFarm = async (_, args, context) => {
+	try {
+		const idUserAuthenticate = context._userAuthenticate.id,
+			requestIdFarm = args.id,
+			{ name } = args.input;
+
+		const isUpdated = await connection('farm')
+			.where('id', requestIdFarm)
+			.where('idUser', idUserAuthenticate)
+			.update({ name });
+
+		if(!isUpdated)
+			throw new Error(`Farm don't found`);
+
+		return {
+			id: requestIdFarm,
+			name,
+			token: generateToken({ id: context._userAuthenticate.id, phone: context._userAuthenticate.phone, email: context._userAuthenticate.email, type: context._userAuthenticate.type, idFarm: requestIdFarm })
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
 module.exports = {
-    createFarm,
-    deleteFarm,
-    updateFarm
+	createFarm,
+	deleteFarm,
+	updateFarm
 };

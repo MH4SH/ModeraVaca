@@ -9,51 +9,51 @@ const getTypeDefs = require('./types');
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 
-//Auth for altenticate
+//Auth for authenticate
 const auth = require('./auth');
-const middlewaresAuth = require('./auth/middlewares/');
+const middlewaresAuth = require('./auth/middleware');
 
-//Enuns and Types of elements 
+//Enums and Types of elements 
 const Types = require('./resolvers/Types');
 
 const startServer = () => {
-    try {
-        var app = express();
-        
-        auth(app);
+	try {
+		var app = express();
+		
+		auth(app);
 
-        const resolvers = {
-            ...Types,
-            Query,
-            Mutation
-        };
-        const typeDefs = getTypeDefs();
-    
-        const schema = makeExecutableSchema({ typeDefs, resolvers });
-    
-        app.use(
-            "/graphql",
-            middlewaresAuth,
-            graphqlHTTP({
-            schema: schema
-            })
-        );
+		const resolvers = {
+			...Types,
+			Query,
+			Mutation
+		};
+		const typeDefs = getTypeDefs();
+	
+		const schema = makeExecutableSchema({ typeDefs, resolvers });
+	
+		app.use(
+			"/graphql",
+			middlewaresAuth,
+			graphqlHTTP({
+			schema: schema
+			})
+		);
 
-        app.use(
-            "/graphiql",
-            graphqlHTTP({
-            schema: schema,
-            graphiql: true,
-            })
-        );
+		app.use(
+			"/graphiql",
+			graphqlHTTP({
+			schema: schema,
+			graphiql: true,
+			})
+		);
 
-        app.listen(port);
-        console.log(`Server is running on: \nhttp://localhost:${port}/graphql \nhttp://localhost:${port}/graphiql`)
+		app.listen(port);
+		console.log(`Server is running on: \nhttp://localhost:${port}/graphql \nhttp://localhost:${port}/graphiql`)
 
-    } catch (e) {
-        console.log(e.message);
-      throw new Error(e.message);
-    }
+	} catch (e) {
+		console.log(e.message);
+	  throw new Error(e.message);
+	}
 };
 
 startServer();

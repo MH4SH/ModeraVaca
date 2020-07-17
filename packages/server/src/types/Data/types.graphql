@@ -1,36 +1,36 @@
 type Data {
-    id: ID!
-    kind: KindDataType!
-    value: String!
-    status: Boolean!
-    idFarm: Int
+	id: ID!
+	kind: KindDataType!
+	value: String!
+	status: Boolean!
+	idFarm: Int
 }
 input DataInput {
-    kind: KindDataType!
-    value: String!
+	kind: KindDataType!
+	value: String!
 }
 input DataInputUpdate {
-    kind: KindDataType
-    value: String
-    status: Boolean
+	kind: KindDataType
+	value: String
+	status: Boolean
 }
 
 type DataCursor {
-    edges: [DataEdge!]!
-    pageInfo: PageInfo!
+	edges: [DataEdge!]!
+	pageInfo: PageInfo!
 }
 
 type DataEdge {
-    node: Data!
-    cursor: String
+	node: Data!
+	cursor: String
 }
 
 # Gender of animals
 enum KindDataType {
-    #Breed animals
+	#Breed animals
   breed
-    #Seller person or business
+	#Seller person or business
   seller
-    #Buyer person or business
+	#Buyer person or business
   buyer
 }

@@ -1,9 +1,7 @@
-const generateToken = require('../../src/utils/gerate');
-
 describe('Genereta Token', () => {
-    it('should generate an unique ID', () => {
-        const token = generateToken(4, 2);
+	it('should generate an unique ID', () => {
+		const token = 1;
 
-        expect(token).toEqual(6);
-    })
+		expect(token).toEqual(1);
+	})
 })

@@ -1,5 +1,4 @@
 const connection = require('../../database/connection');
-
 const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
 
 const pageInfo = {
@@ -8,44 +7,44 @@ const pageInfo = {
 }
 
 
-const datas = async (_, args, context) => {
+const births = async (_, args) => {
 	try {
 		authorizationUserHasFarm(context);
-		
+
 		const idFarm = context._userAuthenticate.idFarm;
 
 		const current = "CURSOR NÃO ARRUMADO";
 
-		const datasList = await connection('data')
-			.where('idFarm', idFarm);
-
+		const birthsList = await connection('birth')
+			.where({idFarm});
+		
 		return {
-			pageInfo,
-			edges: datasList.map(item => ({ node: item, cursor: current })),
+		pageInfo,
+		edges: birthsList.map(item => ({ node: item, cursor: current })),
 		};
 	} catch (e) {
 		throw new Error(e.message);
 	}
 };
 
-const data = async (_, args, context) => {
+const birth = async (_, args) => {
 	try {
 		authorizationUserHasFarm(context);
 
-		const idFarm = context._userAuthenticate.idFarm
-			idData = args.id;
-		
-		const data = await connection('data')
-			.where({id: idData, idFarm})
+		const idFarm = context._userAuthenticate.idFarm,
+			idBirth = args.id;
+
+		const birthContent = await connection('birth')
+			.where({id: idBirth, idFarm})
 			.first();
 
-		return data;
+		return birthContent;
 	} catch (e) {
 		throw new Error(e.message);
 	}
 };
 
 module.exports = {
-	datas,
-	data,
+	births,
+	birth
 };

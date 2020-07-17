@@ -1,39 +1,39 @@
 type Purchase {
-    id: ID!
-    idBreeds: ID!
-    gender: GenderType!
-    dateBorn: Float!
-    amount: Int!
-    priceAmount: Int!
-    priceDelivery: Int
-    note: String
-    idSeller: ID!
+	id: ID!
+	idBreeds: ID!
+	gender: GenderType!
+	dateBirth: Float!
+	amount: Int!
+	priceAmount: Int!
+	priceDelivery: Int
+	note: String
+	idSeller: ID!
 }
 
 input PurchaseInput {
-    idBreeds: ID!
-    gender: GenderType!
-    dateBorn: Float!
-    amount: Int!
-    priceAmount: Int!
-    priceDelivery: Int
-    note: String
-    idSeller: ID!
+	idBreeds: ID!
+	gender: GenderType!
+	dateBirth: Float!
+	amount: Int!
+	priceAmount: Int!
+	priceDelivery: Int
+	note: String
+	idSeller: ID!
 }
 
 input PurchaseUpdate {
-    priceAmount: Int
-    priceDelivery: Int
-    note: String
-    idSeller: ID
+	priceAmount: Int
+	priceDelivery: Int
+	note: String
+	idSeller: ID
 }
 
 type PurchaseCursor {
-    edges: [PurchaseEdge!]!
-    pageInfo: PageInfo!
+	edges: [PurchaseEdge!]!
+	pageInfo: PageInfo!
 }
 
 type PurchaseEdge {
-    node: Purchase!
-    cursor: String
+	node: Purchase!
+	cursor: String
 }
