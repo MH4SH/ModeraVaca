@@ -19,8 +19,8 @@ const deads = async (_, args, context) => {
 			.where({idFarm});
 		
 		return {
-		pageInfo,
-		edges: deadList.map(item => ({ node: item, cursor: current })),
+			pageInfo,
+			edges: deadList.map(item => ({ node: item, cursor: current })),
 		};
 	} catch (e) {
 		throw new Error(e.message);
