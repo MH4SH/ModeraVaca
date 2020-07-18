@@ -2,7 +2,7 @@ type Query {
 	users(limit: Int, cursor: String): UserCursor!
 	user(id: ID!): User
 
-	datas: DataCursor!
+	datas(limit: Int, cursor: String, filter: KindDataType): DataCursor!
 	data(id: ID!): Data
 
 	purchases: PurchaseCursor!

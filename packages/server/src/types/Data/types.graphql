@@ -16,6 +16,7 @@ input DataInputUpdate {
 }
 
 type DataCursor {
+	totalCount: Int!
 	edges: [DataEdge!]!
 	pageInfo: PageInfo!
 }
