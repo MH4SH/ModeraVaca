@@ -19,8 +19,8 @@ const births = async (_, args) => {
 			.where({idFarm});
 		
 		return {
-		pageInfo,
-		edges: birthsList.map(item => ({ node: item, cursor: current })),
+			pageInfo,
+			edges: birthsList.map(item => ({ node: item, cursor: current })),
 		};
 	} catch (e) {
 		throw new Error(e.message);

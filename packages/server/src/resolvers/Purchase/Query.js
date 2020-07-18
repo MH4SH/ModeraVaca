@@ -19,8 +19,8 @@ const purchases = async (_, args, context) => {
 			.where({idFarm});
 
 		return {
-		pageInfo,
-		edges: listPurchases.map(item => ({ node: item, cursor: current })),
+			pageInfo,
+			edges: listPurchases.map(item => ({ node: item, cursor: current })),
 		};
 	} catch (e) {
 		throw new Error(e.message);

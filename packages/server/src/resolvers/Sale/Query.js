@@ -7,7 +7,7 @@ const pageInfo = {
 }
 
 
-const sales = async (_, args) => {
+const sales = async (_, args, context) => {
     try {
         authorizationUserHasFarm(context);
 
