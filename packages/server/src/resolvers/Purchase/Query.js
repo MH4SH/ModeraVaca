@@ -1,40 +1,50 @@
 const connection = require('../../database/connection');
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
 
 const pageInfo = {
-  endCursor: "CURSOR NÃO ARRUMADO",
-  hasNextPage: true
+	endCursor: "CURSOR NÃO ARRUMADO",
+	hasNextPage: true
 }
 
 
-const purchases = async (_, args) => {
-  try {
-	const current = "CURSOR NÃO ARRUMADO"
-	const listPurchases = await connection('purchase');
+const purchases = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
+		const idFarm = context._userAuthenticate.idFarm;
 
+		const current = "CURSOR NÃO ARRUMADO"
 
-	return {
-	  pageInfo,
-	  edges: listPurchases.map(item => ({ node: item, cursor: current })),
-	};
-  } catch (e) {
-	throw new Error(e.message);
-  }
+		const listPurchases = await connection('purchase')
+			.where({idFarm});
+
+		return {
+		pageInfo,
+		edges: listPurchases.map(item => ({ node: item, cursor: current })),
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const purchase = async (_, args) => {
+const purchase = async (_, args, context) => {
   try {
-	const data = await connection('purchase')
-	  .where('id', args.id)
+	authorizationUserHasFarm(context);
+
+	const idFarm = context._userAuthenticate.idFarm,
+		idPurchase = args.id;
+
+	const purchaseContent = await connection('purchase')
+	  .where({id: idPurchase, idFarm})
 	  .first();
 
-	return data;
+	return purchaseContent;
   } catch (e) {
 	throw new Error(e.message);
   }
 };
 
 module.exports = {
-  purchases,
+	purchases,
 	purchase,
 };

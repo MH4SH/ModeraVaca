@@ -50,7 +50,7 @@ const createBirth = async (_, args, context) => {
 	}
 };
 
-const deleteBirth = async (_, args) => {
+const deleteBirth = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
 
@@ -61,14 +61,14 @@ const deleteBirth = async (_, args) => {
 		let listAnimals = await connection('transaction_with_animal')
 			.where({idTransaction, type: 'birth', idFarm});
 
-	let { amountCreated } = await connection('transaction_with_animal')
-			.where({ idTransaction, type: 'dead', idFarm })
-			.orWhere({ idTransaction, type: 'sale', idFarm })
-			.count({ amountCreated: 'id' })
-			.first();
+		let { amountCreated } = await connection('transaction_with_animal')
+				.where({ idTransaction, type: 'dead', idFarm })
+				.orWhere({ idTransaction, type: 'sale', idFarm })
+				.count({ amountCreated: 'id' })
+				.first();
 
-	if (!isForceDelete && amountCreated !== 0)
-			throw new Error(JSON.stringify({ status: "Need Force", number: amountCreated }));
+		if (!isForceDelete && amountCreated !== 0)
+				throw new Error(JSON.stringify({ status: "Need Force", number: amountCreated }));
 
 		if (listAnimals.length === 0)
 			return false;
@@ -76,13 +76,13 @@ const deleteBirth = async (_, args) => {
 		const trx = await connection.transaction();
 
 		await trx('birth')
-			.where('id', idTransaction)
+			.where({id: idTransaction})
 			.delete();
 
 		for (let { idAnimal } of listAnimals) {
 
 			await trx('animal')
-				.where('id', idAnimal)
+				.where({id: idAnimal})
 				.delete();
 
 			await trx('transaction_with_animal')
@@ -99,7 +99,7 @@ const deleteBirth = async (_, args) => {
 	}
 };
 
-const updateBirth = async (_, args) => {
+const updateBirth = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
 

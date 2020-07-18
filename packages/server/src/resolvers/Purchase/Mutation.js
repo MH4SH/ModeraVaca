@@ -1,110 +1,127 @@
 const connection = require("../../database/connection");
 
-const createPurchase = async (_, args) => {
-  try {
-	const trx = await connection.transaction();
-	const data = args.input;
+const createPurchase = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-	const [purchaseId] = await trx('purchase').insert({
-	  ...data,
-	  idFarm: args.idFarm,
-	  created: new Date()
-	})
+		const idFarm = context._userAuthenticate.idFarm,
+			purchaseData = args.input;
 
+		const trx = await connection.transaction();
 
-	for(let v = 0; v < data.amount; v++){
-	  let [idAnimal] = await trx('animal').insert({
-		idBreeds: data.idBreeds,
-		gender: data.gender,
-		dateBirth: data.dateBirth,
-		idFarm: args.idFarm,
-		type: 'purchase',
-		created: new Date()
-	  });
+		const [purchaseId] = await trx('purchase')
+			.insert({
+				...purchaseData,
+				idFarm,
+				created: new Date()
+			})
 
 
-	  await trx('transaction_with_animal').insert({
-		idAnimal,
-		idTransaction: purchaseId,
-		type: 'purchase'
-	  });
+		for(let v = 0; v < purchaseData.amount; v++){
+				
+			let [idAnimal] = await trx('animal')
+				.insert({
+					idBreeds: purchaseData.idBreeds,
+					gender: purchaseData.gender,
+					dateBirth: purchaseData.dateBirth,
+					idFarm,
+					type: 'purchase',
+					created: new Date()
+				});
+
+			await trx('transaction_with_animal')
+				.insert({
+					idAnimal,
+					idTransaction: purchaseId,
+					idFarm,
+					type: 'purchase'
+				});
+		}
+
+		await trx.commit();
+
+		return {
+			id: purchaseId,
+			...purchaseData
+		};
+	} catch (e) {
+		throw new Error(e.message);
 	}
-
-	await trx.commit();
-
-	return {
-	  id: purchaseId,
-	  ...data
-	  };
-  } catch (e) {
-	throw new Error(e.message);
-  }
 };
 
-const deletePurchase = async (_, args) => {
-  try {
-	let listAnimals = await connection('transaction_with_animal')
-	.where('idTransaction', args.id)
-	.where('type', 'purchase');
-	
-	let {amountCreated} = await connection('transaction_with_animal')
-	.where({'idTransaction': args.id, type: 'dead'})
-	.orWhere({'idTransaction': args.id, type: 'sale'})
-	.count({amountCreated: 'id'})
-	.first();
-	
-	if(!args.force)
-	  if(amountCreated!=0)
-		throw new Error(JSON.stringify({status: "Need Force", number: amountCreated}));
+const deletePurchase = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-	if(listAnimals.length===0)
-	  return false;
+		const idFarm = context._userAuthenticate.idFarm,
+			idTransaction = args.id,
+			isForceDelete = args.force;
 
-	const trx = await connection.transaction();
+		let listAnimals = await connection('transaction_with_animal')
+			.where({idTransaction, type: 'purchase', idFarm});
+		
+		let {amountCreated} = await connection('transaction_with_animal')
+			.where({idTransaction, type: 'dead', idFarm})
+			.orWhere({idTransaction, type: 'sale', idFarm})
+			.count({amountCreated: 'id'})
+			.first();
+			
+		if(!isForceDelete && amountCreated !== 0)
+			throw new Error(JSON.stringify({status: "Need Force", number: amountCreated}));
 
-	await trx('purchase')
-	.where('id', args.id)
-	.delete();
+		if(listAnimals.length===0)
+			return false;
 
-	for(let {idAnimal} of listAnimals){
+		const trx = await connection.transaction();
 
-	  await trx('animal')
-	  .where('id', idAnimal)
-	  .delete();
+		await trx('purchase')
+			.where({id: idTransaction})
+			.delete();
 
-	  await trx('transaction_with_animal')
-	  .where('idAnimal', idAnimal)
-	  .where('idTransaction', args.id)
-	  .where('type', 'purchase')
-	  .delete();
+		for(let { idAnimal } of listAnimals){
 
+		await trx('animal')
+			.where({id: idAnimal})
+			.delete();
+
+		await trx('transaction_with_animal')
+			.where({idAnimal, idTransaction, type: 'purchase'})
+			.delete();
+
+		}
+
+		await trx.commit();
+
+		return true;
+	} catch (e) {
+		throw new Error(e.message);
 	}
-
-	await trx.commit();
-
-	return true;
-  } catch (e) {
-	throw new Error(e.message);
-  }
 };
 
-const updatePurchase = async (_, args) => {
-  try {
-	const content = {...args.input};
+const updatePurchase = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
+
+		const idFarm = context._userAuthenticate.idFarm,
+			idTransaction = args.id,
+			contentPurchase = { ...args.input };
 
 
-	await connection('purchase')
-	.where('id', args.id)
-	.update({ ...content });
+		const isUpdated = await connection('purchase')
+			.where({id: idTransaction, idFarm})
+			.update({ ...contentPurchase });
 
-	let item = await connection('purchase')
-	.where('id', args.id)
-	.first();
+		if(!isUpdated)
+			throw new Error(`Purchase don't found`);
 
-	return item;
-  } catch (e) {
-	throw new Error(e.message);
-  }
+		let item = await connection('purchase')
+			.where({id: idTransaction})
+			.first();
+
+		return item;
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
 module.exports = {
