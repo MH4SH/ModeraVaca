@@ -1,5 +1,5 @@
 type Query {
-	users: UserCursor!
+	users(limit: Int, cursor: String): UserCursor!
 	user(id: ID!): User
 
 	datas: DataCursor!

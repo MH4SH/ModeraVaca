@@ -1,21 +1,40 @@
 const connection = require('../../database/connection');
 const { authorizationUserIsAdmin, authorizationUserIsAdminOrIsOwn } = require('../../auth/utils/verifyUserAuthenticate');
-
-const pageInfo = {
-	endCursor: "CURSOR NÃO ARRUMADO",
-	hasNextPage: true
-}
-
+const { cursorEncoding, cursorDecoding } = require('../../utils/cursorEncodingAndDecoding');
 
 const users = async (_, args, context) => {
 	try {
 		authorizationUserIsAdmin(context);
+		
+		const limitPage = args.limit || 10,
+			cursor = cursorDecoding(args.cursor);
+		
+		let pageInfo = {
+			endCursor: 0,
+			hasNextPage: false
+		}
 
-		const current = "CURSOR NÃO ARRUMADO";
-		const usersList = await connection('user');
+		const { totalCount } = await connection('user').count({totalCount: '*'}).first();
+		
+		const usersList = await connection('user')
+			.where('id', '>', cursor)
+			.offset(0)
+			.limit(limitPage + 1);
+
+		let amountItens = usersList.length;
+		pageInfo.hasNextPage = amountItens > limitPage;
+
+		const edges = usersList.slice(0, limitPage).map(item => {
+			let cursor = cursorEncoding(item.id);
+			pageInfo.endCursor = cursor;
+
+			return { node: item, cursor }
+		})
+
 		return {
 			pageInfo,
-			edges: usersList.map(item => ({ node: item, cursor: current })),
+			totalCount,
+			edges
 		};
 	} catch (e) {
 		throw new Error(e.message);
