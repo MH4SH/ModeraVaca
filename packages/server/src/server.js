@@ -38,15 +38,7 @@ const startServer = () => {
 			schema: schema
 			})
 		);
-
-		app.use(
-			"/graphiql",
-			graphqlHTTP({
-			schema: schema,
-			graphiql: true,
-			})
-		);
-
+		
 		app.listen(port);
 		console.log(`Server is running on: \nhttp://localhost:${port}/graphql \nhttp://localhost:${port}/graphiql`)
 
