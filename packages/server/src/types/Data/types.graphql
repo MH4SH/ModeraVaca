@@ -5,17 +5,24 @@ type Data {
 	status: Boolean!
 	idFarm: Int
 }
+
 input DataInput {
 	kind: KindDataType!
 	value: String!
 }
+
 input DataInputUpdate {
 	kind: KindDataType
 	value: String
 	status: Boolean
 }
 
+input DataFilter {
+	kind: KindDataType
+}
+
 type DataCursor {
+	totalCount: Int!
 	edges: [DataEdge!]!
 	pageInfo: PageInfo!
 }

@@ -24,7 +24,12 @@ input SaleUpdate {
 	idBuyer: ID
 }
 
+input SaleFilter {
+	idBuyer: ID
+}
+
 type SaleCursor {
+	totalCount: Int!
 	edges: [SaleEdge!]!
 	pageInfo: PageInfo!
 }

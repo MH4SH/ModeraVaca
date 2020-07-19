@@ -15,11 +15,16 @@ input BirthInput {
 	note: String
 }
 
+input BirthFilter {
+	age: AgeGroup
+}
+
 input BirthUpdate {
 	note: String
 }
 
 type BirthCursor {
+	totalCount: Int!
 	edges: [BirthEdge!]!
 	pageInfo: PageInfo!
 }

@@ -1,19 +1,19 @@
 type Query {
-	users: UserCursor!
+	users(limit: Int, cursor: String): UserCursor!
 	user(id: ID!): User
 
-	datas: DataCursor!
+	datas(limit: Int, cursor: String, filter: DataFilter): DataCursor!
 	data(id: ID!): Data
 
-	purchases: PurchaseCursor!
+	purchases(limit: Int, cursor: String, filter: purchaseFilter): PurchaseCursor!
 	purchase(id: ID!): Purchase
 
-	sales: SaleCursor!
+	sales(limit: Int, cursor: String, filter: SaleFilter): SaleCursor!
 	sale(id: ID!): Sale
 
-	births: DeadCursor!
-	birth(id: ID!): Dead
+	births(limit: Int, cursor: String, filter: BirthFilter): BirthCursor!
+	birth(id: ID!): Birth
 
-	deads: DeadCursor!
+	deads(limit: Int, cursor: String): DeadCursor!
 	dead(id: ID!): Dead
 }

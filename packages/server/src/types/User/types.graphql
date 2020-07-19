@@ -39,6 +39,7 @@ enum UsersType {
 }
 
 type UserCursor {
+	totalCount: Int!
 	edges: [UserEdge]
 	pageInfo: PageInfo!
 }

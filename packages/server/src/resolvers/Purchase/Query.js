@@ -1,40 +1,70 @@
 const connection = require('../../database/connection');
 
-const pageInfo = {
-  endCursor: "CURSOR NÃO ARRUMADO",
-  hasNextPage: true
-}
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
+const { cursorEncoding, cursorDecoding } = require('../../utils/cursorEncodingAndDecoding');
 
+const purchases = async (_, args, context) => {
+	try {
+		authorizationUserHasFarm(context);
 
-const purchases = async (_, args) => {
-  try {
-	const current = "CURSOR NÃO ARRUMADO"
-	const listPurchases = await connection('purchase');
+		const idFarm = context._userAuthenticate.idFarm,
+			filter = args.filter ? {...args.filter} : {},
+			limitPage = args.limit || 10,
+			cursor = cursorDecoding(args.cursor);
 
+		let pageInfo = {
+			endCursor: null,
+			hasNextPage: false
+		}
 
+		const { totalCount } = await connection('purchase')
+			.count({totalCount: '*'})
+			.where({idFarm, ...filter})
+			.first();
 
-	return {
-	  pageInfo,
-	  edges: listPurchases.map(item => ({ node: item, cursor: current })),
-	};
-  } catch (e) {
-	throw new Error(e.message);
-  }
+		const purchaseList = await connection('purchase')
+			.where('id', '>', cursor)
+			.where({idFarm, ...filter})
+			.limit(limitPage + 1);
+
+		let amountItens = purchaseList.length;
+		pageInfo.hasNextPage = amountItens > limitPage;
+
+		const edges = purchaseList.slice(0, limitPage).map(item => {
+			let cursor = cursorEncoding(item.id);
+			pageInfo.endCursor = cursor;
+
+			return { node: item, cursor }
+		});
+
+		return {
+			pageInfo,
+			totalCount,
+			edges
+		};
+	} catch (e) {
+		throw new Error(e.message);
+	}
 };
 
-const purchase = async (_, args) => {
+const purchase = async (_, args, context) => {
   try {
-	const data = await connection('purchase')
-	  .where('id', args.id)
+	authorizationUserHasFarm(context);
+
+	const idFarm = context._userAuthenticate.idFarm,
+		idPurchase = args.id;
+
+	const purchaseContent = await connection('purchase')
+	  .where({id: idPurchase, idFarm})
 	  .first();
 
-	return data;
+	return purchaseContent;
   } catch (e) {
 	throw new Error(e.message);
   }
 };
 
 module.exports = {
-  purchases,
+	purchases,
 	purchase,
 };

@@ -66,7 +66,7 @@ const UserController = {
 				case 'email':
 					console.log('Email', code);
 					sendEmail
-						.noreplay({
+						.noReplay({
 							to: access,
 							subject: 'Recuperar Senha',
 							html: `<p>Use o código <strong>${code}</strong> para redefinir a sua senha.<br/><a href="https://moderavaca.projeto.mh4sh.dev/password#!${token}">https://moderavaca.projeto.mh4sh.dev/password#!${token}</a></p>`,

@@ -5,7 +5,7 @@ exports.up = function(knex) {
 		table.enu('gender', ['m', 'f']).notNullable();
 		table.integer('amount').notNullable();
 		table.integer('priceAmount').notNullable();
-		table.string('note', 400).notNullable();
+		table.string('note', 400);
 		table.integer('idBuyer').unsigned().notNullable();
 		table.timestamp('created').notNullable();
 

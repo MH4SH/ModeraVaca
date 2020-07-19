@@ -1,27 +1,46 @@
 const connection = require('../../database/connection');
 
 const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
-
-const pageInfo = {
-	endCursor: "CURSOR NÃO ARRUMADO",
-	hasNextPage: true
-}
-
+const { cursorEncoding, cursorDecoding } = require('../../utils/cursorEncodingAndDecoding');
 
 const datas = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
-		
-		const idFarm = context._userAuthenticate.idFarm;
 
-		const current = "CURSOR NÃO ARRUMADO";
+		const idFarm = context._userAuthenticate.idFarm,
+			filter = args.filter ? {...args.filter} : {},
+			limitPage = args.limit || 10,
+			cursor = cursorDecoding(args.cursor);
+		
+		let pageInfo = {
+			endCursor: null,
+			hasNextPage: false
+		};
+
+		const { totalCount } = await connection('data')
+			.count({totalCount: '*'})
+			.where({idFarm, ...filter})
+			.first();
 
 		const datasList = await connection('data')
-			.where('idFarm', idFarm);
+			.where('id', '>', cursor)
+			.where({idFarm, ...filter})
+			.limit(limitPage + 1);
 
+		let amountItens = datasList.length;
+		pageInfo.hasNextPage = amountItens > limitPage;
+
+		const edges = datasList.slice(0, limitPage).map(item => {
+			let cursor = cursorEncoding(item.id);
+			pageInfo.endCursor = cursor;
+
+			return { node: item, cursor }
+		});
+	
 		return {
 			pageInfo,
-			edges: datasList.map(item => ({ node: item, cursor: current })),
+			totalCount,
+			edges
 		};
 	} catch (e) {
 		throw new Error(e.message);
