@@ -1,17 +1,15 @@
 const connection = require('../../database/connection');
+
 const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
-
-const pageInfo = {
-	endCursor: "CURSOR NÃO ARRUMADO",
-	hasNextPage: true
-}
-
+const { cursorEncoding, cursorDecoding } = require('../../utils/cursorEncodingAndDecoding');
 
 const purchases = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
 
-		const idFarm = context._userAuthenticate.idFarm;
+		const idFarm = context._userAuthenticate.idFarm,
+			limitPage = args.limit || 10,
+			cursor = cursorDecoding(args.cursor);
 
 		const current = "CURSOR NÃO ARRUMADO"
 
