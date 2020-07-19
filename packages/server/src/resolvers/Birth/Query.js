@@ -11,7 +11,7 @@ const births = async (_, args, context) => {
 			age = args.filter.age ? args.filter.age(new Date()) : '',
 			limitPage = args.limit || 10,
 			cursor = cursorDecoding(args.cursor);
-			
+		
 		let ageStart = args.filter.age ? ['dateBirth', '<=', age.start.getTime()] : ['dateBirth', '!=', ''],
 			ageEnd = args.filter.age ? ['dateBirth', '>', age.end.getTime()] : ['dateBirth', '!=', ''];
 

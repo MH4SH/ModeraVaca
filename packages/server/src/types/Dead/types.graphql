@@ -15,11 +15,13 @@ input DeadInput {
 }
 
 input DeadUpdate {
+	totalCount: Int!
 	dateDead: Float
 	note: String
 }
 
 type DeadCursor {
+	totalCount: Int!
 	edges: [DeadEdge!]!
 	pageInfo: PageInfo!
 }

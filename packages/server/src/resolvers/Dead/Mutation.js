@@ -31,7 +31,6 @@ const createDead = async (_, args, context) => {
 		const [deadId] = await trx('dead')
 			.insert({
 				...deadData,
-				amount: 3,
 				idFarm,
 				created: new Date()
 			});

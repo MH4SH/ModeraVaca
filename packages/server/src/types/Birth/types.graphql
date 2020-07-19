@@ -24,6 +24,7 @@ input BirthUpdate {
 }
 
 type BirthCursor {
+	totalCount: Int!
 	edges: [BirthEdge!]!
 	pageInfo: PageInfo!
 }
