@@ -2,7 +2,7 @@ type Query {
 	users(limit: Int, cursor: String): UserCursor!
 	user(id: ID!): User
 
-	datas(limit: Int, cursor: String, filter: KindDataType): DataCursor!
+	datas(limit: Int, cursor: String, filter: DataFilter): DataCursor!
 	data(id: ID!): Data
 
 	purchases: PurchaseCursor!
@@ -11,8 +11,8 @@ type Query {
 	sales: SaleCursor!
 	sale(id: ID!): Sale
 
-	births: DeadCursor!
-	birth(id: ID!): Dead
+	births(limit: Int, cursor: String, filter: BirthFilter): BirthCursor!
+	birth(id: ID!): Birth
 
 	deads: DeadCursor!
 	dead(id: ID!): Dead

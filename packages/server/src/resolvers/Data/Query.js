@@ -7,16 +7,15 @@ const datas = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
 
-		const idFarm = context._userAuthenticate.idFarm;
-		
-		const filter = args.filter ? {kind: args.filter} : {},
+		const idFarm = context._userAuthenticate.idFarm,
+			filter = args.filter ? {kind: args.filter} : {},
 			limitPage = args.limit || 10,
 			cursor = cursorDecoding(args.cursor);
 		
 		let pageInfo = {
 			endCursor: null,
 			hasNextPage: false
-		}
+		};
 
 		const { totalCount } = await connection('data')
 			.count({totalCount: '*'})
@@ -36,7 +35,7 @@ const datas = async (_, args, context) => {
 			pageInfo.endCursor = cursor;
 
 			return { node: item, cursor }
-		})
+		});
 	
 		return {
 			pageInfo,

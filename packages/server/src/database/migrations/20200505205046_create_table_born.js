@@ -5,7 +5,7 @@ exports.up = function(knex) {
 		table.integer('idBreeds').unsigned().notNullable();
 		table.enu('gender', ['m', 'f']).notNullable();
 		table.integer('amount').notNullable();
-		table.string('note', 400).notNullable();
+		table.string('note', 400);
 		table.timestamp('dateBirth').notNullable();
 		table.timestamp('created').notNullable();
 		

@@ -1,33 +1,60 @@
 const connection = require('../../database/connection');
+
 const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
+const { cursorEncoding, cursorDecoding } = require('../../utils/cursorEncodingAndDecoding');
 
-const pageInfo = {
-	endCursor: "CURSOR NÃO ARRUMADO",
-	hasNextPage: true
-}
-
-
-const births = async (_, args) => {
+const births = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
 
-		const idFarm = context._userAuthenticate.idFarm;
+		const idFarm = context._userAuthenticate.idFarm,
+			age = args.filter.age ? args.filter.age(new Date()) : '',
+			limitPage = args.limit || 10,
+			cursor = cursorDecoding(args.cursor);
+			
+		let ageStart = args.filter.age ? ['dateBirth', '<=', age.start.getTime()] : ['dateBirth', '!=', ''],
+			ageEnd = args.filter.age ? ['dateBirth', '>', age.end.getTime()] : ['dateBirth', '!=', ''];
 
-		const current = "CURSOR NÃO ARRUMADO";
+		let pageInfo = {
+			endCursor: null,
+			hasNextPage: false
+		};
+
+		const { totalCount } = await connection('birth')
+			.where({idFarm})
+			.where(...ageStart)
+			.where(...ageEnd)
+			.count({totalCount: '*'})
+			.first();
 
 		const birthsList = await connection('birth')
-			.where({idFarm});
-		
+			.where('id', '>', cursor)
+			.where(...ageStart)
+			.where(...ageEnd)
+			.where({idFarm})
+			.limit(limitPage + 1);
+
+		let amountItens = birthsList.length;
+		pageInfo.hasNextPage = amountItens > limitPage;
+
+		const edges = birthsList.slice(0, limitPage).map(item => {
+			let cursor = cursorEncoding(item.id);
+			pageInfo.endCursor = cursor;
+
+			return { node: item, cursor }
+		});
+
 		return {
 			pageInfo,
-			edges: birthsList.map(item => ({ node: item, cursor: current })),
+			totalCount,
+			edges
 		};
 	} catch (e) {
 		throw new Error(e.message);
 	}
 };
 
-const birth = async (_, args) => {
+const birth = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);
 

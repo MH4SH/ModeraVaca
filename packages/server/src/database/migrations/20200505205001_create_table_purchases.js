@@ -7,7 +7,7 @@ exports.up = function(knex) {
 		table.integer('amount').notNullable();
 		table.integer('priceAmount').notNullable();
 		table.integer('priceDelivery').notNullable();
-		table.string('note', 400).notNullable();
+		table.string('note', 400);
 		table.integer('idSeller').unsigned().notNullable();
 		table.timestamp('created').notNullable();
 
