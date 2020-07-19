@@ -5,7 +5,7 @@ type Query {
 	datas(limit: Int, cursor: String, filter: DataFilter): DataCursor!
 	data(id: ID!): Data
 
-	purchases: PurchaseCursor!
+	purchases(limit: Int, cursor: String, filter: purchaseFilter): PurchaseCursor!
 	purchase(id: ID!): Purchase
 
 	sales: SaleCursor!

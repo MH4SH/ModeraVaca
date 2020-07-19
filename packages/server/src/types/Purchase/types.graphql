@@ -28,7 +28,12 @@ input PurchaseUpdate {
 	idSeller: ID
 }
 
+input purchaseFilter {
+	idSeller: ID
+}
+
 type PurchaseCursor {
+	totalCount: Int!
 	edges: [PurchaseEdge!]!
 	pageInfo: PageInfo!
 }

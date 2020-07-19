@@ -8,17 +8,39 @@ const purchases = async (_, args, context) => {
 		authorizationUserHasFarm(context);
 
 		const idFarm = context._userAuthenticate.idFarm,
+			filter = args.filter ? {...args.filter} : {},
 			limitPage = args.limit || 10,
 			cursor = cursorDecoding(args.cursor);
 
-		const current = "CURSOR NÃO ARRUMADO"
+		let pageInfo = {
+			endCursor: null,
+			hasNextPage: false
+		}
 
-		const listPurchases = await connection('purchase')
-			.where({idFarm});
+		const { totalCount } = await connection('purchase')
+			.count({totalCount: '*'})
+			.where({idFarm, ...filter})
+			.first();
+
+		const purchaseList = await connection('purchase')
+			.where('id', '>', cursor)
+			.where({idFarm, ...filter})
+			.limit(limitPage + 1);
+
+		let amountItens = purchaseList.length;
+		pageInfo.hasNextPage = amountItens > limitPage;
+
+		const edges = purchaseList.slice(0, limitPage).map(item => {
+			let cursor = cursorEncoding(item.id);
+			pageInfo.endCursor = cursor;
+
+			return { node: item, cursor }
+		});
 
 		return {
 			pageInfo,
-			edges: listPurchases.map(item => ({ node: item, cursor: current })),
+			totalCount,
+			edges
 		};
 	} catch (e) {
 		throw new Error(e.message);

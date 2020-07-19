@@ -1,5 +1,5 @@
 const connection = require("../../database/connection");
-
+const { authorizationUserHasFarm } = require('../../auth/utils/verifyUserAuthenticate');
 const createPurchase = async (_, args, context) => {
 	try {
 		authorizationUserHasFarm(context);

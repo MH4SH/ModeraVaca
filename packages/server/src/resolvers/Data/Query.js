@@ -8,7 +8,7 @@ const datas = async (_, args, context) => {
 		authorizationUserHasFarm(context);
 
 		const idFarm = context._userAuthenticate.idFarm,
-			filter = args.filter.kind ? {kind: args.filter.kind} : {},
+			filter = args.filter ? {...args.filter} : {},
 			limitPage = args.limit || 10,
 			cursor = cursorDecoding(args.cursor);
 		
