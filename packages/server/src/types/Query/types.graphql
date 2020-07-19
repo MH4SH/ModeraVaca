@@ -8,7 +8,7 @@ type Query {
 	purchases(limit: Int, cursor: String, filter: purchaseFilter): PurchaseCursor!
 	purchase(id: ID!): Purchase
 
-	sales: SaleCursor!
+	sales(limit: Int, cursor: String, filter: SaleFilter): SaleCursor!
 	sale(id: ID!): Sale
 
 	births(limit: Int, cursor: String, filter: BirthFilter): BirthCursor!
