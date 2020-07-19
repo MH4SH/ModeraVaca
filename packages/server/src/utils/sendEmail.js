@@ -15,7 +15,7 @@ const sendEmail = {
 			text: '\n\nfor ModeVaca'
 		};
 	},
-	noreplay: async ({to, subject, html, text}) => {
+	noReplay: async ({to, subject, html, text}) => {
 		const msg = {
 			to,
 			from: 'ModeraVaca <noreply@moderavaca.mh4sh.dev>',
