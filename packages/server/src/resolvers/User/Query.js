@@ -1,4 +1,5 @@
 const connection = require('../../database/connection');
+
 const { authorizationUserIsAdmin, authorizationUserIsAdminOrIsOwn } = require('../../auth/utils/verifyUserAuthenticate');
 const { cursorEncoding, cursorDecoding } = require('../../utils/cursorEncodingAndDecoding');
 
@@ -10,15 +11,16 @@ const users = async (_, args, context) => {
 			cursor = cursorDecoding(args.cursor);
 		
 		let pageInfo = {
-			endCursor: 0,
+			endCursor: null,
 			hasNextPage: false
 		}
 
-		const { totalCount } = await connection('user').count({totalCount: '*'}).first();
+		const { totalCount } = await connection('user')
+			.count({totalCount: '*'})
+			.first();
 		
 		const usersList = await connection('user')
 			.where('id', '>', cursor)
-			.offset(0)
 			.limit(limitPage + 1);
 
 		let amountItens = usersList.length;
