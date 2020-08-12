@@ -1,0 +1,91 @@
+
+.header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background: var(--primary);
+	padding: 15px 0;
+	z-index: 10;
+}
+
+.header_menu > nav, .header_menu > button, .header_menu > div {
+	text-align: right;
+	float: inline-end;
+}
+
+.header_menu button {
+	margin-left: 20px;
+	margin-top: 15px;
+	background: none;
+
+	color: var(--bg-s-light);
+    font-family: 'Ubuntu', sans-serif;
+	font-weight: 700;
+	text-transform: lowercase;
+	letter-spacing: .04em;
+	font-size: 14px;
+	line-height: 20px;
+	outline: none;	
+}
+
+.header_menu > div {
+	margin: auto 0;
+	margin-left: 20px;
+	margin-right: 15px;
+}
+
+.header_menu > div::after {
+	content: "";
+
+	top: 24px;
+	right: -10px;
+
+	border: 8px solid transparent;
+	border-top-color: var(--bg-s-light);
+
+	display: block;
+	position: absolute;
+}
+
+.header_menu button::after {
+	content: "";
+	width: 100%;
+	height: 2.4px;
+	background: var(--bg-s-light);
+    display: block;
+}
+
+.header_menu ul li {
+	display: inline-block;
+	margin-left: 20px;
+	margin-top: 15px;
+}
+
+.header_menu ul li a {
+	color: var(--bg);
+    font-family: 'Ubuntu', sans-serif;
+	font-weight: 700;
+	text-transform: lowercase;
+	letter-spacing: .04em;
+	font-size: 14px;
+	line-height: 20px;
+	padding: 10px 0;
+	outline: none;
+}
+
+.header_menu ul li a:hover {
+	color: #FFF;
+}
+
+.header_menu ul li a.active {
+	color: #FFF;
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	
+}

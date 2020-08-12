@@ -1,0 +1,13 @@
+type Farm {
+  id: ID!
+  name: String
+}
+
+input FarmInput {
+  idUser: Int!
+  name: String!
+}
+
+input FarmInputUpdate {
+  name: String!
+}

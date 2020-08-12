@@ -1,0 +1,27 @@
+type Born {
+    id: ID!
+    idCard: ID
+    idBreeds: ID!
+    gender: GenderType!
+    age: AgeType!
+    dateBorn: Int!
+    note: String
+    status: Boolean!
+}
+
+input BornInput {
+    idBreeds: ID!
+    gender: GenderType!
+    dateBorn: Int!
+    note: String
+}
+
+type BornCursor {
+    edges: [BornEdge!]!
+    pageInfo: PageInfo!
+}
+
+type BornEdge {
+    node: Born!
+    cursor: String
+}
