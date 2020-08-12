@@ -1,0 +1,14 @@
+{
+  "name": "moderavaca",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+        "packages/*",
+        "packages/shared/*"
+    ]
+  },
+  "author": "Marcon Willian <marconwillian@protonmail.com>",
+  "license": "MIT"
+}

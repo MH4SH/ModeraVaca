@@ -1,5 +1,5 @@
 {
-	"name": "moderavaca_api",
+    "name": "@moderavaca/server",
 	"version": "3.15.9",
 	"description": "Projeto para moderar rebanhos e transações do sitio",
 	"main": "src/index.js",
