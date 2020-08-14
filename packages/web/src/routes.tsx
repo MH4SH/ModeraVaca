@@ -6,9 +6,6 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Cards from './pages/Cards';
 
-import ScrollToTop from './components/ScrollToTop';
-
-
 
 export default function Routes() {
     const Middlewares = () => {

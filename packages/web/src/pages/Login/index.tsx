@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, FormEvent} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 
 import api from '../../services/api';
@@ -16,8 +16,8 @@ export default function Login() {
     const history = useHistory();
 
 
-    const handleChange = async (e) => {
-        e.preventDefault();
+    const handleChange = async (event: FormEvent) => {
+        event.preventDefault();
         if(!access)
             return alert(`Acesso não preenchido!`);
         if(!pass)
@@ -46,15 +46,15 @@ export default function Login() {
         if(formPhone){
             return (
                 <div className="from-input">
-                    <label for="access">seu celular ou <span onClick={()=>{setFormPhone(false)}}>seu email aqui</span></label>
-                    <input type="number" id="access" value={access} onChange={e=> setAccess(e.target.value)} required=""/>
+                    <label htmlFor="access">seu celular ou <span onClick={()=>{setFormPhone(false)}}>seu email aqui</span></label>
+                    <input type="number" id="access" value={access} onChange={e=> setAccess(e.target.value)} required={true}/>
                 </div>
                 )
         } else {
             return (
                 <div className="from-input">
-                    <label for="access">seu email ou <span onClick={()=>{setFormPhone(true)}}>seu celular aqui</span></label>
-                    <input type="email" id="access" value={access} onChange={e=> setAccess(e.target.value)} required=""/>
+                    <label htmlFor="access">seu email ou <span onClick={()=>{setFormPhone(true)}}>seu celular aqui</span></label>
+                    <input type="email" id="access" value={access} onChange={e=> setAccess(e.target.value)} required={true}/>
                 </div>
                 )
         }
@@ -68,7 +68,7 @@ export default function Login() {
                     <h1>fazer login</h1>
                     { inputAccess() }
                     <div className="from-input">
-                        <label for="pass">sua senha</label>
+                        <label htmlFor="pass">sua senha</label>
                         <input type="password" id="pass" value={pass} onChange={e=> setPass(e.target.value)}/>
                     </div>
                     <button className="button" type="submit">entrar</button>

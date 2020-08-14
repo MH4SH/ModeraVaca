@@ -39,7 +39,7 @@
 	"devDependencies": {
 		"@divyenduz/ts-graphql-plugin": "^0.1.0",
 		"cross-env": "^7.0.2",
-		"jest": "^26.0.1",
+		"jest": "^24.9.0",
 		"sqlite3": "^4.2.0"
 	},
 	"engines": {

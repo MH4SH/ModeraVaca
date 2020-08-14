@@ -30,11 +30,11 @@ export default function Cards(){
 
     }, [userToken]);
 
-    function hasSelected(card){
+    function hasSelected(card: any){
         console.log(card);
     }
 
-    function cardList(card){
+    function cardList(card: any){
         return (
             <li className="row" key={card._id} onClick={() => hasSelected(card)}>
                     <div className="grid-8">{new Date(card.date).toLocaleDateString("pt-BR")}</div>
