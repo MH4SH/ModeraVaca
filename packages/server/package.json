@@ -1,5 +1,5 @@
 {
-    "name": "@moderavaca/server",
+	"name": "@moderavaca/server",
 	"version": "3.15.9",
 	"description": "Projeto para moderar rebanhos e transações do sitio",
 	"main": "src/index.js",
@@ -33,7 +33,7 @@
 		"graphql-tools": "^5.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"knex": "^0.21.1",
-		"pg": "^8.2.1",
+		"mysql": "^2.18.1",
 		"smslegal": "^0.2.1"
 	},
 	"devDependencies": {
