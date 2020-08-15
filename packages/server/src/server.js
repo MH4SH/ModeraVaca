@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const graphqlHTTP = require("express-graphql");
 const { makeExecutableSchema } = require("graphql-tools");
 require('dotenv').config();
@@ -19,7 +20,7 @@ const Types = require('./resolvers/Types');
 const startServer = () => {
 	try {
 		var app = express();
-		
+		app.use(cors());
 		auth(app);
 
 		const resolvers = {
