@@ -14,8 +14,8 @@ export default function Login() {
     const [name, setName] = useState("");
     const [city, setCity] = useState("");
     const [uf, setUf] = useState("");
-    const [pass, setPass] = useState("");
-    const [passB, setPassB] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordCheck, setPasswordCheck] = useState("");
 
     const history = useHistory();
     //history.push('/perfil')
@@ -23,17 +23,17 @@ export default function Login() {
     const handleChange = async (event: FormEvent) => {
         event.preventDefault();
 
-        if(pass!==passB){
-            alert("Senhas não são identicas!");
-            return setPassB("");
+        if(password!==passwordCheck){
+            alert("Senhas não são idênticas!");
+            return setPasswordCheck("");
         }
         try {
-            const response = await api.post('user/resgister', {phone, email, name, city, uf, pass});
+            const response = await api.post('auth/register', {phone, email, name, city, uf, password});
 
             localStorage.setItem('userToken', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            history.push('/home');
+            history.push('/');
         } catch (err){
             console.log(err);
             alert(`Falha: ${err.response.data.message} (${err.response.status})`);
@@ -115,12 +115,12 @@ export default function Login() {
                     </div>
                     <div className="row">
                         <div>
-                            <label htmlFor="pass">senha</label>
-                            <input type="password" id="pass" value={pass} onChange={e=>setPass(e.target.value)} required={true} />
+                            <label htmlFor="password">senha</label>
+                            <input type="password" id="password" value={password} onChange={e=>setPassword(e.target.value)} required={true} />
                         </div>
                         <div>
-                            <label htmlFor="passB">confirme a senha</label>
-                            <input type="password" id="passB" value={passB} onChange={e=>setPassB(e.target.value)} required={true} />
+                            <label htmlFor="passwordB">confirme a senha</label>
+                            <input type="password" id="passwordB" value={passwordCheck} onChange={e=>setPasswordCheck(e.target.value)} required={true} />
                         </div>
                     </div>
                     <div className="row">

@@ -10,7 +10,7 @@ import './styles.css';
 
 export default function Login() {
     const [access, setAccess] = useState("");
-    const [pass, setPass] = useState("");
+    const [password, setPassword] = useState("");
     const [formPhone, setFormPhone] = useState(true);
 
     const history = useHistory();
@@ -20,11 +20,11 @@ export default function Login() {
         event.preventDefault();
         if(!access)
             return alert(`Acesso não preenchido!`);
-        if(!pass)
+        if(!password)
             return alert(`Senha não preenchido!`);
 
         try {
-            const response = await api.post('user/authenticate', {access, pass});
+            const response = await api.post('auth/authenticate', {access, password});
 
             localStorage.setItem('userToken', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -69,7 +69,7 @@ export default function Login() {
                     { inputAccess() }
                     <div className="from-input">
                         <label htmlFor="pass">sua senha</label>
-                        <input type="password" id="pass" value={pass} onChange={e=> setPass(e.target.value)}/>
+                        <input type="password" id="pass" value={password} onChange={e=> setPassword(e.target.value)}/>
                     </div>
                     <button className="button" type="submit">entrar</button>
                 </form>
