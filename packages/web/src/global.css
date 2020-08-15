@@ -128,6 +128,12 @@ body {
 input, button, textarea {
     font: 400 18px Roboto, sans-setif;
 }
+
+textarea:focus, input:focus, select:focus {
+    outline: 0;
+    border: 2px solid #d1dcd1;
+}
+
 h1 {
     font-family: 'Ubuntu', sans-serif;
     font-weight: 700;
