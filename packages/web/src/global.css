@@ -131,7 +131,7 @@ input, button, textarea {
 
 textarea:focus, input:focus, select:focus {
     outline: 0;
-    border: 2px solid #d1dcd1;
+    border: 2px solid #b5e2b6;
 }
 
 h1 {
