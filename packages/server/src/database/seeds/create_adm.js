@@ -13,8 +13,7 @@ exports.seed = async (knex) => {
             city: 'Primavera do Leste',
             uf: 'MT',
             password, 
-            type: '1',
-            created: new Date()
+            type: '1'
         }
     ]);
 };

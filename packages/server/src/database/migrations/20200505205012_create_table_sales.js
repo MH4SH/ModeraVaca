@@ -7,8 +7,13 @@ exports.up = function(knex) {
 		table.integer('priceAmount').notNullable();
 		table.string('note', 400);
 		table.integer('idBuyer').unsigned().notNullable();
-		table.timestamp('created').notNullable();
 
+    table.dateTime('created_at')
+      .notNullable()
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
+    table.dateTime('updated_at')
+      .notNullable()
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 
 		table.integer('idFarm').unsigned().notNullable();
 		table.foreign('idFarm').references('id').inTable('farm');

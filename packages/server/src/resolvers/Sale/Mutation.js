@@ -27,8 +27,7 @@ const createSale = async (_, args, context) => {
 
 		const [saleId] = await trx('sale').insert({
 			...saleData,
-			idFarm,
-			created: new Date()
+			idFarm
 		});
 
 		for(let v = 0; v < amount; v++){
