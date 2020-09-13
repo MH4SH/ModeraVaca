@@ -6,7 +6,7 @@ exports.up = function(knex) {
 		table.integer('token').notNullable();
 		table.integer('code').notNullable();
 		
-    table.dateTime('created_at')
+    table.timestamp('created_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 

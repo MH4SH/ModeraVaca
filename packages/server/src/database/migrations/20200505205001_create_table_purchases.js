@@ -3,17 +3,19 @@ exports.up = function(knex) {
 		table.increments('id').primary();
 		table.integer('idBreeds').unsigned().notNullable();
 		table.enu('gender', ['m', 'f']).notNullable();
-		table.timestamp('dateBirth').notNullable();
+    table.timestamp('dateBirth')
+      .notNullable()
+      .defaultTo();
 		table.integer('amount').notNullable();
 		table.integer('priceAmount').notNullable();
 		table.integer('priceDelivery').notNullable();
 		table.string('note', 400);
 		table.integer('idSeller').unsigned().notNullable();
 
-    table.dateTime('created_at')
+    table.timestamp('created_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
-    table.dateTime('updated_at')
+    table.timestamp('updated_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 

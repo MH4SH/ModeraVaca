@@ -4,10 +4,10 @@ exports.up = function(knex) {
 		table.integer('idUser').unsigned().notNullable();
     table.string('name').notNullable();
     
-    table.dateTime('created_at')
+    table.timestamp('created_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
-    table.dateTime('updated_at')
+    table.timestamp('updated_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 

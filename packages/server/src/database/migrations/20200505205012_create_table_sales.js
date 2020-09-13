@@ -8,10 +8,10 @@ exports.up = function(knex) {
 		table.string('note', 400);
 		table.integer('idBuyer').unsigned().notNullable();
 
-    table.dateTime('created_at')
+    table.timestamp('created_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
-    table.dateTime('updated_at')
+    table.timestamp('updated_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 
