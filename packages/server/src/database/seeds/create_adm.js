@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
-
+require('dotenv').config();
 
 exports.seed = async (knex) => {
 
-    password = await bcrypt.hash('12345', 10);
+    password = await bcrypt.hash(process.env.PASS_USER_SEED, 10);
 
     await knex('user').insert([
         {
