@@ -14,8 +14,7 @@ const createBirth = async (_, args, context) => {
 
 		const [birthId] = await trx('birth').insert({
 			...birthData,
-			idFarm,
-			created: new Date()
+			idFarm
 		});
 
 		for (let v = 0; v < birthData.amount; v++) {
@@ -25,8 +24,7 @@ const createBirth = async (_, args, context) => {
 					gender: birthData.gender,
 					dateBirth: birthData.dateBirth,
 					idFarm,
-					type: 'birth',
-					created: new Date()
+					type: 'birth'
 				});
 
 

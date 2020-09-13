@@ -9,14 +9,16 @@ const createDead = async (_, args, context) => {
 
 		const idFarm = context._userAuthenticate.idFarm,
 			deadData = args.input,
-			{idBreeds, gender, AgeGroup} = args.input;
+      {idBreeds, gender, AgeGroup} = args.input;
+      
+      deadData.dateDead = new Date(deadData.dateDead);
 
 		let age = AgeGroup(new Date());
 
 		let listAnimals = await connection('animal')
 			.where({idBreeds, gender, idFarm, hasNow: true})
-			.where('dateBirth', '<=', age.start.getTime())
-			.where('dateBirth', '>', age.end.getTime());
+			.where('dateBirth', '<=', age.start)
+			.where('dateBirth', '>', age.end);
 
 		if(listAnimals.length===0)
 			throw new Error(JSON.stringify({status: "Don't have animal"}));
@@ -31,8 +33,7 @@ const createDead = async (_, args, context) => {
 		const [deadId] = await trx('dead')
 			.insert({
 				...deadData,
-				idFarm,
-				created: new Date()
+				idFarm
 			});
 
 		await trx('animal')

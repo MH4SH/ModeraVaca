@@ -10,14 +10,14 @@ const createSale = async (_, args, context) => {
 			{idBreeds, gender, AgeGroup, amount} = args.input,
 			saleData = args.input;
 
-		let age = AgeGroup(new Date());
+    let age = AgeGroup(new Date());
 
 		let listAnimals = await connection('animal')
 			.select('id')
 			.where({idBreeds, gender, hasNow:  true, idFarm})
-			.where('dateBirth', '<=', age.start.getTime())
-			.where('dateBirth', '>', age.end.getTime());
-
+			.where('dateBirth', '<=', age.start)
+      .where('dateBirth', '>', age.end);
+    
 		if(listAnimals.length<amount)
 			throw new Error(JSON.stringify({status: "Don't have animal"}));
 
@@ -27,8 +27,7 @@ const createSale = async (_, args, context) => {
 
 		const [saleId] = await trx('sale').insert({
 			...saleData,
-			idFarm,
-			created: new Date()
+			idFarm
 		});
 
 		for(let v = 0; v < amount; v++){
