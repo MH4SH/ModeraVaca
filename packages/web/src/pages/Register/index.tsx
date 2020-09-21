@@ -6,7 +6,7 @@ import api from '../../services/api';
 import farmImg from '../../assets/cow-register.svg';
 import logoImg from '../../assets/logo.svg'
 
-import './styles.css';
+import { ContainerRegister, InfoRegister, FormRegister } from './styles';
 
 export default function Login() {
     const [phone, setPhone] = useState("");
@@ -41,8 +41,8 @@ export default function Login() {
     }
     
     return (
-        <div className="register-container">
-            <section className="info">
+        <ContainerRegister>
+            <InfoRegister>
                 <h1>beneficios</h1>
                 <p>
                     - disponivel offline <br/>
@@ -53,8 +53,8 @@ export default function Login() {
                     - entre outros
                 </p>
                 <img src={farmImg} alt="Fazenda" />
-            </section>
-            <section className="form">
+            </InfoRegister>
+            <FormRegister>
                 <img src={logoImg} alt="Logo ModeraVaca" />
                 <form onSubmit={handleChange}>
                     <h1>se cadastre</h1>
@@ -134,7 +134,7 @@ export default function Login() {
                     </div>
 
                 </form>
-            </section>
-        </div>
+            </FormRegister>
+        </ContainerRegister>
     )
 }

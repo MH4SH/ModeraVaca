@@ -6,7 +6,7 @@ import api from '../../services/api';
 import farmImg from '../../assets/farm-login.svg';
 import logoImg from '../../assets/logo.svg'
 
-import './styles.css';
+import { ContainerLogin, FormInput } from './styles';
 
 export default function Login() {
     const [access, setAccess] = useState("");
@@ -45,23 +45,23 @@ export default function Login() {
     const inputAccess = () => {
         if(formPhone){
             return (
-                <div className="from-input">
+                <FormInput>
                     <label htmlFor="access">seu celular ou <span onClick={()=>{setFormPhone(false)}}>seu email aqui</span></label>
                     <input type="number" id="access" value={access} onChange={e=> setAccess(e.target.value)} required={true}/>
-                </div>
+                </FormInput>
                 )
         } else {
             return (
-                <div className="from-input">
+                <FormInput>
                     <label htmlFor="access">seu email ou <span onClick={()=>{setFormPhone(true)}}>seu celular aqui</span></label>
                     <input type="email" id="access" value={access} onChange={e=> setAccess(e.target.value)} required={true}/>
-                </div>
+                </FormInput>
                 )
         }
     }
     
     return (
-        <div className="login-container">
+        <ContainerLogin>
             <section className="form">
                 <img src={logoImg} alt="Logo ModeraVaca" />
                 <form onSubmit={handleChange}>
@@ -78,6 +78,6 @@ export default function Login() {
             </section>
 
             <img src={farmImg} alt="Fazenda" />
-        </div>
+        </ContainerLogin>
     )
 }
