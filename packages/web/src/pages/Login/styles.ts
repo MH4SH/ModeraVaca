@@ -59,5 +59,6 @@ export const FormInput = styled.div`
 
   input {
       margin-bottom: 20px;
+      border-radius: 5px;
   }
 `;

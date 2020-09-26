@@ -32,7 +32,7 @@ export const InfoRegister = styled.section`
 
 export const FormRegister = styled.section`
   width: 100%;
-  margin-right: 30px;
+  margin-right: 32px;
 
   form {
     margin-top: 75px;
@@ -42,7 +42,7 @@ export const FormRegister = styled.section`
 
   form h1 {
     font-size: 28px;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
   }
 
 
@@ -53,7 +53,7 @@ export const FormRegister = styled.section`
 
 
   form > div.row  div + div {
-    margin-left: 20px;
+    margin-left: 32px;
   }
 
   form > div.row div {
@@ -67,6 +67,7 @@ export const FormRegister = styled.section`
   form > div.row input, select {
     margin-top: 5px;
     margin-bottom: 20px;
+    border-radius: 5px;
   }
 
 

@@ -5,7 +5,7 @@ import api from '../../services/api';
 
 import Header from '../../components/Header';
 
-import './styles.css';
+import { Container } from './styles';
 
 export default function Home(){
     const userToken = localStorage.getItem('userToken'),
@@ -23,10 +23,10 @@ export default function Home(){
     return (
         <>
             <Header />
-            <div>
+            <Container>
                 HOME - {userToken}<br/>
                 {user}
-            </div>
+            </Container>
         </>
     )
 }

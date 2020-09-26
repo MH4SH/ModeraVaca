@@ -8,12 +8,12 @@ const births = async (_, args, context) => {
 		authorizationUserHasFarm(context);
 
 		const idFarm = context._userAuthenticate.idFarm,
-			age = args.filter.age ? args.filter.age(new Date()) : '',
+			age = args.filter && args.filter.age ? new Date(args.filter.age()) : '',
 			limitPage = args.limit || 10,
 			cursor = cursorDecoding(args.cursor);
-		
-		let ageStart = args.filter.age ? ['dateBirth', '<=', age.start.getTime()] : ['dateBirth', '!=', ''],
-			ageEnd = args.filter.age ? ['dateBirth', '>', age.end.getTime()] : ['dateBirth', '!=', ''];
+
+		let ageStart = args.filter && args.filter.age ? ['dateBirth', '<=', age.start.getTime()] : ['dateBirth', '!=', ''],
+			ageEnd = args.filter && args.filter.age ? ['dateBirth', '>', age.end.getTime()] : ['dateBirth', '!=', ''];
 
 		let pageInfo = {
 			endCursor: null,

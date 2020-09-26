@@ -67,10 +67,10 @@ export default function Login() {
                 <form onSubmit={handleChange}>
                     <h1>fazer login</h1>
                     { inputAccess() }
-                    <div className="from-input">
+                    <FormInput>
                         <label htmlFor="pass">sua senha</label>
                         <input type="password" id="pass" value={password} onChange={e=> setPassword(e.target.value)}/>
-                    </div>
+                    </FormInput>
                     <button className="button" type="submit">entrar</button>
                 </form>
                 <p>ainda não tem conta?</p>
