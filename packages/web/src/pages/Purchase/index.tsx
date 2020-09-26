@@ -24,7 +24,7 @@ export default function Home(){
         <>
             <Header />
             <div>
-                HOME - {userToken}<br/>
+                Compras - {userToken}<br/>
                 {user}
             </div>
         </>

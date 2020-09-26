@@ -24,7 +24,7 @@ export default function Home(){
         <>
             <Header />
             <div>
-                HOME - {userToken}<br/>
+                CCompra - {userToken}<br/>
                 {user}
             </div>
         </>

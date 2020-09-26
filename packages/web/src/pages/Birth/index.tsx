@@ -24,7 +24,7 @@ export default function Home(){
         <>
             <Header />
             <Container>
-                HOME - {userToken}<br/>
+                Nascidos - {userToken}<br/>
                 {user}
             </Container>
         </>

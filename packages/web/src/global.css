@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
 /** Colors 
 */
@@ -7,9 +8,13 @@
     --primary: rgba(111, 201, 113, 1);
     --primary-light: #B5E2B7;
     --primary-s-light   : #C6E9C8;
+    --secondary: #6999EA;
+    --secondary-light: #B5E2B7;
+    --secondary-s-light   : #C6E9C8;
     --bg: #212421;
     --bg-light: #BFC5BF;
     --bg-s-light: #EFF6EF;
+    --white: #EFF6EF;
 }  
 
 
