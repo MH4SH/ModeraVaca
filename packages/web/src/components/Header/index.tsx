@@ -4,19 +4,20 @@ import {NavLink} from 'react-router-dom';
 import logoImg from '../../assets/logo-white.svg';
 import perfilImg from '../../assets/perfil.png';
 
-import { ContainerHeader } from './styles';
+import { ContainerHeader, TopBarHeader, HeaderContent } from './styles';
 
-export default function Header(){
+const Header: React.FunctionComponent = (props) => {
   return (
     <ContainerHeader>
-      <div>
-        <NavLink to="/" className="grid-3">
+      <TopBarHeader>
+        <NavLink to="/nascimentos" className="grid-3">
           <img src={logoImg} alt="Modera Vaca" />
         </NavLink>
         <div className="grid-9 row header_menu">
           <nav>
             <ul>
-              <li><NavLink to="/" exact activeClassName='active'>Inicio</NavLink></li>
+              {/* <li><NavLink to="/" exact activeClassName='active'>Financeiro</NavLink></li> */}
+              {/* <li><NavLink to="/" exact activeClassName='active'>Investimento</NavLink></li> */}
               <li><NavLink to="/nascimentos" activeClassName='active'>Nascimentos</NavLink></li>
               <li><NavLink to="/mortes" activeClassName='active'>Mortes</NavLink></li>
               <li><NavLink to="/compras" activeClassName='active'>Compras</NavLink></li>
@@ -24,7 +25,14 @@ export default function Header(){
             </ul>
           </nav>
         </div>
-      </div>
+      </TopBarHeader>
+      { props.children && (
+        <HeaderContent>
+          {props.children}
+        </HeaderContent>
+      )}
     </ContainerHeader>
   )
-}
+};
+
+export default Header;
