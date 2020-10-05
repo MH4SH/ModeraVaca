@@ -24,7 +24,7 @@ export default function Home(){
         <>
             <Header />
             <div>
-                HOME - {userToken}<br/>
+                Venda - {userToken}<br/>
                 {user}
             </div>
         </>

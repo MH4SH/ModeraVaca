@@ -29,7 +29,7 @@ export default function Login() {
             localStorage.setItem('userToken', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            history.push('/');
+            history.push('/nascimentos');
 
         } catch (err){
             if(err.response.status===400){
