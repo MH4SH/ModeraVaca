@@ -4,8 +4,6 @@ export const ContainerHeader = styled.header`
   display: flex;
   flex-direction: column;
   background-color: var(--primary);
-
-  
 `;
 
 export const TopBarHeader = styled.header`
@@ -32,63 +30,66 @@ export const TopBarHeader = styled.header`
     float: inline-end;
   }
 
-  ul li {
+  & > div {
+    margin-right: 0px;
+
+    ul li {
     display: inline-block;
     margin-left: 20px;
 
-    a {
-      color: var(--bg-s-light);
-      opacity: 0.8;
-      font-family: Poppins;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      transition: opacity 0.2s;
+      a {
+        color: var(--bg-s-light);
+        opacity: 0.8;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        transition: opacity 0.2s;
+      }
+
+      a::after {
+        content: '';
+        display: block;
+        background: var(--secondary);
+        margin: 0 auto;
+        width: 0%;
+        height: 2px;
+        margin-top: 8px;
+        transition: width 0.2s;
+      };
+
+      a:hover {
+        color: #FFF;
+        opacity: 1;
+      }
+
+      a:hover::after {
+        content: '';
+        display: block;
+        background: var(--secondary);
+        margin: 0 auto;
+        width: 100%;
+        height: 2px;
+        margin-top: 8px;
+        transition: width 0.2s;
+      };
+
+      a.active {
+        color: #FFF;
+        opacity: 1;
+      }
+
+      a.active::after {
+        content: '';
+        display: block;
+        background: var(--secondary);
+        margin: 0 auto;
+        width: 100%;
+        height: 2px;
+        margin-top: 8px;
+      }
     }
-
-    a::after {
-      content: '';
-      display: block;
-      background: var(--secondary);
-      margin: 0 auto;
-      width: 0%;
-      height: 2px;
-      margin-top: 8px;
-      transition: width 0.2s;
-    };
-
-    a:hover {
-      color: #FFF;
-      opacity: 1;
-    }
-
-    a:hover::after {
-      content: '';
-      display: block;
-      background: var(--secondary);
-      margin: 0 auto;
-      width: 100%;
-      height: 2px;
-      margin-top: 8px;
-      transition: width 0.2s;
-    };
-
-
-    a.active {
-      color: #FFF;
-      opacity: 1;
-    }
-
-    a.active::after {
-      content: '';
-      display: block;
-      background: var(--secondary);
-      margin: 0 auto;
-      width: 100%;
-      height: 2px;
-      margin-top: 8px;
-    };
   }
 `;
 

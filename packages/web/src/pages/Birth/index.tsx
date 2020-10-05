@@ -5,7 +5,7 @@ import api from '../../services/api';
 
 import Header from '../../components/Header';
 
-import { Container } from './styles';
+import { HeaderBirth, Container } from './styles';
 
 export default function Home(){
     const userToken = localStorage.getItem('userToken'),
@@ -22,7 +22,10 @@ export default function Home(){
 
     return (
         <>
-            <Header />
+            <Header>
+              <HeaderBirth className="grid-2">
+              </HeaderBirth>
+            </Header>
             <Container>
                 Nascidos - {userToken}<br/>
                 {user}
