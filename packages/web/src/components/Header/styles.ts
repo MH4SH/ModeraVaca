@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ContainerHeader = styled.header`
   display: flex;
@@ -25,7 +25,9 @@ export const TopBarHeader = styled.header`
     }
   }
 
-  & > nav, & > button, & > div {
+  & > nav,
+  & > button,
+  & > div {
     text-align: right;
     float: inline-end;
   }
@@ -34,8 +36,8 @@ export const TopBarHeader = styled.header`
     margin-right: 0px;
 
     ul li {
-    display: inline-block;
-    margin-left: 20px;
+      display: inline-block;
+      margin-left: 20px;
 
       a {
         color: var(--bg-s-light);
@@ -49,7 +51,7 @@ export const TopBarHeader = styled.header`
       }
 
       a::after {
-        content: '';
+        content: "";
         display: block;
         background: var(--secondary);
         margin: 0 auto;
@@ -57,15 +59,15 @@ export const TopBarHeader = styled.header`
         height: 2px;
         margin-top: 8px;
         transition: width 0.2s;
-      };
+      }
 
       a:hover {
-        color: #FFF;
+        color: #fff;
         opacity: 1;
       }
 
       a:hover::after {
-        content: '';
+        content: "";
         display: block;
         background: var(--secondary);
         margin: 0 auto;
@@ -73,15 +75,15 @@ export const TopBarHeader = styled.header`
         height: 2px;
         margin-top: 8px;
         transition: width 0.2s;
-      };
+      }
 
       a.active {
-        color: #FFF;
+        color: #fff;
         opacity: 1;
       }
 
       a.active::after {
-        content: '';
+        content: "";
         display: block;
         background: var(--secondary);
         margin: 0 auto;

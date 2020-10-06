@@ -1,35 +1,32 @@
-import React, {useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
-import api from '../../services/api';
+import Header from "../../components/Header";
 
-import Header from '../../components/Header';
+import { HeaderBirth, Container } from "./styles";
 
-import { HeaderBirth, Container } from './styles';
+export default function Home() {
+  const userToken = localStorage.getItem("userToken");
+  const user = localStorage.getItem("user");
+  const history = useHistory();
 
-export default function Home(){
-    const userToken = localStorage.getItem('userToken'),
-        user = localStorage.getItem('user'),
-        history = useHistory();
+  if (!userToken) history.push("/entrar");
 
+  useEffect(() => {
+    console.log(userToken);
+  }, [userToken]);
 
-    if(!userToken)
-        history.push('/entrar');
-
-    useEffect(()=>{
-        console.log(userToken);
-    }, [userToken])
-
-    return (
-        <>
-            <Header>
-              <HeaderBirth className="grid-2">
-              </HeaderBirth>
-            </Header>
-            <Container>
-                Nascidos - {userToken}<br/>
-                {user}
-            </Container>
-        </>
-    )
+  return (
+    <>
+      <Header>
+        <HeaderBirth className="grid-2" />
+      </Header>
+      <Container>
+        Nascidos
+        <br />
+        {userToken}
+        {user}
+      </Container>
+    </>
+  );
 }
