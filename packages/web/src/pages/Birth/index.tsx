@@ -6,8 +6,8 @@ import Header from "../../components/Header";
 import { HeaderBirth, Container } from "./styles";
 
 export default function Home() {
-  const userToken = localStorage.getItem("userToken");
-  const user = localStorage.getItem("user");
+  const userToken = localStorage.getItem("@ModeraVaca/token");
+  const user = localStorage.getItem("@ModeraVaca/user");
   const history = useHistory();
 
   if (!userToken) history.push("/entrar");
