@@ -6,6 +6,8 @@ import api from "../../services/api";
 import farmImg from "../../assets/cow-register.svg";
 import logoImg from "../../assets/logo.svg";
 
+import Button from "../../components/Button";
+
 import { ContainerRegister, InfoRegister, FormRegister } from "./styles";
 
 const SignUp: React.FC = () => {
@@ -196,12 +198,12 @@ const SignUp: React.FC = () => {
           </div>
           <div className="row">
             <div>
-              <button className="button" type="submit">
-                cadastrar
-              </button>
+              <Button type="submit">cadastrar</Button>
             </div>
-            <p>já esta cadastrado?</p>
-            <Link to="/entrar">fazer login</Link>
+            <div>
+              <p>já esta cadastrado?</p>
+              <Link to="/entrar">fazer login</Link>
+            </div>
           </div>
         </form>
       </FormRegister>
