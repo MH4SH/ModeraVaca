@@ -6,6 +6,10 @@ exports.up = function(knex) {
 		table.integer('token').notNullable();
 		table.integer('code').notNullable();
 		
+    table.timestamp('created_at')
+      .notNullable()
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
+
 		table.foreign('idUser').references('id').inTable('user');
 	});
 };

@@ -5,7 +5,7 @@ import { useAuth } from "../../hooks/Auth";
 
 import Header from "../../components/Header";
 
-import { HeaderHome, Container } from "./styles";
+import { HeaderBirth, Container } from "./styles";
 
 export default function Home() {
   const { user } = useAuth();
@@ -13,10 +13,10 @@ export default function Home() {
   return (
     <>
       <Header>
-        <HeaderHome className="grid-2" />
+        <HeaderBirth className="grid-2" />
       </Header>
       <Container>
-        HOME -
+        Nascidos
         <br />
         {JSON.stringify(user)}
       </Container>

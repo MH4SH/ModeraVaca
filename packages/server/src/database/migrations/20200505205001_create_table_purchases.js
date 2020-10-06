@@ -3,14 +3,21 @@ exports.up = function(knex) {
 		table.increments('id').primary();
 		table.integer('idBreeds').unsigned().notNullable();
 		table.enu('gender', ['m', 'f']).notNullable();
-		table.timestamp('dateBirth').notNullable();
+    table.timestamp('dateBirth')
+      .notNullable()
+      .defaultTo();
 		table.integer('amount').notNullable();
 		table.integer('priceAmount').notNullable();
 		table.integer('priceDelivery').notNullable();
 		table.string('note', 400);
 		table.integer('idSeller').unsigned().notNullable();
-		table.timestamp('created').notNullable();
 
+    table.timestamp('created_at')
+      .notNullable()
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
+    table.timestamp('updated_at')
+      .notNullable()
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 
 		table.integer('idFarm').unsigned().notNullable();
 		table.foreign('idFarm').references('id').inTable('farm');

@@ -5,15 +5,16 @@ const createPurchase = async (_, args, context) => {
 		authorizationUserHasFarm(context);
 
 		const idFarm = context._userAuthenticate.idFarm,
-			purchaseData = args.input;
+      purchaseData = args.input;
+      
+    purchaseData.dateBirth = new Date(purchaseData.dateBirth);
 
 		const trx = await connection.transaction();
 
 		const [purchaseId] = await trx('purchase')
 			.insert({
 				...purchaseData,
-				idFarm,
-				created: new Date()
+				idFarm
 			})
 
 
@@ -25,8 +26,7 @@ const createPurchase = async (_, args, context) => {
 					gender: purchaseData.gender,
 					dateBirth: purchaseData.dateBirth,
 					idFarm,
-					type: 'purchase',
-					created: new Date()
+					type: 'purchase'
 				});
 
 			await trx('transaction_with_animal')

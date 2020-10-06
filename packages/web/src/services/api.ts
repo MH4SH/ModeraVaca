@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://server-moderavaca.mh4sh.dev'
+  baseURL: "http://localhost:4004",
 });
 
 export default api;

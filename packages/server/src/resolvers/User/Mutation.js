@@ -21,8 +21,7 @@ const createUser = async (_, args, context) => {
 
 		const [id] = await connection('user').insert({
 			...userData,
-			password: mh4sh,
-			created: new Date()
+			password: mh4sh
 		});
 
 		return {

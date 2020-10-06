@@ -1,11 +1,17 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes";
 
-import Routes from './routes';
+import { AppProvider } from "./hooks";
 
 function App() {
   return (
     <>
-      <Routes />
+      <Router>
+        <AppProvider>
+          <Routes />
+        </AppProvider>
+      </Router>
     </>
   );
 }
