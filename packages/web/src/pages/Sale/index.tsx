@@ -5,19 +5,21 @@ import { useAuth } from "../../hooks/Auth";
 
 import Header from "../../components/Header";
 
-import "./styles.css";
+import { HeaderSale, Container } from "./styles";
 
 export default function Home() {
   const { user } = useAuth();
 
   return (
     <>
-      <Header />
-      <div>
+      <Header>
+        <HeaderSale className="grid-2" />
+      </Header>
+      <Container>
         Venda
         <br />
         {JSON.stringify(user)}
-      </div>
+      </Container>
     </>
   );
 }
