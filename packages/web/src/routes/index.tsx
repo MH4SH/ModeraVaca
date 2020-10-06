@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
 // import Home from '../pages/Home';
 import Birth from "../pages/Birth";
 import Death from "../pages/Death";
@@ -13,8 +13,8 @@ const Routes: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/entrar" component={Login} />
-        <Route path="/registrar" component={Register} />
+        <Route path="/entrar" component={SignIn} />
+        <Route path="/registrar" component={SignUp} />
 
         <Route path="/" exact component={Birth} isPrivate />
         <Route path="/nascimentos" component={Birth} isPrivate />

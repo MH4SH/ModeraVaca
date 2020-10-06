@@ -1,16 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ContainerRegister = styled.div`
   width: 100%;
   max-width: 1120px;
   height: 100vh;
-  margin:0 auto;
+  margin: 0 auto;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
-
 
 export const InfoRegister = styled.section`
   width: 100%;
@@ -29,7 +28,6 @@ export const InfoRegister = styled.section`
   }
 `;
 
-
 export const FormRegister = styled.section`
   width: 100%;
   margin-right: 32px;
@@ -45,14 +43,12 @@ export const FormRegister = styled.section`
     margin-bottom: 32px;
   }
 
-
-  form  div.row {
+  form div.row {
     flex-direction: row;
     display: flex;
   }
 
-
-  form > div.row  div + div {
+  form > div.row div + div {
     margin-left: 32px;
   }
 
@@ -64,21 +60,21 @@ export const FormRegister = styled.section`
     flex: 3;
   }
 
-  form > div.row input, select {
+  form > div.row input,
+  select {
     margin-top: 5px;
     margin-bottom: 20px;
     border-radius: 5px;
   }
 
-
-  p{
+  p {
     font-size: 18px;
   }
 
-  a{
+  a {
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
-    color: #6999EA;
+    color: #6999ea;
   }
 `;

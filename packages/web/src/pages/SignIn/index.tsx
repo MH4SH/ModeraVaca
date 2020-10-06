@@ -10,7 +10,7 @@ import logoImg from "../../assets/logo.svg";
 
 import { ContainerLogin, FormInput } from "./styles";
 
-export default function Login() {
+const SignIn: React.FC = () => {
   const [access, setAccess] = useState("");
   const [password, setPassword] = useState("");
   const [formPhone, setFormPhone] = useState(true);
@@ -121,4 +121,6 @@ export default function Login() {
       <img src={farmImg} alt="Fazenda" />
     </ContainerLogin>
   );
-}
+};
+
+export default SignIn;
