@@ -151,27 +151,4 @@ export default createGlobalStyle`
       border: 0px solid #dcdce6;
       padding: 0 10px;
   }
-
-
-
-  .button {
-      width: 50%;
-      height: 40px;
-      background: #6999EA;
-      border: 0;
-      color: #FFF;
-      font-family: 'Ubuntu', sans-serif;
-      font-weight: 700;
-      display: inline-block;
-      text-align: center;
-      text-decoration: none;
-      font-size: 18px;
-      transition: filter 0.3s;
-      cursor: pointer;
-
-  }
-
-  .button:hover {
-      filter: brightness(0.9);
-  }
 `;

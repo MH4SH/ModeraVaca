@@ -6,7 +6,7 @@ import GlobalStyle from "./styles/global";
 
 import { AppProvider } from "./hooks";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Router>
@@ -18,6 +18,6 @@ function App() {
       </Router>
     </>
   );
-}
+};
 
 export default App;

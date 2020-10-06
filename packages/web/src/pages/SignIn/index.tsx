@@ -8,6 +8,8 @@ import { useAuth } from "../../hooks/Auth";
 import farmImg from "../../assets/farm-login.svg";
 import logoImg from "../../assets/logo.svg";
 
+import Button from "../../components/Button";
+
 import { ContainerLogin, FormInput } from "./styles";
 
 const SignIn: React.FC = () => {
@@ -104,9 +106,7 @@ const SignIn: React.FC = () => {
               />
             </label>
           </FormInput>
-          <button className="button" type="submit">
-            entrar
-          </button>
+          <Button>entrar</Button>
         </form>
         <p>ainda não tem conta?</p>
         <Link to="/registrar">se cadastrar</Link>
