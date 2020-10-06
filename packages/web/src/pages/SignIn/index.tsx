@@ -3,7 +3,7 @@
 import React, { useState, FormEvent } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import api from "../../services/api";
+import { useAuth } from "../../hooks/Auth";
 
 import farmImg from "../../assets/farm-login.svg";
 import logoImg from "../../assets/logo.svg";
@@ -15,6 +15,8 @@ const SignIn: React.FC = () => {
   const [password, setPassword] = useState("");
   const [formPhone, setFormPhone] = useState(true);
 
+  const { singIn } = useAuth();
+
   const history = useHistory();
 
   const handleChange = async (event: FormEvent) => {
@@ -23,25 +25,17 @@ const SignIn: React.FC = () => {
     if (!password) return alert(`Senha não preenchido!`);
 
     try {
-      const response = await api.post("auth/authenticate", {
-        access,
-        password,
-      });
-
-      localStorage.setItem("@ModeraVaca/token", response.data.token);
-      localStorage.setItem(
-        "@ModeraVaca/user",
-        JSON.stringify(response.data.user)
-      );
+      await singIn({ access, password });
 
       history.push("/nascimentos");
     } catch (err) {
-      if (err.response.status === 400) {
-        alert(`Celular ou Email não encontrado!`);
-        setAccess("");
-      } else if (err.response.status === 403) {
-        alert(`Senha incorreta!`);
-      }
+      alert(`Celular ou Email não encontrado!`);
+      // if (err.response.status === 400) {
+      //   alert(`Celular ou Email não encontrado!`);
+      //   setAccess("");
+      // } else if (err.response.status === 403) {
+      //   alert(`Senha incorreta!`);
+      // }
     }
   };
 

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Route as ReactDOMRoute,
   RouteProps as ReactDOMRouteProps,
   Redirect,
 } from "react-router-dom";
+
+import { useAuth } from "../hooks/Auth";
 
 interface RouteProps extends ReactDOMRouteProps {
   isPrivate?: boolean;
@@ -15,10 +17,8 @@ const Route: React.FC<RouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const token = useState(() => {
-    return localStorage.getItem("@ModeraVaca/token");
-  });
-  const isSigned = !!token;
+  const { user } = useAuth();
+  const isSigned = !!user;
 
   return (
     <ReactDOMRoute

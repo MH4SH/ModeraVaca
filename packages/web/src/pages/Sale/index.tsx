@@ -1,20 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
+
+import { useAuth } from "../../hooks/Auth";
 
 import Header from "../../components/Header";
 
 import "./styles.css";
 
 export default function Home() {
-  const userToken = localStorage.getItem("@ModeraVaca/token");
-  const user = localStorage.getItem("@ModeraVaca/user");
-  const history = useHistory();
-
-  if (!userToken) history.push("/entrar");
-
-  useEffect(() => {
-    console.log(userToken);
-  }, [userToken]);
+  const { user } = useAuth();
 
   return (
     <>
@@ -22,8 +16,7 @@ export default function Home() {
       <div>
         Venda
         <br />
-        {userToken}
-        {user}
+        {JSON.stringify(user)}
       </div>
     </>
   );
