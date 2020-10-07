@@ -133,7 +133,7 @@ export default createGlobalStyle`
       font: 400 18px Roboto, sans-setif;
   }
 
-  textarea:focus, input:focus, select:focus {
+  textarea:focus, select:focus {
       outline: 0;
       border-bottom: 2px solid #b5e2b6;
   }
@@ -143,7 +143,7 @@ export default createGlobalStyle`
       font-weight: 700;
   }
 
-  form input, select {
+  form select {
       width: 100%;
       height: 40px;
       color: #212421;

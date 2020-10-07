@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, FormEvent } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
 
 import { useAuth } from "../../hooks/Auth";
 
@@ -9,10 +11,18 @@ import farmImg from "../../assets/farm-login.svg";
 import logoImg from "../../assets/logo.svg";
 
 import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 import { ContainerLogin, FormInput } from "./styles";
 
+interface SingInData {
+  access: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
   const [access, setAccess] = useState("");
   const [password, setPassword] = useState("");
   const [formPhone, setFormPhone] = useState(true);
@@ -21,15 +31,15 @@ const SignIn: React.FC = () => {
 
   const history = useHistory();
 
-  const handleChange = async (event: FormEvent) => {
-    event.preventDefault();
-    if (!access) return alert(`Acesso não preenchido!`);
-    if (!password) return alert(`Senha não preenchido!`);
-
+  const handleSubmit = useCallback(async (data: SingInData) => {
+    formRef.current?.setErrors({});
     try {
-      await singIn({ access, password });
-
+      await singIn({
+        access: data.access,
+        password: data.password,
+      });
       history.push("/nascimentos");
+      console.log(data);
     } catch (err) {
       alert(`Celular ou Email não encontrado!`);
       // if (err.response.status === 400) {
@@ -39,13 +49,13 @@ const SignIn: React.FC = () => {
       //   alert(`Senha incorreta!`);
       // }
     }
-  };
+  }, []);
 
   const inputAccess = () => {
     if (formPhone) {
       return (
         <FormInput>
-          <label htmlFor="accessPhone">
+          <Input type="number" name="access">
             seu celular ou
             <span
               onClick={() => {
@@ -54,20 +64,13 @@ const SignIn: React.FC = () => {
             >
               seu email aqui
             </span>
-            <input
-              type="number"
-              id="accessPhone"
-              value={access}
-              onChange={(e) => setAccess(e.target.value)}
-              required
-            />
-          </label>
+          </Input>
         </FormInput>
       );
     }
     return (
       <FormInput>
-        <label htmlFor="accessEmail">
+        <Input type="email" name="access">
           seu email ou
           <span
             onClick={() => {
@@ -76,14 +79,7 @@ const SignIn: React.FC = () => {
           >
             seu celular aqui
           </span>
-          <input
-            type="email"
-            id="accessEmail"
-            value={access}
-            onChange={(e) => setAccess(e.target.value)}
-            required
-          />
-        </label>
+        </Input>
       </FormInput>
     );
   };
@@ -92,22 +88,16 @@ const SignIn: React.FC = () => {
     <ContainerLogin>
       <section className="form">
         <img src={logoImg} alt="Logo ModeraVaca" />
-        <form onSubmit={handleChange}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>fazer login</h1>
           {inputAccess()}
           <FormInput>
-            <label htmlFor="pass">
+            <Input type="password" name="password">
               sua senha
-              <input
-                type="password"
-                id="pass"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
+            </Input>
           </FormInput>
-          <Button>entrar</Button>
-        </form>
+          <Button type="submit">entrar</Button>
+        </Form>
         <p>ainda não tem conta?</p>
         <Link to="/registrar">se cadastrar</Link>
       </section>
