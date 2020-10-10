@@ -4,11 +4,11 @@ import React, {
   useEffect,
   useCallback,
   useState,
-} from "react";
-import { v4 } from "uuid";
-import { useField } from "@unform/core";
+} from 'react';
+import { v4 } from 'uuid';
+import { useField } from '@unform/core';
 
-import { Label, InputElement } from "./styles";
+import { Label, InputElement } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -37,7 +37,7 @@ const Input: React.FC<InputProps> = ({ name, children, ...rest }) => {
     registerField({
       name: fieldName,
       ref: inputRef.current,
-      path: "value",
+      path: 'value',
     });
   }, [fieldName, registerField]);
 

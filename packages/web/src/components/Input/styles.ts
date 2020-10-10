@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { shade } from "polished";
+import styled, { css } from 'styled-components';
+import { shade } from 'polished';
 
 interface InputProps {
   isField: boolean;
@@ -32,13 +32,13 @@ export const InputElement = styled.input<InputProps>`
   border: 0px solid #dcdce6;
   padding: 0 10px;
 
-  ${(props) =>
+  ${props =>
     props.isField &&
     css`
       border-bottom: 2px solid #b5e2b6;
     `}
 
-  ${(props) =>
+  ${props =>
     props.isFocused &&
     css`
       border-bottom: 2px solid #b5e2b6;

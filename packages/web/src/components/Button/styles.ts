@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { shade } from "polished";
+import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const ButtonElement = styled.button`
   display: inline-block;
@@ -10,7 +10,7 @@ export const ButtonElement = styled.button`
   border-radius: 5px;
 
   color: #fff;
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
@@ -20,6 +20,6 @@ export const ButtonElement = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: ${shade(0.2, "#6999ea")};
+    background: ${shade(0.2, '#6999ea')};
   }
 `;

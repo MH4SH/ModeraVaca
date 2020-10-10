@@ -1,19 +1,20 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, useRef, useCallback } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { FormHandles } from "@unform/core";
-import { Form } from "@unform/web";
+import React, { useState, useRef, useCallback } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
 
-import { useAuth } from "../../hooks/Auth";
+import { useAuth } from '../../hooks/Auth';
 
-import farmImg from "../../assets/farm-login.svg";
-import logoImg from "../../assets/logo.svg";
+import farmImg from '../../assets/farm-login.svg';
+import logoImg from '../../assets/logo.svg';
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 
-import { ContainerLogin, FormInput } from "./styles";
+import { ContainerLogin, FormInput } from './styles';
 
 interface SingInData {
   access: string;
@@ -23,33 +24,34 @@ interface SingInData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const [access, setAccess] = useState("");
-  const [password, setPassword] = useState("");
   const [formPhone, setFormPhone] = useState(true);
 
   const { singIn } = useAuth();
 
   const history = useHistory();
 
-  const handleSubmit = useCallback(async (data: SingInData) => {
-    formRef.current?.setErrors({});
-    try {
-      await singIn({
-        access: data.access,
-        password: data.password,
-      });
-      history.push("/nascimentos");
-      console.log(data);
-    } catch (err) {
-      alert(`Celular ou Email não encontrado!`);
-      // if (err.response.status === 400) {
-      //   alert(`Celular ou Email não encontrado!`);
-      //   setAccess("");
-      // } else if (err.response.status === 403) {
-      //   alert(`Senha incorreta!`);
-      // }
-    }
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: SingInData) => {
+      formRef.current?.setErrors({});
+      try {
+        await singIn({
+          access: data.access,
+          password: data.password,
+        });
+        history.push('/nascimentos');
+        console.log(data);
+      } catch (err) {
+        alert(`Celular ou Email não encontrado!`);
+        // if (err.response.status === 400) {
+        //   alert(`Celular ou Email não encontrado!`);
+        //   setAccess("");
+        // } else if (err.response.status === 403) {
+        //   alert(`Senha incorreta!`);
+        // }
+      }
+    },
+    [history, singIn],
+  );
 
   const inputAccess = () => {
     if (formPhone) {

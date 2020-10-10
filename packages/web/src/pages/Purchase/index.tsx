@@ -1,11 +1,11 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { useAuth } from "../../hooks/Auth";
+import { useAuth } from '../../hooks/Auth';
 
-import Header from "../../components/Header";
+import Header from '../../components/Header';
 
-import { HeaderPurchase, Container } from "./styles";
+import { HeaderPurchase, Container } from './styles';
 
 export default function Home() {
   const { user } = useAuth();

@@ -1,10 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import logoImg from "../../assets/logo-white.svg";
+import logoImg from '../../assets/logo-white.svg';
 // import perfilImg from "../../assets/perfil.png";
 
-import { ContainerHeader, TopBarHeader, HeaderContent } from "./styles";
+import { ContainerHeader, TopBarHeader, HeaderContent } from './styles';
 
 const Header: React.FC = ({ children }) => {
   return (

@@ -1,23 +1,23 @@
-import React, { useState, FormEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, FormEvent } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
-import api from "../../services/api";
+import api from '../../services/api';
 
-import farmImg from "../../assets/cow-register.svg";
-import logoImg from "../../assets/logo.svg";
+import farmImg from '../../assets/cow-register.svg';
+import logoImg from '../../assets/logo.svg';
 
-import Button from "../../components/Button";
+import Button from '../../components/Button';
 
-import { ContainerRegister, InfoRegister, FormRegister } from "./styles";
+import { ContainerRegister, InfoRegister, FormRegister } from './styles';
 
 const SignUp: React.FC = () => {
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [uf, setUf] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [city, setCity] = useState('');
+  const [uf, setUf] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
 
   const history = useHistory();
 
@@ -25,11 +25,11 @@ const SignUp: React.FC = () => {
     event.preventDefault();
 
     if (password !== passwordCheck) {
-      alert("Senhas não são idênticas!");
-      return setPasswordCheck("");
+      alert('Senhas não são idênticas!');
+      return setPasswordCheck('');
     }
     try {
-      const response = await api.post("auth/register", {
+      const response = await api.post('auth/register', {
         phone,
         email,
         name,
@@ -38,13 +38,13 @@ const SignUp: React.FC = () => {
         password,
       });
 
-      localStorage.setItem("@ModeraVaca/token", response.data.token);
+      localStorage.setItem('@ModeraVaca/token', response.data.token);
       localStorage.setItem(
-        "@ModeraVaca/user",
-        JSON.stringify(response.data.user)
+        '@ModeraVaca/user',
+        JSON.stringify(response.data.user),
       );
 
-      history.push("/");
+      history.push('/');
     } catch (err) {
       console.log(err);
       alert(`Falha: ${err.response.data.message} (${err.response.status})`);
@@ -83,7 +83,7 @@ const SignUp: React.FC = () => {
                   type="number"
                   id="phone"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={e => setPhone(e.target.value)}
                   required
                   minLength={10}
                 />
@@ -96,7 +96,7 @@ const SignUp: React.FC = () => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   required
                 />
               </label>
@@ -110,7 +110,7 @@ const SignUp: React.FC = () => {
                   type="text"
                   id="name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   required
                 />
               </label>
@@ -123,7 +123,7 @@ const SignUp: React.FC = () => {
                     type="text"
                     id="city"
                     value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    onChange={e => setCity(e.target.value)}
                     required
                   />
                 </label>
@@ -134,7 +134,7 @@ const SignUp: React.FC = () => {
                   <select
                     id="uf"
                     value={uf}
-                    onChange={(e) => setUf(e.target.value)}
+                    onChange={e => setUf(e.target.value)}
                     required
                   >
                     <option value=""> </option>
@@ -178,7 +178,7 @@ const SignUp: React.FC = () => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   required
                 />
               </label>
@@ -190,7 +190,7 @@ const SignUp: React.FC = () => {
                   type="password"
                   id="passwordB"
                   value={passwordCheck}
-                  onChange={(e) => setPasswordCheck(e.target.value)}
+                  onChange={e => setPasswordCheck(e.target.value)}
                   required
                 />
               </label>
