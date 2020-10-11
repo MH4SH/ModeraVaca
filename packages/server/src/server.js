@@ -4,7 +4,7 @@ const graphqlHTTP = require("express-graphql");
 const { makeExecutableSchema } = require("graphql-tools");
 require('dotenv').config();
 
-const port = process.env.PORT || 4004;
+const port = 3001;
 
 const getTypeDefs = require('./types');
 const Query = require('./resolvers/Query');

@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  moderavaca-db:
+    image: mariadb
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: 'moderavaca_dev'
+      MYSQL_USER: 'developer'
+      MYSQL_PASSWORD: 'igXwrQ12Ja'
+      MYSQL_ROOT_PASSWORD: 'igXwrQ12Ja'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - moderavaca-db-data:/var/lib/mysql
+
+volumes:
+  moderavaca-db-data:
