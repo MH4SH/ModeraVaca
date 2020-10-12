@@ -38,9 +38,9 @@ const SignUp: React.FC = () => {
         password,
       });
 
-      localStorage.setItem('@ModeraVaca/token', response.data.token);
+      localStorage.setItem('@ModeraVaca:token', response.data.token);
       localStorage.setItem(
-        '@ModeraVaca/user',
+        '@ModeraVaca:user',
         JSON.stringify(response.data.user),
       );
 

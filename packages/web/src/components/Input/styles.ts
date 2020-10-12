@@ -4,6 +4,7 @@ import { shade } from 'polished';
 interface InputProps {
   isField: boolean;
   isFocused: boolean;
+  hasError: boolean;
 }
 
 export const Label = styled.label`
@@ -42,5 +43,11 @@ export const InputElement = styled.input<InputProps>`
     props.isFocused &&
     css`
       border-bottom: 2px solid #b5e2b6;
+    `}
+  ${props =>
+    props.hasError &&
+    css`
+      background-color: #f6f0ef;
+      border-bottom: 2px solid #e2bab5;
     `}
 `;

@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 
 import { HeaderBirth, Container } from './styles';
 
-export default function Home() {
+const Birth: React.FC = () => {
   const { user } = useAuth();
 
   return (
@@ -22,4 +22,6 @@ export default function Home() {
       </Container>
     </>
   );
-}
+};
+
+export default Birth;

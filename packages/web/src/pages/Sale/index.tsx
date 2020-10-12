@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 
 import { HeaderSale, Container } from './styles';
 
-export default function Home() {
+const Sale: React.FC = () => {
   const { user } = useAuth();
 
   return (
@@ -22,4 +22,6 @@ export default function Home() {
       </Container>
     </>
   );
-}
+};
+
+export default Sale;

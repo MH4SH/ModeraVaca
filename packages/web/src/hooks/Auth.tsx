@@ -21,8 +21,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@ModeraVaca/token');
-    const user = localStorage.getItem('@ModeraVaca/user');
+    const token = localStorage.getItem('@ModeraVaca:token');
+    const user = localStorage.getItem('@ModeraVaca:user');
 
     if (token && user) {
       return { token, user: JSON.parse(user) };
@@ -38,9 +38,9 @@ const AuthProvider: React.FC = ({ children }) => {
         password,
       });
 
-      localStorage.setItem('@ModeraVaca/token', response.data.token);
+      localStorage.setItem('@ModeraVaca:token', response.data.token);
       localStorage.setItem(
-        '@ModeraVaca/user',
+        '@ModeraVaca:user',
         JSON.stringify(response.data.user),
       );
 
@@ -50,8 +50,8 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 
   const singOut = useCallback(() => {
-    localStorage.removeItem('@ModeraVaca/token');
-    localStorage.removeItem('@ModeraVaca/user');
+    localStorage.removeItem('@ModeraVaca:token');
+    localStorage.removeItem('@ModeraVaca:user');
 
     setData({} as AuthState);
   }, []);

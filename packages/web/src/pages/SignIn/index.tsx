@@ -7,6 +7,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import { useAuth } from '../../hooks/Auth';
+import getValidationErros from '../../utils/getValidationErros';
 
 import farmImg from '../../assets/farm-login.svg';
 import logoImg from '../../assets/logo.svg';
@@ -17,7 +18,8 @@ import Input from '../../components/Input';
 import { ContainerLogin, FormInput } from './styles';
 
 interface SingInData {
-  access: string;
+  email?: string;
+  phone?: string;
   password: string;
 }
 
@@ -34,20 +36,43 @@ const SignIn: React.FC = () => {
     async (data: SingInData) => {
       formRef.current?.setErrors({});
       try {
+        if (data.email !== undefined) {
+          const schema = Yup.object().shape({
+            email: Yup.string()
+              .required('E-mail obrigatório')
+              .email('Digite um e-mail válido'),
+            password: Yup.string().required('Senha obrigatória'),
+          });
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+        } else {
+          const schema = Yup.object().shape({
+            phone: Yup.string().required('Numero de Telefone obrigatório'),
+            password: Yup.string().required('Senha obrigatória'),
+          });
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+        }
+
         await singIn({
-          access: data.access,
+          access: data?.email || data?.phone || '',
           password: data.password,
         });
+
         history.push('/nascimentos');
-        console.log(data);
       } catch (err) {
-        alert(`Celular ou Email não encontrado!`);
-        // if (err.response.status === 400) {
-        //   alert(`Celular ou Email não encontrado!`);
-        //   setAccess("");
-        // } else if (err.response.status === 403) {
-        //   alert(`Senha incorreta!`);
-        // }
+        if (err instanceof Yup.ValidationError) {
+          console.log('Errors', err);
+          return formRef.current?.setErrors(getValidationErros(err));
+        }
+
+        if (err.response.status === 400) {
+          alert(`Celular ou Email não encontrado!`);
+        } else if (err.response.status === 403) {
+          alert(`Senha incorreta!`);
+        }
       }
     },
     [history, singIn],
@@ -57,7 +82,7 @@ const SignIn: React.FC = () => {
     if (formPhone) {
       return (
         <FormInput>
-          <Input type="number" name="access">
+          <Input type="number" name="phone">
             seu celular ou
             <span
               onClick={() => {
@@ -72,7 +97,7 @@ const SignIn: React.FC = () => {
     }
     return (
       <FormInput>
-        <Input type="email" name="access">
+        <Input type="string" name="email">
           seu email ou
           <span
             onClick={() => {

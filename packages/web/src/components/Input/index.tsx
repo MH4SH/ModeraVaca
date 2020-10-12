@@ -46,6 +46,7 @@ const Input: React.FC<InputProps> = ({ name, children, ...rest }) => {
       {children}
       <InputElement
         id={idElement}
+        hasError={!!error}
         isField={isField}
         isFocused={isFocused}
         onFocus={handleInputFocused}
@@ -57,6 +58,7 @@ const Input: React.FC<InputProps> = ({ name, children, ...rest }) => {
     </Label>
   ) : (
     <InputElement
+      hasError={!!error}
       isField={isField}
       isFocused={isFocused}
       onFocus={handleInputFocused}
