@@ -135,7 +135,7 @@ export default createGlobalStyle`
 
   textarea:focus, select:focus {
       outline: 0;
-      border-bottom: 2px solid #b5e2b6;
+      border: 2px solid #b5e2b6;
   }
 
   h1 {
