@@ -22,8 +22,7 @@ const UserController = {
 				const [id] = await connection('user')
 				.insert({
 					...body,
-					type: '3',
-					created: new Date()
+					type: '3'
 				});
 
 				body.password = undefined;
