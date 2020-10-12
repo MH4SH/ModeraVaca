@@ -1,9 +1,11 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import * as Yup from 'yup';
 
-// import api from '../../services/api';
+import api from '../../services/api';
+import getValidationErros from '../../utils/getValidationErros';
 
 import farmImg from '../../assets/cow-register.svg';
 import logoImg from '../../assets/logo.svg';
@@ -26,50 +28,57 @@ interface SingUpData {
   city: string;
   uf: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirmation: string;
 }
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const [uf, setUf] = useState('');
+  const history = useHistory();
 
-  const handleSubmit = useCallback(async (data: SingUpData) => {
-    formRef.current?.setErrors({});
-    try {
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-  // const handleChange = async (event: FormEvent) => {
-  //   event.preventDefault();
+  const handleSubmit = useCallback(
+    async (data: SingUpData) => {
+      formRef.current?.setErrors({});
+      try {
+        const schema = Yup.object().shape({
+          phone: Yup.string().required('Numero de Telefone obrigatório'),
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um e-mail válido'),
+          name: Yup.string().required('Nome obrigatório'),
+          city: Yup.string().required('Cidade obrigatório'),
+          uf: Yup.string().required('Estado obrigatório'),
+          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+          passwordConfirmation: Yup.string()
+            .required('Confirmação de senha obrigatória')
+            .oneOf([Yup.ref('password')], 'As senhas devem corresponder'),
+        });
 
-  //   if (password !== passwordCheck) {
-  //     alert('Senhas não são idênticas!');
-  //     return setPasswordCheck('');
-  //   }
-  //   try {
-  //     const response = await api.post('auth/register', {
-  //       phone,
-  //       email,
-  //       name,
-  //       city,
-  //       uf,
-  //       password,
-  //     });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-  //     localStorage.setItem('@ModeraVaca:token', response.data.token);
-  //     localStorage.setItem(
-  //       '@ModeraVaca:user',
-  //       JSON.stringify(response.data.user),
-  //     );
+        await api.post('auth/register', {
+          phone: data.phone,
+          email: data.email,
+          name: data.name,
+          city: data.city,
+          uf: data.uf,
+          password: data.password,
+        });
 
-  //     history.push('/');
-  //   } catch (err) {
-  //     console.log(err);
-  //     alert(`Falha: ${err.response.data.message} (${err.response.status})`);
-  //   }
-  // };
+        alert('Cadastro realizado com sucesso!');
+        history.push('/entrar');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          console.log('Errors', err);
+          return formRef.current?.setErrors(getValidationErros(err));
+        }
+        // Verificar se email existe e retornar mensagem
+        // Retornar erro do de retorno da api.
+      }
+    },
+    [history],
+  );
 
   return (
     <ContainerRegister>
@@ -138,7 +147,6 @@ const SignUp: React.FC = () => {
               <FormInput className="col-1">
                 <Select
                   name="uf"
-                  required
                   label={{
                     text: 'uf',
                   }}
@@ -188,7 +196,7 @@ const SignUp: React.FC = () => {
             <FormInput>
               <Input
                 type="password"
-                name="confirmPassword"
+                name="passwordConfirmation"
                 label={{
                   text: 'confirme a senha',
                 }}
