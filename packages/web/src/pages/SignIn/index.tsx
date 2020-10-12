@@ -82,31 +82,37 @@ const SignIn: React.FC = () => {
     if (formPhone) {
       return (
         <FormInput>
-          <Input type="number" name="phone">
-            seu celular ou
-            <span
-              onClick={() => {
-                setFormPhone(false);
-              }}
-            >
-              seu email aqui
-            </span>
-          </Input>
+          <Input
+            type="number"
+            name="phone"
+            label={{
+              text: 'seu celular ou',
+              span: {
+                text: 'seu email aqui',
+                onClick: () => {
+                  setFormPhone(false);
+                },
+              },
+            }}
+          />
         </FormInput>
       );
     }
     return (
       <FormInput>
-        <Input type="string" name="email">
-          seu email ou
-          <span
-            onClick={() => {
-              setFormPhone(true);
-            }}
-          >
-            seu celular aqui
-          </span>
-        </Input>
+        <Input
+          type="string"
+          name="email"
+          label={{
+            text: 'seu email ou',
+            span: {
+              text: 'seu celular aqui',
+              onClick: () => {
+                setFormPhone(true);
+              },
+            },
+          }}
+        />
       </FormInput>
     );
   };
@@ -119,9 +125,13 @@ const SignIn: React.FC = () => {
           <h1>fazer login</h1>
           {inputAccess()}
           <FormInput>
-            <Input type="password" name="password">
-              sua senha
-            </Input>
+            <Input
+              type="password"
+              name="password"
+              label={{
+                text: 'sua senha',
+              }}
+            />
           </FormInput>
           <Button type="submit">entrar</Button>
         </Form>

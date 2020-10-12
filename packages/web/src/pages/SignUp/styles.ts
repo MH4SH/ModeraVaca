@@ -78,3 +78,8 @@ export const FormRegister = styled.section`
     color: #6999ea;
   }
 `;
+
+export const FormInput = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
