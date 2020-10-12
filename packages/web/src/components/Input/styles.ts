@@ -27,7 +27,7 @@ export const InputElement = styled.input<InputProps>`
   outline: 0;
   width: 100%;
   height: 40px;
-  border-bottom: 2px solid #b5e2b6;
+  border: 2px solid #b5e2b6;
   background: #eff6ef;
   border: 0px solid #dcdce6;
   padding: 0 10px;
@@ -35,18 +35,18 @@ export const InputElement = styled.input<InputProps>`
   ${props =>
     props.isField &&
     css`
-      border-bottom: 2px solid #b5e2b6;
+      border: 2px solid #b5e2b6;
     `}
 
   ${props =>
     props.isFocused &&
     css`
-      border-bottom: 2px solid #b5e2b6;
+      border: 2px solid #b5e2b6;
     `}
   ${props =>
     props.hasError &&
     css`
       background-color: #f6f0ef;
-      border-bottom: 2px solid #e2bab5;
+      border: 2px solid #e2bab5;
     `}
 `;

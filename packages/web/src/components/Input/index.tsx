@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, {
   useRef,
   InputHTMLAttributes,
@@ -10,13 +12,22 @@ import { useField } from '@unform/core';
 
 import { Label, InputElement } from './styles';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
-  label?: JSX.Element;
+interface LabelProps {
+  text: string;
+  span?: {
+    text: string;
+    onClick(): void;
+  };
 }
 
-const Input: React.FC<InputProps> = ({ name, children, ...rest }) => {
-  const hasLabel = !!children;
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  label?: LabelProps;
+}
+
+const Input: React.FC<InputProps> = ({ name, label, ...rest }) => {
+  const hasLabel = !!label;
+  const hasSpan = !!label?.span;
   const inputRef = useRef<HTMLInputElement>(null);
   const idElement = v4();
   const [isFocused, setIsFocused] = useState(false);
@@ -43,7 +54,10 @@ const Input: React.FC<InputProps> = ({ name, children, ...rest }) => {
 
   return hasLabel ? (
     <Label htmlFor={idElement}>
-      {children}
+      {label?.text}
+      {hasSpan && (
+        <span onClick={label?.span?.onClick}>{label?.span?.text}</span>
+      )}
       <InputElement
         id={idElement}
         hasError={!!error}
