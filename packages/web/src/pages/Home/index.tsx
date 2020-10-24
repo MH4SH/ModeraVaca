@@ -1,13 +1,12 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React from 'react';
 
-import { useAuth } from "../../hooks/Auth";
+import { useAuth } from '../../hooks/Auth';
 
-import Header from "../../components/Header";
+import Header from '../../components/Header';
 
-import { HeaderHome, Container } from "./styles";
+import { HeaderHome, Container } from './styles';
 
-export default function Home() {
+const Home: React.FC = () => {
   const { user } = useAuth();
 
   return (
@@ -22,4 +21,6 @@ export default function Home() {
       </Container>
     </>
   );
-}
+};
+
+export default Home;

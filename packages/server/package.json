@@ -6,6 +6,8 @@
 	"scripts": {
 		"start": "node src/server.js",
 		"dev": "cross-env NODE_ENV=dev nodemon src/server.js",
+		"production:migration": "npx knex migrate:latest --env dev",
+		"production:seed": "npx knex seed:run --env dev",
 		"test": "cross-env NODE_ENV=test jest",
 		"heroku-postbuild": "npx knex migrate:latest --env production"
 	},
@@ -40,11 +42,6 @@
 	"devDependencies": {
 		"@divyenduz/ts-graphql-plugin": "^0.1.0",
 		"cross-env": "^7.0.2",
-		"jest": "^24.9.0",
-		"sqlite3": "^4.2.0"
-	},
-	"engines": {
-		"node": "12.x",
-		"yarn": "1.x"
+		"jest": "^24.9.0"
 	}
 }

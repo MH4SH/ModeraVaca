@@ -1,53 +1,84 @@
-import React, { useState, FormEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useCallback, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
 
-import api from "../../services/api";
+import api from '../../services/api';
+import getValidationErros from '../../utils/getValidationErros';
 
-import farmImg from "../../assets/cow-register.svg";
-import logoImg from "../../assets/logo.svg";
+import farmImg from '../../assets/cow-register.svg';
+import logoImg from '../../assets/logo.svg';
 
-import { ContainerRegister, InfoRegister, FormRegister } from "./styles";
+import Input from '../../components/Input';
+import Select from '../../components/Select';
+import Button from '../../components/Button';
+
+import {
+  ContainerRegister,
+  InfoRegister,
+  FormRegister,
+  FormInput,
+} from './styles';
+
+interface SingUpData {
+  phone: number;
+  email: string;
+  name: string;
+  city: string;
+  uf: string;
+  password: string;
+  passwordConfirmation: string;
+}
 
 const SignUp: React.FC = () => {
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [uf, setUf] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-
+  const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
-  const handleChange = async (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (data: SingUpData) => {
+      formRef.current?.setErrors({});
+      try {
+        const schema = Yup.object().shape({
+          phone: Yup.string().required('Numero de Telefone obrigatório'),
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um e-mail válido'),
+          name: Yup.string().required('Nome obrigatório'),
+          city: Yup.string().required('Cidade obrigatório'),
+          uf: Yup.string().required('Estado obrigatório'),
+          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+          passwordConfirmation: Yup.string()
+            .required('Confirmação de senha obrigatória')
+            .oneOf([Yup.ref('password')], 'As senhas devem corresponder'),
+        });
 
-    if (password !== passwordCheck) {
-      alert("Senhas não são idênticas!");
-      return setPasswordCheck("");
-    }
-    try {
-      const response = await api.post("auth/register", {
-        phone,
-        email,
-        name,
-        city,
-        uf,
-        password,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      localStorage.setItem("@ModeraVaca/token", response.data.token);
-      localStorage.setItem(
-        "@ModeraVaca/user",
-        JSON.stringify(response.data.user)
-      );
+        await api.post('auth/register', {
+          phone: data.phone,
+          email: data.email,
+          name: data.name,
+          city: data.city,
+          uf: data.uf,
+          password: data.password,
+        });
 
-      history.push("/");
-    } catch (err) {
-      console.log(err);
-      alert(`Falha: ${err.response.data.message} (${err.response.status})`);
-    }
-  };
+        alert('Cadastro realizado com sucesso!');
+        history.push('/entrar');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          console.log('Errors', err);
+          return formRef.current?.setErrors(getValidationErros(err));
+        }
+        // Verificar se email existe e retornar mensagem
+        // Retornar erro do de retorno da api.
+      }
+    },
+    [history],
+  );
 
   return (
     <ContainerRegister>
@@ -71,139 +102,117 @@ const SignUp: React.FC = () => {
       </InfoRegister>
       <FormRegister>
         <img src={logoImg} alt="Logo ModeraVaca" />
-        <form onSubmit={handleChange}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>se cadastre</h1>
           <div className="row">
-            <div>
-              <label htmlFor="phone">
-                seu celular para login com ddd
-                <input
-                  type="number"
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                  minLength={10}
-                />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="email">
-                email
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
+            <FormInput>
+              <Input
+                type="number"
+                name="phone"
+                label={{
+                  text: 'seu celular para login com ddd',
+                }}
+              />
+            </FormInput>
+            <FormInput>
+              <Input
+                type="email"
+                name="email"
+                label={{
+                  text: 'email',
+                }}
+              />
+            </FormInput>
           </div>
           <div className="row">
-            <div>
-              <label htmlFor="name">
-                nome
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
+            <FormInput>
+              <Input
+                type="text"
+                name="name"
+                label={{
+                  text: 'nome',
+                }}
+              />
+            </FormInput>
             <div className="row">
-              <div className="col-3">
-                <label htmlFor="city">
-                  cidade
-                  <input
-                    type="text"
-                    id="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-              <div className="col-1">
-                <label htmlFor="uf">
-                  uf
-                  <select
-                    id="uf"
-                    value={uf}
-                    onChange={(e) => setUf(e.target.value)}
-                    required
-                  >
-                    <option value=""> </option>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="AM">AM</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
-                  </select>
-                </label>
-              </div>
+              <FormInput className="col-3">
+                <Input
+                  type="text"
+                  name="city"
+                  label={{
+                    text: 'cidade',
+                  }}
+                />
+              </FormInput>
+              <FormInput className="col-1">
+                <Select
+                  name="uf"
+                  label={{
+                    text: 'uf',
+                  }}
+                >
+                  <option value=""> </option>
+                  <option value="AC">AC</option>
+                  <option value="AL">AL</option>
+                  <option value="AP">AP</option>
+                  <option value="AM">AM</option>
+                  <option value="BA">BA</option>
+                  <option value="CE">CE</option>
+                  <option value="DF">DF</option>
+                  <option value="ES">ES</option>
+                  <option value="GO">GO</option>
+                  <option value="MA">MA</option>
+                  <option value="MT">MT</option>
+                  <option value="MS">MS</option>
+                  <option value="MG">MG</option>
+                  <option value="PA">PA</option>
+                  <option value="PB">PB</option>
+                  <option value="PR">PR</option>
+                  <option value="PE">PE</option>
+                  <option value="PI">PI</option>
+                  <option value="RJ">RJ</option>
+                  <option value="RN">RN</option>
+                  <option value="RS">RS</option>
+                  <option value="RO">RO</option>
+                  <option value="RR">RR</option>
+                  <option value="SC">SC</option>
+                  <option value="SP">SP</option>
+                  <option value="SE">SE</option>
+                  <option value="TO">TO</option>
+                </Select>
+              </FormInput>
             </div>
           </div>
           <div className="row">
-            <div>
-              <label htmlFor="password">
-                senha
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="passwordB">
-                confirme a senha
-                <input
-                  type="password"
-                  id="passwordB"
-                  value={passwordCheck}
-                  onChange={(e) => setPasswordCheck(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
+            <FormInput>
+              <Input
+                type="password"
+                name="password"
+                label={{
+                  text: 'senha',
+                }}
+              />
+            </FormInput>
+            <FormInput>
+              <Input
+                type="password"
+                name="passwordConfirmation"
+                label={{
+                  text: 'confirme a senha',
+                }}
+              />
+            </FormInput>
           </div>
           <div className="row">
             <div>
-              <button className="button" type="submit">
-                cadastrar
-              </button>
+              <Button type="submit">cadastrar</Button>
             </div>
-            <p>já esta cadastrado?</p>
-            <Link to="/entrar">fazer login</Link>
+            <div>
+              <p>já esta cadastrado?</p>
+              <Link to="/entrar">fazer login</Link>
+            </div>
           </div>
-        </form>
+        </Form>
       </FormRegister>
     </ContainerRegister>
   );

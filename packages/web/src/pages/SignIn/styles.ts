@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ContainerLogin = styled.div`
   width: 100%;
@@ -44,18 +44,4 @@ export const ContainerLogin = styled.div`
 export const FormInput = styled.div`
   display: flex;
   flex-direction: column;
-
-  label {
-    margin-bottom: 5px;
-  }
-
-  label > span {
-    cursor: pointer;
-    color: #6999ea;
-  }
-
-  input {
-    margin-bottom: 20px;
-    border-radius: 5px;
-  }
 `;

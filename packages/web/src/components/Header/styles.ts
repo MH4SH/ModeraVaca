@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ContainerHeader = styled.header`
   display: flex;
@@ -51,7 +51,7 @@ export const TopBarHeader = styled.header`
       }
 
       a::after {
-        content: "";
+        content: '';
         display: block;
         background: var(--secondary);
         margin: 0 auto;
@@ -67,7 +67,7 @@ export const TopBarHeader = styled.header`
       }
 
       a:hover::after {
-        content: "";
+        content: '';
         display: block;
         background: var(--secondary);
         margin: 0 auto;
@@ -83,7 +83,7 @@ export const TopBarHeader = styled.header`
       }
 
       a.active::after {
-        content: "";
+        content: '';
         display: block;
         background: var(--secondary);
         margin: 0 auto;

@@ -1,87 +1,118 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, FormEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useRef, useCallback } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
 
-import { useAuth } from "../../hooks/Auth";
+import { useAuth } from '../../hooks/Auth';
+import getValidationErros from '../../utils/getValidationErros';
 
-import farmImg from "../../assets/farm-login.svg";
-import logoImg from "../../assets/logo.svg";
+import farmImg from '../../assets/farm-login.svg';
+import logoImg from '../../assets/logo.svg';
 
-import { ContainerLogin, FormInput } from "./styles";
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+
+import { ContainerLogin, FormInput } from './styles';
+
+interface SingInData {
+  email?: string;
+  phone?: string;
+  password: string;
+}
 
 const SignIn: React.FC = () => {
-  const [access, setAccess] = useState("");
-  const [password, setPassword] = useState("");
+  const formRef = useRef<FormHandles>(null);
+
   const [formPhone, setFormPhone] = useState(true);
 
   const { singIn } = useAuth();
 
   const history = useHistory();
 
-  const handleChange = async (event: FormEvent) => {
-    event.preventDefault();
-    if (!access) return alert(`Acesso não preenchido!`);
-    if (!password) return alert(`Senha não preenchido!`);
+  const handleSubmit = useCallback(
+    async (data: SingInData) => {
+      formRef.current?.setErrors({});
+      try {
+        if (data.email !== undefined) {
+          const schema = Yup.object().shape({
+            email: Yup.string()
+              .required('E-mail obrigatório')
+              .email('Digite um e-mail válido'),
+            password: Yup.string().required('Senha obrigatória'),
+          });
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+        } else {
+          const schema = Yup.object().shape({
+            phone: Yup.string().required('Numero de Telefone obrigatório'),
+            password: Yup.string().required('Senha obrigatória'),
+          });
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+        }
 
-    try {
-      await singIn({ access, password });
+        await singIn({
+          access: data?.email || data?.phone || '',
+          password: data.password,
+        });
 
-      history.push("/nascimentos");
-    } catch (err) {
-      alert(`Celular ou Email não encontrado!`);
-      // if (err.response.status === 400) {
-      //   alert(`Celular ou Email não encontrado!`);
-      //   setAccess("");
-      // } else if (err.response.status === 403) {
-      //   alert(`Senha incorreta!`);
-      // }
-    }
-  };
+        history.push('/nascimentos');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          console.log('Errors', err);
+          return formRef.current?.setErrors(getValidationErros(err));
+        }
+
+        if (err.response.status === 400) {
+          alert(`Celular ou Email não encontrado!`);
+        } else if (err.response.status === 403) {
+          alert(`Senha incorreta!`);
+        }
+      }
+    },
+    [history, singIn],
+  );
 
   const inputAccess = () => {
     if (formPhone) {
       return (
         <FormInput>
-          <label htmlFor="accessPhone">
-            seu celular ou
-            <span
-              onClick={() => {
-                setFormPhone(false);
-              }}
-            >
-              seu email aqui
-            </span>
-            <input
-              type="number"
-              id="accessPhone"
-              value={access}
-              onChange={(e) => setAccess(e.target.value)}
-              required
-            />
-          </label>
+          <Input
+            type="number"
+            name="phone"
+            label={{
+              text: 'seu celular ou',
+              span: {
+                text: 'seu email aqui',
+                onClick: () => {
+                  setFormPhone(false);
+                },
+              },
+            }}
+          />
         </FormInput>
       );
     }
     return (
       <FormInput>
-        <label htmlFor="accessEmail">
-          seu email ou
-          <span
-            onClick={() => {
-              setFormPhone(true);
-            }}
-          >
-            seu celular aqui
-          </span>
-          <input
-            type="email"
-            id="accessEmail"
-            value={access}
-            onChange={(e) => setAccess(e.target.value)}
-            required
-          />
-        </label>
+        <Input
+          type="string"
+          name="email"
+          label={{
+            text: 'seu email ou',
+            span: {
+              text: 'seu celular aqui',
+              onClick: () => {
+                setFormPhone(true);
+              },
+            },
+          }}
+        />
       </FormInput>
     );
   };
@@ -90,24 +121,20 @@ const SignIn: React.FC = () => {
     <ContainerLogin>
       <section className="form">
         <img src={logoImg} alt="Logo ModeraVaca" />
-        <form onSubmit={handleChange}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>fazer login</h1>
           {inputAccess()}
           <FormInput>
-            <label htmlFor="pass">
-              sua senha
-              <input
-                type="password"
-                id="pass"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
+            <Input
+              type="password"
+              name="password"
+              label={{
+                text: 'sua senha',
+              }}
+            />
           </FormInput>
-          <button className="button" type="submit">
-            entrar
-          </button>
-        </form>
+          <Button type="submit">entrar</Button>
+        </Form>
         <p>ainda não tem conta?</p>
         <Link to="/registrar">se cadastrar</Link>
       </section>

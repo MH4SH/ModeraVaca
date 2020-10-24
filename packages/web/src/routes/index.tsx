@@ -1,13 +1,15 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React from 'react';
+import { Switch } from 'react-router-dom';
 
-import SignIn from "../pages/SignIn";
-import SignUp from "../pages/SignUp";
+import Route from './Route';
+
+import SignIn from '../pages/SignIn';
+import SignUp from '../pages/SignUp';
 // import Home from '../pages/Home';
-import Birth from "../pages/Birth";
-import Death from "../pages/Death";
-import Sale from "../pages/Sale";
-import Purchase from "../pages/Purchase";
+import Birth from '../pages/Birth';
+import Death from '../pages/Death';
+import Sale from '../pages/Sale';
+import Purchase from '../pages/Purchase';
 
 const Routes: React.FC = () => {
   return (
